@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FoodTruck | User</title>
+  </head>
+  <body>
+    <p th:text="${user.name}"></p>
+    <p th:text="${user.email}"></p>
+    <p th:text="${foodtrucks}"></p>
+    <div th:each="foodtruck : ${foodtrucks}">
+      <p th:text="${foodtruck.name}"></p>
+      <p th:text="${foodtruck.foodTruckName}"></p>
+      <p th:text="${foodtruck.email}"></p>
+      <div th:each="img : ${foodtruck.MenuEntity}">
+        <img th:src="@{'data:image/jpeg;base64,'+${img.image}}" alt="" />
+      </div>
+    </div>
+  </body>
+</html>

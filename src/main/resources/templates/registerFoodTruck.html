@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register | FoodTruck</title>
+  </head>
+  <body>
+    <form action="/foodTruck/saveNewFoodTruck" class="" method="post">
+      <label for="name">Full Name</label>
+      <input type="text" name="name" required />
+
+      <label for="foodTruckName">FoodTruck Name</label>
+      <input type="text" name="foodTruckName" required />
+
+      <label for="email">Email</label>
+      <input type="email" name="email" required />
+
+      <label for="password">Password</label>
+      <input type="password" name="password" required />
+
+      <label for="cpassword">Confirm Password</label>
+      <input type="password" name="cpassword" required />
+
+      <button type="submit">Register FoodTruck</button>
+    </form>
+  </body>
+</html>

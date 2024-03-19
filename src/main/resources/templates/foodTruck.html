@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FoodTruck</title>
+  </head>
+  <body>
+    <h1>Welcome To FoodTruck</h1>
+    <p>Name :</p>
+    <p th:text="${foodtruck}"></p>
+    <form
+      action="/foodTruck/addMenu"
+      method="post"
+      enctype="multipart/form-data"
+    >
+      <input type="text" th:value="${foodtruck.email}" name="email" />
+      <input type="file" name="menuImg" />
+      <button type="submit">Upload</button>
+    </form>
+    <div th:each="img:${foodtruck.MenuEntity}">
+      <img th:src="@{'data:image/jpeg;base64,'+${img.image}}" alt="" />
+      <a th:href="'/foodTruck/deleteMenu/'+${img.id}">Delete Menu</a>
+    </div>
+  </body>
+</html>
