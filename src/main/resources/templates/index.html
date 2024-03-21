@@ -5,5 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Home | Page</title>
   </head>
-  <body></body>
+  <body>
+    <h1>Welocome to FoodTruck</h1>
+    <div th:if="${isUserLogged}">
+      <div th:if="${isUser}">
+        <a th:href="@{/user/userDashboard}">Contine</a>
+      </div>
+      <div th:if="${isFoodtruck}">
+        <a th:href="@{/foodTruck/foodTruckDashboard}">Contine</a>
+      </div>
+    </div>
+    <div th:unless="${isUserLogged}">
+      <p>Please Login To Contine</p>
+      <a th:href="@{/public/loginPage}">Login</a>
+    </div>
+  </body>
 </html>
