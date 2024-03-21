@@ -31,4 +31,8 @@ public class FoodtruckEntity {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_foodtruck_id", referencedColumnName = "id")
     private List<MenuEntity> menuEntity;
+
+    private Double lat;
+    private Double longi;
+    private Double distance;
 }

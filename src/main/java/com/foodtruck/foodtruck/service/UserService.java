@@ -6,4 +6,6 @@ public interface UserService {
     public UserEntity saveNewUser(UserEntity userEntity);
 
     public UserEntity findUser(String email);
+
+    public UserEntity updateUser(UserEntity userEntity);
 }

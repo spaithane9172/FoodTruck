@@ -78,4 +78,15 @@ public class FoodTruckController {
         menuService.deleteMenu(id);
         return "redirect:/foodTruck/foodTruckDashboard";
     }
+
+    @RequestMapping("/getLocation")
+    public String getLocation(@RequestParam("lat") String lat, @RequestParam("long") String longi,
+            @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        FoodtruckEntity foodtruckEntity = foodTruckService.findFoodTruckByEmail(customUserDetails.getUsername());
+        foodtruckEntity.setLat(Double.parseDouble(lat));
+        foodtruckEntity.setLongi(Double.parseDouble(longi));
+        foodTruckService.updateFoodTruck(foodtruckEntity);
+
+        return "redirect:/foodTruck/foodTruckDashboard";
+    }
 }

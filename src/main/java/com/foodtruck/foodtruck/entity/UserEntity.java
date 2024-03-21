@@ -21,4 +21,6 @@ public class UserEntity {
     private String email;
     private String password;
     private String role = "ROLE_USER";
+    private Double lat;
+    private Double longi;
 }

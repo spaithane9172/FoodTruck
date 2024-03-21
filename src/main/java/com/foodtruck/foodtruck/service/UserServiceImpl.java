@@ -21,4 +21,9 @@ public class UserServiceImpl implements UserService {
         return userRepo.findUserByEmail(email);
     }
 
+    @Override
+    public UserEntity updateUser(UserEntity userEntity) {
+        return userRepo.save(userEntity);
+    }
+
 }

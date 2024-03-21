@@ -6,6 +6,13 @@
     <title>FoodTruck | User</title>
   </head>
   <body>
+    <a href="/logout">LogOut</a>
+    <form action="/user/getUserLocation" method="post" hidden>
+      <p id="msg"></p>
+      <input type="text" name="lat" id="lat" th:value="${user.lat}" />
+      <input type="text" name="long" id="long" th:value="${user.longi}" />
+      <button type="submit" id="sendLocation">Go Online</button>
+    </form>
     <p th:text="${user.name}"></p>
     <p th:text="${user.email}"></p>
     <p th:text="${foodtrucks}"></p>
@@ -17,5 +24,6 @@
         <img th:src="@{'data:image/jpeg;base64,'+${img.image}}" alt="" />
       </div>
     </div>
+    <script th:src="@{/js/getUserLocation.js}"></script>
   </body>
 </html>

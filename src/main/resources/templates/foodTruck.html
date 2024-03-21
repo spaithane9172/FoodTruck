@@ -6,6 +6,18 @@
     <title>FoodTruck</title>
   </head>
   <body>
+    <a href="/logout">LogOut</a>
+    <br />
+
+    <form action="/foodTruck/getLocation" method="post" hidden>
+      <p id="msg"></p>
+      <input type="text" name="lat" id="lat" />
+      <input type="text" name="long" id="long" />
+      <button type="submit" id="sendLocation">Go Online</button>
+    </form>
+
+    <button onclick="getLocation()">Go Online</button>
+
     <h1>Welcome To FoodTruck</h1>
     <p>Name :</p>
     <p th:text="${foodtruck}"></p>
@@ -22,5 +34,6 @@
       <img th:src="@{'data:image/jpeg;base64,'+${img.image}}" alt="" />
       <a th:href="'/foodTruck/deleteMenu/'+${img.id}">Delete Menu</a>
     </div>
+    <script th:src="@{/js/getFoodTruckLocation.js}"></script>
   </body>
 </html>
