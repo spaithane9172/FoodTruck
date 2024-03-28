@@ -3,11 +3,13 @@ package com.foodtruck.foodtruck.entity;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -32,7 +34,15 @@ public class FoodtruckEntity {
     @JoinColumn(name = "fk_foodtruck_id", referencedColumnName = "id")
     private List<MenuEntity> menuEntity;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "fk_foodtruck_id", referencedColumnName = "id")
+    private List<FoodtruckFeedbacksEntity> feedbacks;
+
     private Double lat;
     private Double longi;
     private Double distance;
+    private String closingTime;
+    @Lob
+    @Column(columnDefinition = "LONGBLOB")
+    private String foodTruckImage;
 }

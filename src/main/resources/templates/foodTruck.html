@@ -9,31 +9,58 @@
     <a href="/logout">LogOut</a>
     <br />
 
+    <form
+      action="/foodTruck/updateFoodtruckImage"
+      method="post"
+      enctype="multipart/form-data"
+    >
+      <label for="">Update Cover Photo</label>
+      <input type="file" name="img" />
+      <button type="submit">Update Photo</button>
+    </form>
+
     <form action="/foodTruck/getLocation" method="post" hidden>
       <p id="msg"></p>
       <input type="text" name="lat" id="lat" />
       <input type="text" name="long" id="long" />
       <button type="submit" id="sendLocation">Go Online</button>
     </form>
-
     <button onclick="getLocation()">Go Online</button>
+
+    <form action="/foodTruck/setClosingTime" method="post">
+      <input type="time" name="closingTime" />
+      <button type="submit">Set ClosingTime</button>
+    </form>
 
     <h1>Welcome To FoodTruck</h1>
     <p>Name :</p>
     <p th:text="${foodtruck}"></p>
+
     <form
       action="/foodTruck/addMenu"
       method="post"
       enctype="multipart/form-data"
     >
-      <input type="text" th:value="${foodtruck.email}" name="email" />
       <input type="file" name="menuImg" />
       <button type="submit">Upload</button>
     </form>
+
     <div th:each="img:${foodtruck.MenuEntity}">
       <img th:src="@{'data:image/jpeg;base64,'+${img.image}}" alt="" />
       <a th:href="'/foodTruck/deleteMenu/'+${img.id}">Delete Menu</a>
     </div>
+
+    <div>
+      <h1>Foodtruck Feedbacks:</h1>
+      <div th:each="feedback: ${foodtruck.feedbacks}">
+        <p>Name : <span th:text="${feedback.userName}"></span></p>
+        <p>Feedback : <span th:text="${feedback.feedback}"></span></p>
+        <p>Rating : <span th:text="${feedback.rating}"></span></p>
+        <p>Date : <span th:text="${feedback.date}"></span></p>
+        <hr />
+      </div>
+    </div>
+
     <script th:src="@{/js/getFoodTruckLocation.js}"></script>
   </body>
 </html>

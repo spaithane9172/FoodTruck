@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FoodTruck</title>
+  </head>
+  <body>
+    <form action="/user/saveFeedback" method="post">
+      <input type="text" name="feedback" placeholder="Feedback" />
+      <input type="text" name="rating" placeholder="Rating" />
+      <input
+        type="text"
+        name="foodtruckEmail"
+        th:value="${foodtruck.email}"
+        hidden
+      />
+      <button type="submit">Submit</button>
+    </form>
+    <p th:text="${foodtruck}"></p>
+    <p th:text="${foodtruck.name}"></p>
+    <p th:text="${foodtruck.foodTruckName}"></p>
+    <p th:text="${foodtruck.email}"></p>
+    <div th:each="menu : ${foodtruck.MenuEntity}">
+      <img src="@{'data:image/jpeg;base64,'+${menu.image}}" alt="" />
+    </div>
+  </body>
+</html>

@@ -8,6 +8,7 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -31,11 +32,12 @@ public class PublicController {
     }
 
     @RequestMapping("/registerFoodTruck")
-    public String registerFoodTruck() {
+    public String registerFoodTruck(@ModelAttribute("error") String error, Model m) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null || authentication instanceof AnonymousAuthenticationToken)
+        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+            m.addAttribute("error", error);
             return "registerFoodTruck";
-        else
+        } else
             return PATH;
     }
 
@@ -50,11 +52,12 @@ public class PublicController {
     }
 
     @RequestMapping("/registerUser")
-    public String registerUser() {
+    public String registerUser(@ModelAttribute("error") String error, Model m) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null || authentication instanceof AnonymousAuthenticationToken)
+        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+            m.addAttribute("error", error);
             return "registerUser";
-        else
+        } else
             return PATH;
     }
 

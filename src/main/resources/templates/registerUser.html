@@ -6,6 +6,7 @@
     <title>User | Registration</title>
   </head>
   <body>
+    <p th:text="${error}"></p>
     <form action="/user/saveNewUser" method="post">
       <label for="name">Full Name</label>
       <input type="text" name="name" />

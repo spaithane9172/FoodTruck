@@ -6,7 +6,13 @@
     <title>Register | FoodTruck</title>
   </head>
   <body>
-    <form action="/foodTruck/saveNewFoodTruck" class="" method="post">
+    <p th:text="${error}"></p>
+    <form
+      action="/foodTruck/saveNewFoodTruck"
+      class=""
+      method="post"
+      enctype="multipart/form-data"
+    >
       <label for="name">Full Name</label>
       <input type="text" name="name" required />
 
@@ -15,6 +21,9 @@
 
       <label for="email">Email</label>
       <input type="email" name="email" required />
+
+      <label for="img">Cover Photo</label>
+      <input type="file" name="img" required />
 
       <label for="password">Password</label>
       <input type="password" name="password" required />
