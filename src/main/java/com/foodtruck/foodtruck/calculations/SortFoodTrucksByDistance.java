@@ -23,13 +23,13 @@ public class SortFoodTrucksByDistance {
                     f.setLat(foodtruckEntities.get(i).getLat());
                     f.setLongi(foodtruckEntities.get(i).getLongi());
                     f.setDistance(foodtruckEntities.get(i).getDistance());
-                    f.setMenuEntity(foodtruckEntities.get(i).getMenuEntity());
+                    f.setGalleryPhotos(foodtruckEntities.get(i).getGalleryPhotos());
 
                     // Set value for i index
                     foodtruckEntities.get(i).setName(foodtruckEntities.get(j).getName());
                     foodtruckEntities.get(i).setEmail(foodtruckEntities.get(j).getEmail());
                     foodtruckEntities.get(i).setFoodTruckName(foodtruckEntities.get(j).getFoodTruckName());
-                    foodtruckEntities.get(i).setMenuEntity(foodtruckEntities.get(j).getMenuEntity());
+                    foodtruckEntities.get(i).setGalleryPhotos(foodtruckEntities.get(j).getGalleryPhotos());
                     foodtruckEntities.get(i).setLat(foodtruckEntities.get(j).getLat());
                     foodtruckEntities.get(i).setLongi(foodtruckEntities.get(j).getLongi());
                     foodtruckEntities.get(i).setDistance(foodtruckEntities.get(j).getDistance());
@@ -38,7 +38,7 @@ public class SortFoodTrucksByDistance {
                     foodtruckEntities.get(j).setName(f.getName());
                     foodtruckEntities.get(j).setEmail(f.getEmail());
                     foodtruckEntities.get(j).setFoodTruckName(f.getFoodTruckName());
-                    foodtruckEntities.get(j).setMenuEntity(f.getMenuEntity());
+                    foodtruckEntities.get(j).setGalleryPhotos(f.getGalleryPhotos());
                     foodtruckEntities.get(j).setLat(f.getLat());
                     foodtruckEntities.get(j).setLongi(f.getLongi());
                     foodtruckEntities.get(j).setDistance(f.getDistance());

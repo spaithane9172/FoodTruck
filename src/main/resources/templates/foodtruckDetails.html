@@ -17,12 +17,79 @@
       />
       <button type="submit">Submit</button>
     </form>
+
     <p th:text="${foodtruck}"></p>
     <p th:text="${foodtruck.name}"></p>
     <p th:text="${foodtruck.foodTruckName}"></p>
     <p th:text="${foodtruck.email}"></p>
-    <div th:each="menu : ${foodtruck.MenuEntity}">
-      <img src="@{'data:image/jpeg;base64,'+${menu.image}}" alt="" />
+    <div
+      style="display: flex; justify-content: space-between; align-items: center"
+    >
+      <h1>Menu List</h1>
+      <div
+        style="
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 50vw;
+        "
+      >
+        <h5>Filter :</h5>
+        <a th:href="@{'/user/foodtruckDetails/'+${email}}">All Menu Item </a
+        ><span>,</span>
+        <div th:each="category : ${categories}">
+          <a
+            th:href="@{'/user/menuItemFilter/'+${category}+'/'+${email}}"
+            th:text="${category}"
+          ></a
+          ><span>,</span>
+        </div>
+      </div>
+    </div>
+
+    <hr />
+
+    <div
+      th:each="menuItem : ${foodtruck.menuEntity}"
+      style="display: flex; margin-bottom: 3vh"
+    >
+      <div style="margin-right: 5vh">
+        <img
+          th:if="${menuItem.dishePhoto!=null}"
+          th:src="@{'data:image/jpeg;base64,'+${menuItem.dishePhoto}}"
+          style="width: 15vw; height: 30vh"
+          alt=""
+        /><img
+          th:if="${menuItem.dishePhoto==null}"
+          th:src="@{/img/imgIcon.png}"
+          style="width: 15vw; height: 30vh"
+          alt=""
+        />
+      </div>
+      <div>
+        <p>Dishe Name : <span th:text="${menuItem.disheName}"></span></p>
+        <p>
+          Dishe Description :
+          <span th:text="${menuItem.disheDescription}"></span>
+        </p>
+        <p>Price : <span th:text="${menuItem.price}"></span> &#8377;</p>
+        <p>Discount : <span th:text="${menuItem.discount}"></span> &percnt;</p>
+        <p>Category : <span th:text="${menuItem.category}"></span></p>
+      </div>
+    </div>
+    <h1>Foodtruck Photo Gallery</h1>
+    <div th:each="img : ${foodtruck.galleryPhotos}">
+      <img th:src="@{'data:image/jpeg;base64,'+${img.image}}" alt="" />
+    </div>
+
+    <h1>Feedbacks :</h1>
+    <hr />
+    <div th:each="feedback:${foodtruck.feedbacks}">
+      <p>User : <span th:text="${feedback.userName}"></span></p>
+      <p>Feedback : <span th:text="${feedback.feedback}"></span></p>
+      <p>Rating : <span th:text="${feedback.rating}"></span></p>
+      <p>Date : <span th:text="${feedback.date}"></span></p>
+      <hr />
     </div>
   </body>
 </html>

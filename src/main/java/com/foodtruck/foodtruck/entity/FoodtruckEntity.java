@@ -32,7 +32,7 @@ public class FoodtruckEntity {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_foodtruck_id", referencedColumnName = "id")
-    private List<MenuEntity> menuEntity;
+    private List<GalleryPhotos> galleryPhotos;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_foodtruck_id", referencedColumnName = "id")
@@ -45,4 +45,8 @@ public class FoodtruckEntity {
     @Lob
     @Column(columnDefinition = "LONGBLOB")
     private String foodTruckImage;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "fk_foodtruck_id", referencedColumnName = "id")
+    private List<MenuEntity> menuEntity;
 }

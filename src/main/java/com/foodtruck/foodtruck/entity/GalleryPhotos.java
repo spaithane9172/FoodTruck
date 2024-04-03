@@ -6,21 +6,21 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Data
 @Entity
-public class MenuEntity {
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+public class GalleryPhotos {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String disheName;
-    private String disheDescription;
-    private Long price;
-    private Long discount;
-    private String category;
+
     @Lob
     @Column(columnDefinition = "LONGBLOB")
-    private String dishePhoto = null;
+    private String image;
 
 }

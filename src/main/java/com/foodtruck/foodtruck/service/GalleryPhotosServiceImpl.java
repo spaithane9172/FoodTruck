@@ -6,32 +6,27 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.foodtruck.foodtruck.entity.MenuEntity;
-import com.foodtruck.foodtruck.repo.MenuRepo;
+import com.foodtruck.foodtruck.entity.GalleryPhotos;
+import com.foodtruck.foodtruck.repo.GalleryPhotosRepo;
 
 @Service
-public class MenuServiceImpl implements MenuService {
+public class GalleryPhotosServiceImpl implements GalleryPhotosService {
 
     @Autowired
-    MenuRepo menuRepo;
+    GalleryPhotosRepo menuRepo;
 
     @Override
-    public MenuEntity addMenu(MenuEntity menuEntity) {
+    public GalleryPhotos addMenu(GalleryPhotos menuEntity) {
         return menuRepo.save(menuEntity);
     }
 
     @Override
     public Boolean deleteMenu(Long id) {
         menuRepo.deleteById(id);
-        Optional<MenuEntity> menuEntity = menuRepo.findById(id);
+        Optional<GalleryPhotos> menuEntity = menuRepo.findById(id);
 
         return menuEntity.isEmpty();
 
-    }
-
-    @Override
-    public List<MenuEntity> getMenu(Long id) {
-        return null;
     }
 
 }

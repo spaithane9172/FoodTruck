@@ -2,6 +2,9 @@ package com.foodtruck.foodtruck.controller;
 
 import java.io.IOException;
 import java.util.Base64;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -16,13 +19,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.foodtruck.foodtruck.config.CustomUserDetails;
 import com.foodtruck.foodtruck.entity.FoodtruckEntity;
+import com.foodtruck.foodtruck.entity.GalleryPhotos;
 import com.foodtruck.foodtruck.entity.MenuEntity;
 import com.foodtruck.foodtruck.entity.UserEntity;
 import com.foodtruck.foodtruck.model.FoodTruckModel;
+import com.foodtruck.foodtruck.model.MenuModel;
 import com.foodtruck.foodtruck.service.FoodTruckService;
-import com.foodtruck.foodtruck.service.MenuService;
+import com.foodtruck.foodtruck.service.GalleryPhotosService;
+import com.foodtruck.foodtruck.service.MenuListServiceImpl;
 import com.foodtruck.foodtruck.service.UserServiceImpl;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 @RequestMapping("/foodTruck")
@@ -38,7 +43,10 @@ public class FoodTruckController {
     PasswordEncoder passwordEncoder;
 
     @Autowired
-    MenuService menuService;
+    GalleryPhotosService menuService;
+
+    @Autowired
+    MenuListServiceImpl menuListServiceImpl;
 
     @RequestMapping("/saveNewFoodTruck")
     public String saveNewFoodTruck(FoodTruckModel foodTruckModel, RedirectAttributes m,
@@ -58,7 +66,10 @@ public class FoodTruckController {
                     foodtruckEntity.setFoodTruckName(foodTruckModel.getFoodTruckName());
                     foodtruckEntity.setEmail(foodTruckModel.getEmail());
                     foodtruckEntity.setPassword(passwordEncoder.encode(foodTruckModel.getPassword()));
-                    foodtruckEntity.setFoodTruckImage(Base64.getEncoder().encodeToString(img.getBytes()));
+                    if (img.isEmpty())
+                        foodtruckEntity.setFoodTruckImage(null);
+                    else
+                        foodtruckEntity.setFoodTruckImage(Base64.getEncoder().encodeToString(img.getBytes()));
 
                     foodTruckService.saveNewFoodTruck(foodtruckEntity);
                     return "redirect:/";
@@ -84,7 +95,10 @@ public class FoodTruckController {
             @AuthenticationPrincipal CustomUserDetails customUserDetails) throws IOException {
         try {
             FoodtruckEntity foodtruckEntity = foodTruckService.findFoodTruckByEmail(customUserDetails.getUsername());
-            foodtruckEntity.setFoodTruckImage(Base64.getEncoder().encodeToString(img.getBytes()));
+            if (img.isEmpty())
+                foodtruckEntity.setFoodTruckImage(null);
+            else
+                foodtruckEntity.setFoodTruckImage(Base64.getEncoder().encodeToString(img.getBytes()));
             foodTruckService.updateFoodTruck(foodtruckEntity);
             return "redirect:/foodTruck/foodTruckDashboard";
         } catch (Exception e) {
@@ -98,20 +112,29 @@ public class FoodTruckController {
         foodtruckEntity.setId(null);
         foodtruckEntity.setPassword(null);
         foodtruckEntity.setRole(null);
+
+        Set<String> categories = new HashSet<String>();
+        for (MenuEntity menuItem : foodtruckEntity.getMenuEntity())
+            categories.add(menuItem.getCategory());
+
+        model.addAttribute("categories", categories);
         model.addAttribute("foodtruck", foodtruckEntity);
         return "foodTruck";
     }
 
-    @RequestMapping("/addMenu")
-    public String addMenuImg(@RequestParam("menuImg") MultipartFile file,
+    @RequestMapping("/addGalleryPhoto")
+    public String addMenuImg(@RequestParam("galleryPhoto") MultipartFile file,
             @AuthenticationPrincipal CustomUserDetails customUserDetails, Model m)
             throws IOException {
         try {
-            MenuEntity menuEntity = new MenuEntity();
+            if (file.isEmpty())
+                return "redirect:/foodTruck/foodTruckDashboard";
+            GalleryPhotos menuEntity = new GalleryPhotos();
             menuEntity.setImage(Base64.getEncoder().encodeToString(file.getBytes()));
             FoodtruckEntity foodtruckEntity = foodTruckService.findFoodTruckByEmail(customUserDetails.getUsername());
-            foodtruckEntity.getMenuEntity().add(menuEntity);
-            foodtruckEntity.setMenuEntity(foodtruckEntity.getMenuEntity());
+            foodtruckEntity.getGalleryPhotos().add(menuEntity);
+
+            foodtruckEntity.setGalleryPhotos(foodtruckEntity.getGalleryPhotos());
             foodTruckService.updateFoodTruck(foodtruckEntity);
             return "redirect:/foodTruck/foodTruckDashboard";
 
@@ -122,7 +145,7 @@ public class FoodTruckController {
 
     }
 
-    @RequestMapping("/deleteMenu/{id}")
+    @RequestMapping("/deleteGalleryPhoto/{id}")
     public String deleteMenu(@PathVariable("id") Long id, Model m) {
         try {
             menuService.deleteMenu(id);
@@ -162,5 +185,73 @@ public class FoodTruckController {
             return "redirect:/foodTruck/foodTruckDashboard";
         }
 
+    }
+
+    @RequestMapping("/addMenuItem")
+    public String addMenu(@AuthenticationPrincipal CustomUserDetails customUserDetails, Model model,
+            MenuModel menuModel, @RequestParam("dishePhoto") MultipartFile file) {
+        try {
+            FoodtruckEntity foodtruckEntity = foodTruckService.findFoodTruckByEmail(customUserDetails.getUsername());
+
+            MenuEntity menuEntity = new MenuEntity();
+
+            menuEntity.setDisheName(menuModel.getDisheName());
+            menuEntity.setDisheDescription(menuModel.getDisheDescription());
+            menuEntity.setPrice(menuModel.getPrice());
+            menuEntity.setDiscount(menuModel.getDiscount());
+            menuEntity.setCategory(menuModel.getCategory());
+            if (file.isEmpty())
+                menuEntity.setDishePhoto(null);
+            else
+                menuEntity.setDishePhoto(Base64.getEncoder().encodeToString(file.getBytes()));
+
+            foodtruckEntity.getMenuEntity().add(menuEntity);
+
+            foodTruckService.updateFoodTruck(foodtruckEntity);
+
+            return "redirect:/foodTruck/foodTruckDashboard";
+        } catch (Exception e) {
+            model.addAttribute("error", "Something wrong try again.");
+            return "redirect:/foodTruck/foodTruckDashboard";
+        }
+
+    }
+
+    @RequestMapping("/deleteMenuItem/{id}")
+    public String deleteMenuItem(@PathVariable("id") Long id, RedirectAttributes m) {
+
+        if (menuListServiceImpl.deleteMenuItem(id)) {
+            return "redirect:/foodTruck/foodTruckDashboard";
+        } else
+            return "redirect:/foodTruck/foodTruckDashboard";
+    }
+
+    @RequestMapping("/menuItem/{id}")
+    public String menuItem(@PathVariable("id") Long id, Model model) {
+        Optional<MenuEntity> menuItem = menuListServiceImpl.findMenuItem(id);
+        if (menuItem.isPresent()) {
+            model.addAttribute("menuItem", menuItem.get());
+            return "/updateMenuItem";
+        }
+        return "redirect:/foodTruck/foodTruckDashboard";
+    }
+
+    @RequestMapping("/updateMenuItem")
+    public String updateMenuItem(MenuModel menuModel, @RequestParam("dishePhoto") MultipartFile file)
+            throws IOException {
+        MenuEntity menuItem = new MenuEntity();
+
+        menuItem.setId(Long.parseLong(menuModel.getId()));
+        menuItem.setDisheName(menuModel.getDisheName());
+        menuItem.setDisheDescription(menuModel.getDisheDescription());
+        menuItem.setPrice(menuModel.getPrice());
+        menuItem.setDiscount(menuModel.getDiscount());
+        menuItem.setCategory(menuModel.getCategory());
+        if (file.isEmpty())
+            menuItem.setDishePhoto(null);
+        else
+            menuItem.setDishePhoto(Base64.getEncoder().encodeToString(file.getBytes()));
+        menuListServiceImpl.updateMenuItem(menuItem);
+        return "redirect:/foodTruck/foodTruckDashboard";
     }
 }

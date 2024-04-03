@@ -34,7 +34,8 @@
         >
       </p>
       <p th:text="${foodtruck.email}"></p>
-      <div th:each="img : ${foodtruck.MenuEntity}">
+      <h3>Foodtruck Photo Gallery</h3>
+      <div th:each="img : ${foodtruck.galleryPhotos}">
         <img th:src="@{'data:image/jpeg;base64,'+${img.image}}" alt="" />
       </div>
     </div>

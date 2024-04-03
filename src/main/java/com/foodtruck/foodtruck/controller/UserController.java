@@ -1,29 +1,31 @@
 package com.foodtruck.foodtruck.controller;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import com.foodtruck.foodtruck.calculations.FindDistance;
 import com.foodtruck.foodtruck.calculations.SortFoodTrucksByDistance;
 import com.foodtruck.foodtruck.config.CustomUserDetails;
 import com.foodtruck.foodtruck.entity.FoodtruckEntity;
 import com.foodtruck.foodtruck.entity.FoodtruckFeedbacksEntity;
+import com.foodtruck.foodtruck.entity.MenuEntity;
 import com.foodtruck.foodtruck.entity.UserEntity;
 import com.foodtruck.foodtruck.model.FeedbackModel;
 import com.foodtruck.foodtruck.model.UserModel;
 import com.foodtruck.foodtruck.service.FoodTruckServiceImpl;
+import com.foodtruck.foodtruck.service.MenuListServiceImpl;
 import com.foodtruck.foodtruck.service.UserServiceImpl;
-
-import lombok.experimental.PackagePrivate;
 
 @Controller
 @RequestMapping("/user")
@@ -43,6 +45,9 @@ public class UserController {
 
     @Autowired
     PasswordEncoder passwordEncoder;
+
+    @Autowired
+    MenuListServiceImpl menuListServiceImpl;
 
     @RequestMapping("/saveNewUser")
     public String saveNewUser(UserModel userModel, RedirectAttributes m) {
@@ -129,13 +134,39 @@ public class UserController {
     }
 
     @RequestMapping("/foodtruckDetails/{email}")
-    public String showFoodTruckDetails(@PathVariable("email") String email, Model m) {
+    public String showFoodTruckDetails(@PathVariable("email") String email, Model model) {
         FoodtruckEntity foodtruckEntity = foodTruckServiceImpl.findFoodTruckByEmail(email);
+
         foodtruckEntity.setId(null);
         foodtruckEntity.setPassword(null);
         foodtruckEntity.setRole(null);
-        m.addAttribute("foodtruck", foodtruckEntity);
-        return "foodtruckDetails";
+        Set<String> categories = new HashSet<String>();
+        for (MenuEntity menuEntity : foodtruckEntity.getMenuEntity())
+            categories.add(menuEntity.getCategory());
+
+        model.addAttribute("categories", categories);
+        model.addAttribute("foodtruck", foodtruckEntity);
+        return "/foodtruckDetails";
     }
 
+    @RequestMapping("/menuItemFilter/{category}/{email}")
+    public String menuItemFilter(@PathVariable("category") String category, @PathVariable("email") String email,
+            Model model) {
+        FoodtruckEntity foodtruckEntity = foodTruckServiceImpl.findFoodTruckByEmail(email);
+        Set<String> categories = new HashSet<String>();
+        for (MenuEntity menuEntity : foodtruckEntity.getMenuEntity())
+            categories.add(menuEntity.getCategory());
+
+        List<MenuEntity> menuList = menuListServiceImpl.filterMenuList(category);
+
+        foodtruckEntity.setMenuEntity(menuList);
+        foodtruckEntity.setId(null);
+        foodtruckEntity.setRole(null);
+        foodtruckEntity.setPassword(null);
+
+        model.addAttribute("categories", categories);
+        model.addAttribute("foodtruck", foodtruckEntity);
+
+        return "/foodtruckDetails";
+    }
 }

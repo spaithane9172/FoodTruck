@@ -7,6 +7,39 @@
   </head>
   <body>
     <a href="/logout">LogOut</a>
+    <div
+      style="
+        border: 1px solid black;
+        border-radius: 50%;
+        width: 10vw;
+        height: 20vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      "
+    >
+      <img
+        th:if="${foodtruck.foodTruckImage}!=null"
+        th:src="@{'data:image/jpeg;base64,'+${foodtruck.foodTruckImage}}"
+        alt=""
+        style="
+          border: 1px solid black;
+          border-radius: 50%;
+          width: 10vw;
+          height: 20vh;
+        "
+      /><img
+        th:if="${foodtruck.foodTruckImage}==null"
+        th:src="@{/img/imgIcon.png}"
+        alt=""
+        style="
+          border: 1px solid black;
+          border-radius: 50%;
+          width: 10vw;
+          height: 20vh;
+        "
+      />
+    </div>
     <br />
 
     <form
@@ -32,26 +65,99 @@
       <button type="submit">Set ClosingTime</button>
     </form>
 
+    <form
+      action="/foodTruck/addMenuItem"
+      method="post"
+      enctype="multipart/form-data"
+    >
+      <input type="text" name="disheName" placeholder="Dishe Name" />
+      <input
+        type="text"
+        name="disheDescription"
+        placeholder="Dishe Description"
+      />
+      <input type="text" name="price" placeholder="Price" />
+      <input type="text" name="discount" placeholder="Discount" />
+
+      <input
+        type="text"
+        list="categoryList"
+        name="category"
+        placeholder="Dishe Category"
+      />
+      <datalist id="categoryList">
+        <div th:each="category : ${categories}">
+          <option th:value="${category}" th:text="${category}"></option>
+        </div>
+      </datalist>
+
+      <input type="file" name="dishePhoto" />
+      <button type="submit">Add Dishe</button>
+    </form>
     <h1>Welcome To FoodTruck</h1>
+
+    <h1>Menu List</h1>
+    <hr />
+    <div
+      th:each="menuItem : ${foodtruck.menuEntity}"
+      style="display: flex; margin-bottom: 3vh"
+    >
+      <div style="margin-right: 5vh">
+        <img
+          th:if="${menuItem.dishePhoto!=null}"
+          th:src="@{'data:image/jpeg;base64,'+${menuItem.dishePhoto}}"
+          style="width: 15vw; height: 30vh"
+          alt=""
+        /><img
+          th:if="${menuItem.dishePhoto==null}"
+          th:src="@{/img/imgIcon.png}"
+          style="width: 15vw; height: 30vh"
+          alt=""
+        />
+      </div>
+      <div>
+        <p>Dishe Name : <span th:text="${menuItem.disheName}"></span></p>
+        <p>
+          Dishe Description :
+          <span th:text="${menuItem.disheDescription}"></span>
+        </p>
+        <p>Dishe Price : <span th:text="${menuItem.price}"></span></p>
+        <p>Dishe Discount : <span th:text="${menuItem.discount}"></span></p>
+        <p>Dishe Category : <span th:text="${menuItem.category}"></span></p>
+        <a th:href="@{'/foodTruck/deleteMenuItem/'+${menuItem.id}}"
+          >Delete Item</a
+        >
+        <a th:href="@{'/foodTruck/menuItem/'+${menuItem.id}}">Update Item</a>
+      </div>
+    </div>
+
     <p>Name :</p>
     <p th:text="${foodtruck}"></p>
 
     <form
-      action="/foodTruck/addMenu"
+      action="/foodTruck/addGalleryPhoto"
       method="post"
       enctype="multipart/form-data"
     >
-      <input type="file" name="menuImg" />
+      <input type="file" name="galleryPhoto" />
       <button type="submit">Upload</button>
     </form>
-
-    <div th:each="img:${foodtruck.MenuEntity}">
-      <img th:src="@{'data:image/jpeg;base64,'+${img.image}}" alt="" />
-      <a th:href="'/foodTruck/deleteMenu/'+${img.id}">Delete Menu</a>
+    <h1>Foodtruck Photo Gallery</h1>
+    <hr />
+    <div th:each="img:${foodtruck.galleryPhotos}">
+      <img
+        th:src="@{'data:image/jpeg;base64,'+${img.image}}"
+        alt=""
+        style="width: 20vw; height: 40vh"
+      />
+      <a th:href="'/foodTruck/deleteGalleryPhoto/'+${img.id}"
+        >Delete Gallery Photo</a
+      >
     </div>
 
     <div>
       <h1>Foodtruck Feedbacks:</h1>
+      <hr />
       <div th:each="feedback: ${foodtruck.feedbacks}">
         <p>Name : <span th:text="${feedback.userName}"></span></p>
         <p>Feedback : <span th:text="${feedback.feedback}"></span></p>
