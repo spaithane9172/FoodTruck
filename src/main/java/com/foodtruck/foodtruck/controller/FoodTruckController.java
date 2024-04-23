@@ -3,11 +3,16 @@ package com.foodtruck.foodtruck.controller;
 import java.io.IOException;
 import java.util.Base64;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -71,10 +76,11 @@ public class FoodTruckController {
                     else
                         foodtruckEntity.setFoodTruckImage(Base64.getEncoder().encodeToString(img.getBytes()));
 
+                    m.addFlashAttribute("error", "Registration Successful, LogIn");
                     foodTruckService.saveNewFoodTruck(foodtruckEntity);
-                    return "redirect:/";
+                    return "redirect:/public/registerFoodTruck";
                 }
-                m.addFlashAttribute("error", "please enter correct details");
+                m.addFlashAttribute("error", "Please enter correct details");
                 return "redirect:/public/registerFoodTruck";
             } else {
                 m.addFlashAttribute("error", "Email already taken");
@@ -116,6 +122,44 @@ public class FoodTruckController {
         Set<String> categories = new HashSet<String>();
         for (MenuEntity menuItem : foodtruckEntity.getMenuEntity())
             categories.add(menuItem.getCategory());
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Set<String> role = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
+        model.addAttribute("isUser", role.contains("ROLE_USER"));
+        model.addAttribute("isFoodtruck", role.contains("ROLE_FOODTRUCK"));
+        if (authentication == null || authentication instanceof AnonymousAuthenticationToken)
+            model.addAttribute("isUserLogged", false);
+        else
+            model.addAttribute("isUserLogged", true);
+
+        model.addAttribute("categories", categories);
+        model.addAttribute("foodtruck", foodtruckEntity);
+        return "foodTruck";
+    }
+
+    @RequestMapping("/foodTruckDashboardByCategory/{category}")
+    public String foodTruckDashboardByCategory(@PathVariable("category") String category,
+            @AuthenticationPrincipal CustomUserDetails user, Model model) {
+        FoodtruckEntity foodtruckEntity = foodTruckService.findFoodTruckByEmail(user.getUsername());
+        foodtruckEntity.setId(null);
+        foodtruckEntity.setPassword(null);
+        foodtruckEntity.setRole(null);
+
+        Set<String> categories = new HashSet<String>();
+        for (MenuEntity menuItem : foodtruckEntity.getMenuEntity())
+            categories.add(menuItem.getCategory());
+
+        List<MenuEntity> menuList = menuListServiceImpl.filterMenuList(category);
+        foodtruckEntity.setMenuEntity(menuList);
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Set<String> role = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
+        model.addAttribute("isUser", role.contains("ROLE_USER"));
+        model.addAttribute("isFoodtruck", role.contains("ROLE_FOODTRUCK"));
+        if (authentication == null || authentication instanceof AnonymousAuthenticationToken)
+            model.addAttribute("isUserLogged", false);
+        else
+            model.addAttribute("isUserLogged", true);
 
         model.addAttribute("categories", categories);
         model.addAttribute("foodtruck", foodtruckEntity);
@@ -240,6 +284,7 @@ public class FoodTruckController {
     public String updateMenuItem(MenuModel menuModel, @RequestParam("dishePhoto") MultipartFile file)
             throws IOException {
         MenuEntity menuItem = new MenuEntity();
+        Optional<MenuEntity> m = menuListServiceImpl.findMenuItem(Long.parseLong(menuModel.getId()));
 
         menuItem.setId(Long.parseLong(menuModel.getId()));
         menuItem.setDisheName(menuModel.getDisheName());
@@ -247,10 +292,11 @@ public class FoodTruckController {
         menuItem.setPrice(menuModel.getPrice());
         menuItem.setDiscount(menuModel.getDiscount());
         menuItem.setCategory(menuModel.getCategory());
-        if (file.isEmpty())
-            menuItem.setDishePhoto(null);
-        else
+        if (!file.isEmpty())
             menuItem.setDishePhoto(Base64.getEncoder().encodeToString(file.getBytes()));
+        else
+            menuItem.setDishePhoto(m.get().getDishePhoto());
+
         menuListServiceImpl.updateMenuItem(menuItem);
         return "redirect:/foodTruck/foodTruckDashboard";
     }

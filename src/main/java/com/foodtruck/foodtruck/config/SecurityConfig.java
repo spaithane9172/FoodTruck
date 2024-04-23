@@ -14,6 +14,8 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+    @Autowired
+    LogoutHandleImpl logoutHandleImpl;
 
     @Autowired
     CustomAuthSuccessHandler customAuthSuccessHandler;
@@ -40,14 +42,17 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(
-                        auth -> auth.requestMatchers("/public/**", "/foodTruck/saveNewFoodTruck", "/user/saveNewUser")
+                        auth -> auth
+                                .requestMatchers("/public/**", "/foodTruck/saveNewFoodTruck", "/user/saveNewUser",
+                                        "/img/**", "/js/**")
                                 .permitAll()
                                 .requestMatchers("/foodTruck/**").hasRole("FOODTRUCK")
                                 .requestMatchers("/user/**").hasRole("USER")
                                 .anyRequest().authenticated())
                 .formLogin(form -> form.loginPage("/public/loginPage")
                         .successHandler(customAuthSuccessHandler)
-                        .loginProcessingUrl("/login").permitAll());
+                        .loginProcessingUrl("/login").permitAll())
+                .logout(logout -> logout.addLogoutHandler(logoutHandleImpl));
         return http.build();
     }
 }

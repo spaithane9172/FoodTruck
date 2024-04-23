@@ -1,11 +1,16 @@
 package com.foodtruck.foodtruck.controller;
 
+import java.text.DecimalFormat;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -62,7 +67,9 @@ public class UserController {
                 userEntity.setEmail(userModel.getEmail());
                 userEntity.setPassword(passwordEncoder.encode(userModel.getPassword()));
                 userServiceImpl.saveNewUser(userEntity);
-                return "redirect:/public/";
+                m.addFlashAttribute("error", "Registration Successful, LogIn");
+
+                return "redirect:/public/registerUser";
             } else {
                 m.addFlashAttribute("error", "Please Enter Correct details");
             }
@@ -77,13 +84,16 @@ public class UserController {
     public String userDashboard(@AuthenticationPrincipal CustomUserDetails user, Model model) {
         UserEntity u = userServiceImpl.findUser(user.getUsername());
         List<FoodtruckEntity> foodtruckEntity = foodTruckServiceImpl.getAllFoodTrucksNearMe();
+        DecimalFormat decimalFormat = new DecimalFormat("0.00");
         try {
             for (int i = 0; i < foodtruckEntity.size(); i++) {
                 foodtruckEntity.get(i).setId(null);
                 foodtruckEntity.get(i).setPassword(null);
                 foodtruckEntity.get(i).setRole(null);
-                foodtruckEntity.get(i).setDistance(findDistance.calculateDistance(u.getLat(), u.getLongi(),
-                        foodtruckEntity.get(i).getLat(), foodtruckEntity.get(i).getLongi()));
+                foodtruckEntity.get(i)
+                        .setDistance(Double.parseDouble(
+                                decimalFormat.format(findDistance.calculateDistance(u.getLat(), u.getLongi(),
+                                        foodtruckEntity.get(i).getLat(), foodtruckEntity.get(i).getLongi()))));
             }
             foodtruckEntity = sortFoodTrucksByDistance.sortObject(foodtruckEntity);
         } catch (Exception e) {
@@ -93,6 +103,14 @@ public class UserController {
                 foodtruckEntity.get(i).setRole(null);
             }
         }
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Set<String> role = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
+        model.addAttribute("isUser", role.contains("ROLE_USER"));
+        model.addAttribute("isFoodtruck", role.contains("ROLE_FOODTRUCK"));
+        if (authentication == null || authentication instanceof AnonymousAuthenticationToken)
+            model.addAttribute("isUserLogged", false);
+        else
+            model.addAttribute("isUserLogged", true);
 
         model.addAttribute("user", u);
         model.addAttribute("foodtrucks", foodtruckEntity);
@@ -144,12 +162,16 @@ public class UserController {
         for (MenuEntity menuEntity : foodtruckEntity.getMenuEntity())
             categories.add(menuEntity.getCategory());
 
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Set<String> role = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
+        model.addAttribute("isUser", role.contains("ROLE_USER"));
+        model.addAttribute("isFoodtruck", role.contains("ROLE_FOODTRUCK"));
         model.addAttribute("categories", categories);
         model.addAttribute("foodtruck", foodtruckEntity);
         return "/foodtruckDetails";
     }
 
-    @RequestMapping("/menuItemFilter/{category}/{email}")
+    @RequestMapping("/menuItemFilter/category={category}&email={email}")
     public String menuItemFilter(@PathVariable("category") String category, @PathVariable("email") String email,
             Model model) {
         FoodtruckEntity foodtruckEntity = foodTruckServiceImpl.findFoodTruckByEmail(email);
@@ -164,6 +186,10 @@ public class UserController {
         foodtruckEntity.setRole(null);
         foodtruckEntity.setPassword(null);
 
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Set<String> role = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
+        model.addAttribute("isUser", role.contains("ROLE_USER"));
+        model.addAttribute("isFoodtruck", role.contains("ROLE_FOODTRUCK"));
         model.addAttribute("categories", categories);
         model.addAttribute("foodtruck", foodtruckEntity);
 

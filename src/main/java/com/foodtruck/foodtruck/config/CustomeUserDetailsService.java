@@ -4,12 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Component;
 
 import com.foodtruck.foodtruck.entity.FoodtruckEntity;
 import com.foodtruck.foodtruck.entity.UserEntity;
 import com.foodtruck.foodtruck.repo.UserRepo;
 import com.foodtruck.foodtruck.service.FoodTruckServiceImpl;
 
+@Component
 public class CustomeUserDetailsService implements UserDetailsService {
 
     @Autowired

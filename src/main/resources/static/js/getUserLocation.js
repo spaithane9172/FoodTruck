@@ -17,6 +17,7 @@ function showPosition(position) {
 function sendLocation() {
   document.getElementById("sendLocation").click();
 }
+
 if (document.getElementById("lat").value == "") {
   getLocation();
 }

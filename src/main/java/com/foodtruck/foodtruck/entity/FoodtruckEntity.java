@@ -41,6 +41,7 @@ public class FoodtruckEntity {
     private Double lat;
     private Double longi;
     private Double distance;
+    private String openingTime;
     private String closingTime;
     @Lob
     @Column(columnDefinition = "LONGBLOB")
@@ -49,4 +50,6 @@ public class FoodtruckEntity {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_foodtruck_id", referencedColumnName = "id")
     private List<MenuEntity> menuEntity;
+
+    private String status;
 }
