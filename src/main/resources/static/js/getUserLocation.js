@@ -4,7 +4,6 @@ function getLocation(e) {
   } else {
     msg.innerHTML = "Geolocation is not supported by this browser.";
   }
-  setTimeout(sendLocation, 500);
 }
 
 function showPosition(position) {
@@ -12,6 +11,7 @@ function showPosition(position) {
   long = document.getElementById("long");
   lat.value = position.coords.latitude;
   long.value = position.coords.longitude;
+  setTimeout(sendLocation, 500);
 }
 
 function sendLocation() {
@@ -21,5 +21,4 @@ function sendLocation() {
 if (document.getElementById("lat").value == "") {
   getLocation();
 }
-
-console.log(document.getElementById("lat").value);
+console.log("lat", lat.value);
