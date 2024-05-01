@@ -7,12 +7,14 @@
     <nav th:replace="~{/component/Navbar.html :: navbar}"></nav>
 
     <div
-      class="bg-[url(/img/foodtruck.png)] bg-cover flex flex-col justify-center items-center h-[40vh]"
+      class="bg-[url(/img/foodtruck.png)] bg-cover flex flex-col justify-center items-center h-[40vh] sm:h-[65vh]"
     >
       <div
-        class="bg-gray-400 rounded-md bg-opacity-80 border border-gray-100 p-[5vh] flex flex-col justify-center items-center"
+        class="bg-gray-400 rounded-md bg-opacity-80 border border-gray-100 p-[5vh] sm:p-[10vh] flex flex-col justify-center items-center"
       >
-        <h1 class="text-[1.35rem] font-bold">Welocome to FoodTruck</h1>
+        <h1 class="text-[1.35rem] sm:text-[1.5rem] font-bold">
+          Welocome to FoodTruck
+        </h1>
         <p class="font-semibold text-[1rem]">Find food like never tested.</p>
 
         <div th:if="${isUserLogged}">
@@ -55,7 +57,7 @@
           the first step towards food truck fame today!
         </p>
         <a
-          href="#"
+          href="/public/howToStartFoodtruck"
           class="font-semibold px-[1rem] py-[0.5rem] bg-orange-600 text-white w-[70vw] text-center font-semibold rounded-md shadow-md shadow-black"
           >How to start Food Truck?</a
         >
@@ -68,19 +70,32 @@
       >
         Customer Reviews
       </h1>
-      <div class="flex justify-center items-center mt-[3vh]">
+      <div class="flex flex-col justify-center items-center mt-[3vh]">
         <div
-          class="bg-white w-[20rem] p-[1.5rem] rounded-lg shadow-md shadow-black"
+          class="bg-white w-[20rem] sm:w-[30rem] p-[1.5rem] rounded-lg shadow-md shadow-black mb-[2rem]"
+          th:each="review : ${reviews}"
         >
-          <p class="text-justify mb-[1rem]">
+          <p class="text-justify mb-[1rem]" th:text="${review.msg}">
             I would like to take this opportunity to share my thoughts and
             experiences on food. Food is an essential part of our daily lives,
             providing us with nourishment and energy to go about our day.
             However, food is more than just sustenance, it is a cultural and
             social experience that brings people together.
           </p>
-          <p class="font-semibold">Rohan Maske</p>
+          <div class="flex justify-between items-center">
+            <p class="font-semibold" th:text="${review.name}">Rohan Maske</p>
+            <p>
+              <span class="font-semibold">Date:</span>
+              <span th:text="${review.date}"></span>
+            </p>
+          </div>
         </div>
+        <a
+          href="/common/reviewUs"
+          class="text-center bg-blue-600 py-[0.5rem] text-white w-[20rem] rounded-md font-semibold"
+        >
+          Read More</a
+        >
       </div>
     </div>
 
@@ -95,33 +110,29 @@
         <div class="flex w-[1000vw] py-[2rem]">
           <div
             class="bg-white w-[18rem] h-[25rem] p-[1rem] rounded-lg shadow-md shadow-black mx-[1rem]"
+            th:each="blog : ${blogs}"
           >
-            <img src="/img/fblog.jpeg" alt="" class="h-[12rem]" />
-            <p class="text-justify mb-[1rem]">
-              I would like to take this opportunity to share my thoughts and
-              experiences on food. Food is an essential part of our daily lives,
+            <img
+              th:src="@{'data:image/jpeg;Base64,'+${blog.image}}"
+              alt=""
+              class="h-[12rem] w-full"
+            />
+            <p class="text-justify mb-[1rem]" th:text="${blog.msg}"></p>
+            <p class="font-semibold" th:text="${blog.name}"></p>
+            <p class="text-[0.8rem]">
+              <span class="font-semibold">Date: </span
+              ><span th:text="${blog.date}"></span>
             </p>
-            <p class="font-semibold">Rohan Maske</p>
           </div>
+
           <div
-            class="bg-white w-[18rem] h-[25rem] p-[1rem] rounded-lg shadow-md shadow-black mx-[1rem]"
+            class="bg-white w-[18rem] h-[25rem] p-[1rem] rounded-lg shadow-md shadow-black mx-[1rem] flex justify-center items-center"
           >
-            <img src="/img/fblog.jpeg" alt="" class="h-[12rem]" />
-            <p class="text-justify mb-[1rem]">
-              I would like to take this opportunity to share my thoughts and
-              experiences on food. Food is an essential part of our daily lives,
-            </p>
-            <p class="font-semibold">Rohan Maske</p>
-          </div>
-          <div
-            class="bg-white w-[18rem] h-[25rem] p-[1rem] rounded-lg shadow-md shadow-black mx-[1rem]"
-          >
-            <img src="/img/fblog.jpeg" alt="" class="h-[12rem]" />
-            <p class="text-justify mb-[1rem]">
-              I would like to take this opportunity to share my thoughts and
-              experiences on food. Food is an essential part of our daily lives,
-            </p>
-            <p class="font-semibold">Rohan Maske</p>
+            <a
+              href="/common/blogs"
+              class="text-center bg-blue-600 px-[2rem] py-[0.5rem] text-white rounded-md font-semibold"
+              >Read More Blogs</a
+            >
           </div>
         </div>
       </div>

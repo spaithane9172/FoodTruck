@@ -6,7 +6,7 @@
   <body class="bg-gray-100 p-0 m-0">
     <nav th:replace="~{/component/Navbar.html :: navbar}"></nav>
 
-    <div class="py-[3vh] w-full">
+    <div class="pt-[7vh] pb-[5vh] w-full">
       <div class="px-[5vw] w-full flex flex-col justify-center items-center">
         <div>
           <img
@@ -99,7 +99,7 @@
 
           <div
             id="filterBox"
-            class="hidden bg-white absolute w-[12rem] py-[1rem] px-[1rem] left-[50vw] top-[55vh] border-[1px] border-black border-t-white"
+            class="hidden bg-white absolute w-[12rem] py-[1rem] px-[1rem] left-[50vw] top-[53vh] border-[1px] border-black border-t-white"
           >
             <div class="border-b-[1px] border-gray-400 mb-[0.5rem] pb-[0.2rem]">
               <a th:href="@{'/user/foodtruckDetails/'+${email}}"

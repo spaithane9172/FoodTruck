@@ -164,6 +164,11 @@ public class UserController {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Set<String> role = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
+        if (authentication == null || authentication instanceof AnonymousAuthenticationToken)
+            model.addAttribute("isUserLogged", false);
+        else
+            model.addAttribute("isUserLogged", true);
+
         model.addAttribute("isUser", role.contains("ROLE_USER"));
         model.addAttribute("isFoodtruck", role.contains("ROLE_FOODTRUCK"));
         model.addAttribute("categories", categories);
@@ -188,11 +193,54 @@ public class UserController {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Set<String> role = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
+        if (authentication == null || authentication instanceof AnonymousAuthenticationToken)
+            model.addAttribute("isUserLogged", false);
+        else
+            model.addAttribute("isUserLogged", true);
+
         model.addAttribute("isUser", role.contains("ROLE_USER"));
         model.addAttribute("isFoodtruck", role.contains("ROLE_FOODTRUCK"));
         model.addAttribute("categories", categories);
         model.addAttribute("foodtruck", foodtruckEntity);
 
         return "/foodtruckDetails";
+    }
+
+    @RequestMapping("/userProfile")
+    public String userProfile(Authentication authentication, @ModelAttribute("error") String error, Model model) {
+        UserEntity userEntity = userServiceImpl.findUser(authentication.getName());
+        userEntity.setPassword(null);
+        userEntity.setId(null);
+        userEntity.setRole(null);
+        model.addAttribute("user", userEntity);
+
+        Set<String> role = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
+        if (authentication == null || authentication instanceof AnonymousAuthenticationToken)
+            model.addAttribute("isUserLogged", false);
+        else
+            model.addAttribute("isUserLogged", true);
+
+        model.addAttribute("isUser", role.contains("ROLE_USER"));
+        model.addAttribute("isFoodtruck", role.contains("ROLE_FOODTRUCK"));
+        model.addAttribute("error", error);
+        return "userProfile";
+    }
+
+    @RequestMapping("/updateUser")
+    public String updateUserDetails(Authentication authentication, RedirectAttributes model, UserModel userModel) {
+        try {
+            UserEntity userEntity = userServiceImpl.findUser(authentication.getName());
+            if (userModel.getName().length() >= 3) {
+                userEntity.setName(userModel.getName());
+            } else {
+                throw new Exception();
+            }
+            userServiceImpl.updateUser(userEntity);
+            model.addFlashAttribute("error", "Profile Updated Successfully.");
+            return "redirect:/user/userProfile";
+        } catch (Exception e) {
+            model.addFlashAttribute("error", "Something wrong.");
+            return "redirect:/user/userProfile";
+        }
     }
 }

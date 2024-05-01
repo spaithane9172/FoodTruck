@@ -1,52 +1,236 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head th:insert="~{/component/Header.html :: head}">
+    <title>FoodTruck</title>
   </head>
-  <body>
-    <p>
-      Starting Your Food Truck Journey Welcome to the vibrant world of food
-      trucks! If you have a passion for cooking and want to share your culinary
-      creations with the world, starting a food truck could be the perfect
-      avenue for you. Here’s a step-by-step guide to help you kickstart your
-      food truck journey: 1. Conceptualize Your Menu: Think about what makes
-      your food unique and delicious. Whether it’s gourmet burgers, tacos with a
-      twist, or vegan delights, your menu should reflect your culinary expertise
-      and cater to your target audience. 2. Research and Plan: Explore the local
-      food scene and identify potential locations for your food truck. Conduct
-      market research to understand your competitors and target demographic.
-      Create a business plan outlining your concept, budget, and marketing
-      strategy. 3. Get Licensed and Permitted: Ensure you comply with all local
-      regulations and obtain necessary permits and licenses to operate your food
-      truck legally. This may include health permits, parking permits, and
-      business licenses. Contact your local health department for specific
-      requirements. 4. Find the Right Truck: Invest in a reliable food truck
-      that meets your needs and budget. Whether you opt for a custom-built truck
-      or a second-hand vehicle, make sure it’s equipped with essential kitchen
-      equipment and meets health and safety standards. 5. Branding and
-      Marketing: Develop a strong brand identity that resonates with your target
-      audience. Design eye-catching logos, signage, and menus that reflect your
-      brand personality. Utilize social media platforms and online food truck
-      directories to promote your business and engage with customers. 6. Stock
-      Up and Prepare: Source high-quality ingredients and supplies for your
-      menu. Plan your recipes and prep your ingredients in advance to ensure
-      smooth operations during service hours. Train your staff to deliver
-      excellent customer service and maintain food safety standards. 7. Hit the
-      Road: Once everything is in place, it’s time to hit the road! Choose
-      strategic locations to park your food truck and attract hungry customers.
-      Stay adaptable and open to feedback as you navigate the dynamic world of
-      food truck entrepreneurship. 8. Grow and Evolve: Continue to innovate and
-      evolve your menu based on customer feedback and market trends. Explore
-      opportunities to participate in events, festivals, and catering gigs to
-      expand your customer base and revenue streams. 9. Stay Committed: Running
-      a food truck requires dedication, hard work, and resilience. Stay
-      committed to your vision and persevere through challenges. With passion,
-      creativity, and a dash of entrepreneurial spirit, your food truck venture
-      can flourish and delight food lovers everywhere! Ready to embark on your
-      food truck adventure? Register your food truck with us today and Make your
-      Food Truck Available to All
-    </p>
+  <body class="bg-gray-100 p-0 m-0">
+    <nav th:replace="~{/component/Navbar.html :: navbar}"></nav>
+    <div class="py-[7vh] px-[2rem]">
+      <h1
+        class="text-[1.3rem] text-center font-semibold underline underline-offset-[0.3rem] mb-[1rem]"
+      >
+        How to start FoodTruck
+      </h1>
+
+      <p class="text-justify mb-[1rem]">
+        Starting Your Food Truck Journey Welcome to the vibrant world of food
+        trucks! If you have a passion for cooking and want to share your
+        culinary creations with the world, starting a food truck could be the
+        perfect avenue for you. Here’s a step-by-step guide to help you
+        kickstart your food truck journey:
+      </p>
+
+      <div
+        class="bg-white border-[1px] border-black rounded-lg pb-[1rem] shadow-md shadow-black mb-[2rem]"
+      >
+        <h1
+          class="text-center text-[1.1rem] font-semibold bg-[#1E0342] text-white mb-[1rem] py-[1rem] rounded-t-lg"
+        >
+          Conceptualize Your Menu
+        </h1>
+        <div class="px-[0.8rem]">
+          <img
+            src="/img/conceptualizeYourMenu.jpg"
+            alt=""
+            class="mb-[1rem] w-full h-[15rem]"
+          />
+          <p class="text-justify">
+            Think about what makes your food unique and delicious. Whether it’s
+            gourmet burgers, tacos with a twist, or vegan delights, your menu
+            should reflect your culinary expertise and cater to your target
+            audience.
+          </p>
+        </div>
+      </div>
+
+      <div
+        class="bg-white border-[1px] border-black rounded-lg pb-[1rem] shadow-md shadow-black mb-[2rem]"
+      >
+        <h1
+          class="text-center text-[1.1rem] font-semibold bg-[#1E0342] text-white mb-[1rem] py-[1rem] rounded-t-lg"
+        >
+          Research and Plan
+        </h1>
+        <div class="px-[0.8rem]">
+          <img
+            src="/img/researchAndPlan.jpg"
+            alt=""
+            class="mb-[1rem] w-full h-[15rem]"
+          />
+          <p class="text-justify">
+            Explore the local food scene and identify potential locations for
+            your food truck. Conduct market research to understand your
+            competitors and target demographic. Create a business plan outlining
+            your concept, budget, and marketing strategy.
+          </p>
+        </div>
+      </div>
+
+      <div
+        class="bg-white border-[1px] border-black rounded-lg pb-[1rem] shadow-md shadow-black mb-[2rem]"
+      >
+        <h1
+          class="text-center text-[1.1rem] font-semibold bg-[#1E0342] text-white mb-[1rem] py-[1rem] rounded-t-lg"
+        >
+          Get Licensed and Permitted
+        </h1>
+        <div class="px-[0.8rem]">
+          <img
+            src="/img/getLicensed.jpg"
+            alt=""
+            class="mb-[1rem] w-full h-[15rem]"
+          />
+          <p class="text-justify">
+            Ensure you comply with all local regulations and obtain necessary
+            permits and licenses to operate your food truck legally. This may
+            include health permits, parking permits, and business licenses.
+            Contact your local health department for specific requirements.
+          </p>
+        </div>
+      </div>
+
+      <div
+        class="bg-white border-[1px] border-black rounded-lg pb-[1rem] shadow-md shadow-black mb-[2rem]"
+      >
+        <h1
+          class="text-center text-[1.1rem] font-semibold bg-[#1E0342] text-white mb-[1rem] py-[1rem] rounded-t-lg"
+        >
+          Find the Right Truck
+        </h1>
+        <div class="px-[0.8rem]">
+          <img
+            src="/img/findTheRightTruck.jpg"
+            alt=""
+            class="mb-[1rem] w-full h-[15rem]"
+          />
+          <p class="text-justify">
+            Invest in a reliable food truck that meets your needs and budget.
+            Whether you opt for a custom-built truck or a second-hand vehicle,
+            make sure it’s equipped with essential kitchen equipment and meets
+            health and safety standards.
+          </p>
+        </div>
+      </div>
+
+      <div
+        class="bg-white border-[1px] border-black rounded-lg pb-[1rem] shadow-md shadow-black mb-[2rem]"
+      >
+        <h1
+          class="text-center text-[1.1rem] font-semibold bg-[#1E0342] text-white mb-[1rem] py-[1rem] rounded-t-lg"
+        >
+          Branding and Marketing
+        </h1>
+        <div class="px-[0.8rem]">
+          <img
+            src="/img/brandingAndMarketing.jpg"
+            alt=""
+            class="mb-[1rem] w-full h-[15rem]"
+          />
+          <p class="text-justify">
+            Develop a strong brand identity that resonates with your target
+            audience. Design eye-catching logos, signage, and menus that reflect
+            your brand personality. Utilize social media platforms and online
+            food truck directories to promote your business and engage with
+            customers.
+          </p>
+        </div>
+      </div>
+
+      <div
+        class="bg-white border-[1px] border-black rounded-lg pb-[1rem] shadow-md shadow-black mb-[2rem]"
+      >
+        <h1
+          class="text-center text-[1.1rem] font-semibold bg-[#1E0342] text-white mb-[1rem] py-[1rem] rounded-t-lg"
+        >
+          Stock Up and Prepare
+        </h1>
+        <div class="px-[0.8rem]">
+          <img
+            src="/img/stockUpAndPrepare.jpg"
+            alt=""
+            class="mb-[1rem] w-full h-[15rem]"
+          />
+          <p class="text-justify">
+            Source high-quality ingredients and supplies for your menu. Plan
+            your recipes and prep your ingredients in advance to ensure smooth
+            operations during service hours. Train your staff to deliver
+            excellent customer service and maintain food safety standards.
+          </p>
+        </div>
+      </div>
+
+      <div
+        class="bg-white border-[1px] border-black rounded-lg pb-[1rem] shadow-md shadow-black mb-[2rem]"
+      >
+        <h1
+          class="text-center text-[1.1rem] font-semibold bg-[#1E0342] text-white mb-[1rem] py-[1rem] rounded-t-lg"
+        >
+          Hit the Road
+        </h1>
+        <div class="px-[0.8rem]">
+          <img
+            src="/img/hitTheRoad.jpg"
+            alt=""
+            class="mb-[1rem] w-full h-[15rem]"
+          />
+          <p class="text-justify">
+            Once everything is in place, it’s time to hit the road! Choose
+            strategic locations to park your food truck and attract hungry
+            customers. Stay adaptable and open to feedback as you navigate the
+            dynamic world of food truck entrepreneurship.
+          </p>
+        </div>
+      </div>
+
+      <div
+        class="bg-white border-[1px] border-black rounded-lg pb-[1rem] shadow-md shadow-black mb-[2rem]"
+      >
+        <h1
+          class="text-center text-[1.1rem] font-semibold bg-[#1E0342] text-white mb-[1rem] py-[1rem] rounded-t-lg"
+        >
+          Grow and Evolve
+        </h1>
+        <div class="px-[0.8rem]">
+          <img
+            src="/img/growAndEvolve.jpg"
+            alt=""
+            class="mb-[1rem] w-full h-[15rem]"
+          />
+          <p class="text-justify">
+            Continue to innovate and evolve your menu based on customer feedback
+            and market trends. Explore opportunities to participate in events,
+            festivals, and catering gigs to expand your customer base and
+            revenue streams.
+          </p>
+        </div>
+      </div>
+
+      <div
+        class="bg-white border-[1px] border-black rounded-lg pb-[1rem] shadow-md shadow-black mb-[2rem]"
+      >
+        <h1
+          class="text-center text-[1.1rem] font-semibold bg-[#1E0342] text-white mb-[1rem] py-[1rem] rounded-t-lg"
+        >
+          Stay Committed
+        </h1>
+        <div class="px-[0.8rem]">
+          <img
+            src="/img/stayCommited.jpg"
+            alt=""
+            class="mb-[1rem] w-full h-[15rem]"
+          />
+          <p class="text-justify">
+            Running a food truck requires dedication, hard work, and resilience.
+            Staycommitted to your vision and persevere through challenges. With
+            passion, creativity, and a dash of entrepreneurial spirit, your food
+            truck venture can flourish and delight food lovers everywhere!
+          </p>
+        </div>
+      </div>
+      <p class="text-justify">
+        Ready to embark on your food truck adventure? Register your food truck
+        with us today and Make your Food Truck Available to All
+      </p>
+    </div>
   </body>
 </html>

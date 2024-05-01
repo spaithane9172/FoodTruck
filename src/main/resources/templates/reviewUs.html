@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head th:insert="~{/component/Header.html :: head}">
+    <title>Home | Page</title>
+  </head>
+  <body class="bg-gray-100 p-0 m-0">
+    <nav th:replace="~{/component/Navbar.html :: navbar}"></nav>
+
+    <div th:if="${error}!=''" class="z-[1]">
+      <div
+        th:replace="~{/component/Toaster.html :: toaster(color=${error}=='Review Posted Successfully.'?green:red,msg=${error})}"
+      ></div>
+    </div>
+
+    <div class="w-[100vw] pt-[8rem]">
+      <form action="/common/addNewReview" method="post">
+        <div
+          class="flex flex-col border-b-[1px] border-black px-[5vw] pt-[2vh] pb-[3vh] rounded-lg shadow-md shadow-black bg-white w-[100vw]"
+        >
+          <h1 class="text-center text-2xl font-bold mb-[3vh]">Review Us</h1>
+          <div class="flex flex-col">
+            <textarea
+              type="text"
+              name="msg"
+              class="border-[1px] border-black h-[10vh] rounded-md pl-[0.5rem] text-[1.1rem] focus:outline-none mb-[1.5rem]"
+              placeholder="Review"
+            ></textarea>
+
+            <button
+              type="submit"
+              class="bg-blue-400 rounded-lg py-[0.3rem] text-lg font-semibold text-white shadow-sm shadow-black mb-[0.5rem]"
+            >
+              Submit
+            </button>
+          </div>
+        </div>
+      </form>
+      <div class="mt-[5vh]">
+        <h1
+          class="underline text-2xl text-center underline-offset-[0.5rem] font-semibold"
+        >
+          Customer Reviews
+        </h1>
+        <div
+          class="flex justify-center items-center mt-[3vh]"
+          th:each="review : ${reviews}"
+        >
+          <div
+            class="bg-white w-[20rem] p-[1.5rem] rounded-lg shadow-md shadow-black"
+          >
+            <p class="text-justify mb-[1rem]" th:text="${review.msg}"></p>
+            <div class="flex justify-between items-center">
+              <p class="font-semibold" th:text="${review.name}"></p>
+              <p>
+                <span class="font-semibold">Date:</span>
+                <span th:text="${review.date}"></span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head th:insert="~{/component/Header.html :: head}">
+    <title>Document</title>
+  </head>
+  <body class="bg-gray-100 p-0 m-0">
+    <nav th:replace="~{/component/Navbar.html :: navbar}"></nav>
+    <div class="px-[5vw] py-[7vh]">
+      <img src="/img/foodtruck.png" alt="" class="w-full h-[35vh]" />
+      <div class="mt-[2rem]">
+        <h1
+          class="text-center text-[1.5rem] font-semibold underline underline-offset-[0.5rem]"
+        >
+          AboutUS
+        </h1>
+
+        <div class="bg-white mt-[1.5rem]">
+          <div class="px-[1rem] p-[0.5rem] border-[1px] border-black">
+            <h1
+              class="font-semibold mb-[0.5rem] text-[1.1rem] cursor-pointer"
+              onclick="showAboutUs(1)"
+            >
+              Our Mission
+            </h1>
+            <p
+              id="aboutUs1"
+              class="text-justify overflow-hidden h-0 duration-500"
+            >
+              We're on a mission to bring the vibrant world of food trucks right
+              to your fingertips. Our platform is dedicated to connecting hungry
+              customers with their favorite local food trucks, making it easier
+              than ever to satisfy your cravings on the go.
+            </p>
+          </div>
+
+          <div class="px-[1rem] p-[0.5rem] border-[1px] border-black">
+            <h1
+              class="font-semibold mb-[0.5rem] text-[1.1rem] cursor-pointer"
+              onclick="showAboutUs(2)"
+            >
+              Discover Local Flavor
+            </h1>
+            <p
+              id="aboutUs2"
+              class="text-justify overflow-hidden h-0 duration-500"
+            >
+              Explore a diverse array of culinary delights, all conveniently
+              located in your area. From gourmet tacos to mouthwatering burgers,
+              we've curated an eclectic selection of food trucks that promise to
+              tantalize your taste buds.
+            </p>
+          </div>
+
+          <div class="px-[1rem] p-[0.5rem] border-[1px] border-black">
+            <h1
+              class="font-semibold mb-[0.5rem] text-[1.1rem] cursor-pointer"
+              onclick="showAboutUs(3)"
+            >
+              Supporting Small Businesses
+            </h1>
+            <p
+              id="aboutUs3"
+              class="text-justify overflow-hidden h-0 duration-500"
+            >
+              At the heart of our platform is a commitment to supporting small
+              businesses and independent food vendors. By showcasing their
+              unique offerings, we're helping these entrepreneurs thrive and
+              contribute to the local community.
+            </p>
+          </div>
+
+          <div class="px-[1rem] p-[0.5rem] border-[1px] border-black">
+            <h1
+              class="font-semibold mb-[0.5rem] text-[1.1rem] cursor-pointer"
+              onclick="showAboutUs(4)"
+            >
+              User-Friendly Experience
+            </h1>
+            <p
+              id="aboutUs4"
+              class="text-justify overflow-hidden h-0 duration-500"
+            >
+              Designed with simplicity in mind, our website makes it effortless
+              to find food trucks near you. Whether you're searching by cuisine,
+              location, or upcoming events, our intuitive interface ensures a
+              seamless browsing experience.
+            </p>
+          </div>
+
+          <div class="px-[1rem] p-[0.5rem] border-[1px] border-black">
+            <h1
+              class="font-semibold mb-[0.5rem] text-[1.1rem] cursor-pointer"
+              onclick="showAboutUs(5)"
+            >
+              Stay Informed
+            </h1>
+            <p
+              id="aboutUs5"
+              class="text-justify overflow-hidden h-0 duration-500"
+            >
+              Keep up to date with the latest news and events in the food truck
+              scene. From special promotions to pop-up appearances, we'll keep
+              you informed so you never miss out on your favorite eats.
+            </p>
+          </div>
+
+          <div class="px-[1rem] p-[0.5rem] border-[1px] border-black">
+            <h1
+              class="font-semibold mb-[0.5rem] text-[1.1rem] cursor-pointer"
+              onclick="showAboutUs(6)"
+            >
+              Connect with Foodies
+            </h1>
+            <p
+              id="aboutUs6"
+              class="text-justify overflow-hidden h-0 duration-500"
+            >
+              Join a community of fellow food enthusiasts who share your passion
+              for culinary exploration. Connect with like-minded individuals,
+              share recommendations, and discover hidden gems together.
+            </p>
+          </div>
+
+          <div class="px-[1rem] p-[0.5rem] border-[1px] border-black">
+            <h1
+              class="font-semibold mb-[0.5rem] text-[1.1rem] cursor-pointer"
+              onclick="showAboutUs(7)"
+            >
+              Feedback Welcome
+            </h1>
+            <p
+              id="aboutUs7"
+              class="text-justify overflow-hidden h-0 duration-500"
+            >
+              We value your feedback and are constantly striving to improve our
+              platform. Have a suggestion for a new feature or a favorite food
+              truck you'd like to see featured? Let us know – your input helps
+              us serve you better.
+            </p>
+          </div>
+
+          <div class="px-[1rem] p-[0.5rem] border-[1px] border-black">
+            <h1
+              class="font-semibold mb-[0.5rem] text-[1.1rem] cursor-pointer"
+              onclick="showAboutUs(8)"
+            >
+              Get Involved
+            </h1>
+            <p
+              id="aboutUs8"
+              class="text-justify overflow-hidden h-0 duration-500"
+            >
+              Interested in starting your own food truck or hosting a food truck
+              event? Reach out to us to learn more about how we can help turn
+              your culinary dreams into reality.
+            </p>
+          </div>
+
+          <div class="px-[1rem] p-[0.5rem] border-[1px] border-black">
+            <h1
+              class="font-semibold mb-[0.5rem] text-[1.1rem] cursor-pointer"
+              onclick="showAboutUs(9)"
+            >
+              Contact Us
+            </h1>
+            <p
+              id="aboutUs9"
+              class="text-justify overflow-hidden h-0 duration-500"
+            >
+              Have questions or need assistance? Our dedicated support team is
+              here to help. Don't hesitate to reach out – we're always happy to
+              hear from you!
+            </p>
+          </div>
+
+          <div class="px-[1rem] p-[0.5rem] border-[1px] border-black">
+            <h1
+              class="font-semibold mb-[0.5rem] text-[1.1rem] cursor-pointer"
+              onclick="showAboutUs(10)"
+            >
+              Follow Us
+            </h1>
+            <p
+              id="aboutUs10"
+              class="text-justify overflow-hidden h-0 duration-500"
+            >
+              Stay connected with us on social media for the latest updates,
+              mouthwatering photos, and behind-the-scenes peeks into the world
+              of food trucks. Join the conversation and be part of the food
+              truck revolution!
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      function showAboutUs(n) {
+        element = document.getElementById("aboutUs" + n);
+        element.classList.contains("overflow-hidden")
+          ? element.classList.remove("overflow-hidden")
+          : element.classList.add("overflow-hidden");
+
+        element.classList.contains("h-0")
+          ? element.classList.remove("h-0")
+          : element.classList.add("h-0");
+
+        element.classList.contains("h-[20vh]")
+          ? element.classList.remove("h-[20vh]")
+          : element.classList.add("h-[20vh]");
+      }
+    </script>
+  </body>
+</html>

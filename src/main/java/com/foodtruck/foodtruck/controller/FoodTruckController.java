@@ -16,6 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,6 +30,7 @@ import com.foodtruck.foodtruck.entity.MenuEntity;
 import com.foodtruck.foodtruck.entity.UserEntity;
 import com.foodtruck.foodtruck.model.FoodTruckModel;
 import com.foodtruck.foodtruck.model.MenuModel;
+import com.foodtruck.foodtruck.model.UserModel;
 import com.foodtruck.foodtruck.service.FoodTruckService;
 import com.foodtruck.foodtruck.service.GalleryPhotosService;
 import com.foodtruck.foodtruck.service.MenuListServiceImpl;
@@ -64,13 +66,16 @@ public class FoodTruckController {
                         && foodTruckModel.getName().length() >= 3
                         && foodTruckModel.getFoodTruckName().length() >= 3 &&
                         foodTruckModel.getPassword().length() >= 8
-                        && foodTruckModel.getEmail().length() > 9) {
+                        && foodTruckModel.getEmail().length() > 9
+                        && foodTruckModel.getLat() != null && foodTruckModel.getLongi() != null) {
 
                     FoodtruckEntity foodtruckEntity = new FoodtruckEntity();
                     foodtruckEntity.setName(foodTruckModel.getName());
                     foodtruckEntity.setFoodTruckName(foodTruckModel.getFoodTruckName());
                     foodtruckEntity.setEmail(foodTruckModel.getEmail());
                     foodtruckEntity.setPassword(passwordEncoder.encode(foodTruckModel.getPassword()));
+                    foodtruckEntity.setLat(Double.parseDouble(foodTruckModel.getLat()));
+                    foodtruckEntity.setLongi(Double.parseDouble(foodTruckModel.getLongi()));
                     if (img.isEmpty())
                         foodtruckEntity.setFoodTruckImage(null);
                     else
@@ -299,5 +304,44 @@ public class FoodTruckController {
 
         menuListServiceImpl.updateMenuItem(menuItem);
         return "redirect:/foodTruck/foodTruckDashboard";
+    }
+
+    @RequestMapping("/truckProfile")
+    public String userProfile(Authentication authentication, @ModelAttribute("error") String error, Model model) {
+        FoodtruckEntity foodtruckEntity = foodTruckService.findFoodTruckByEmail(authentication.getName());
+        foodtruckEntity.setPassword(null);
+        foodtruckEntity.setId(null);
+        foodtruckEntity.setRole(null);
+        model.addAttribute("foodtruck", foodtruckEntity);
+
+        Set<String> role = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
+        if (authentication == null || authentication instanceof AnonymousAuthenticationToken)
+            model.addAttribute("isUserLogged", false);
+        else
+            model.addAttribute("isUserLogged", true);
+
+        model.addAttribute("isUser", role.contains("ROLE_USER"));
+        model.addAttribute("isFoodtruck", role.contains("ROLE_FOODTRUCK"));
+        model.addAttribute("error", error);
+        return "truckProfile";
+    }
+
+    @RequestMapping("/updateTruck")
+    public String updateUserDetails(Authentication authentication, RedirectAttributes model,
+            FoodTruckModel foodTruckModel) {
+        try {
+            FoodtruckEntity foodtruckEntity = foodTruckService.findFoodTruckByEmail(authentication.getName());
+            if (foodtruckEntity.getName().length() >= 3) {
+                foodtruckEntity.setName(foodTruckModel.getName());
+            } else {
+                throw new Exception();
+            }
+            foodTruckService.updateFoodTruck(foodtruckEntity);
+            model.addFlashAttribute("error", "Profile Updated Successfully.");
+            return "redirect:/foodTruck/truckProfile";
+        } catch (Exception e) {
+            model.addFlashAttribute("error", "Something wrong.");
+            return "redirect:/foodTruck/truckProfile";
+        }
     }
 }

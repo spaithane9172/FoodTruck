@@ -15,4 +15,6 @@ public class FoodTruckModel {
     private String email;
     private String password;
     private String cpassword;
+    private String lat;
+    private String Longi;
 }
