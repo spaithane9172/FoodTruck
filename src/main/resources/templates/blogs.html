@@ -8,12 +8,7 @@
 
     <div th:if="${error}!=''" class="z-auto">
       <div
-        th:replace="~{/component/Toaster.html :: toaster(color=${error}=='Blog Posted Successfully.'?green:red,msg=${error})}"
-      ></div>
-    </div>
-    <div th:if="${error}!=''" class="z-auto">
-      <div
-        th:replace="~{/component/Toaster.html :: toaster(color=${error}=='Blog Deleted Successfully.'?green:red,msg=${error})}"
+        th:replace="~{/component/Toaster.html :: toaster(color=${error}=='Something Wrong.'?red:green,msg=${error})}"
       ></div>
     </div>
 
@@ -25,7 +20,7 @@
         class="bg-white absolute w-[20rem] p-[1rem] border-[1px] border-black rounded-lg shadow-md shadow-black"
       >
         <p
-          class="absolute left-[18rem] font-semibold text-[1.1rem]"
+          class="absolute left-[18rem] font-semibold text-[1.1rem] cursor-pointer"
           onclick="handlePostBlog()"
         >
           X
@@ -54,7 +49,7 @@
             <input
               type="file"
               name="photo"
-              class="border-[1px] border-black file:rounded-md file:h-[2.2rem] file:bg-blue-600 file:text-white file:font-semibold h-[2.2rem] rounded-md focus:outline-none w-[2]"
+              class="border-[1px] border-black file:rounded-md file:h-[2.2rem] file:cursor-pointer file:bg-blue-600 file:text-white file:font-semibold h-[2.2rem] rounded-md focus:outline-none w-[2]"
             />
             <button
               type="submit"
@@ -67,7 +62,7 @@
       </div>
     </div>
 
-    <div class="w-[100vw] pt-[12vh] px-[5vw]">
+    <div class="w-[100vw] pt-[12vh] sm:pt-[15vh] lg:pt-[20vh] px-[5vw]">
       <h1
         class="text-center text-2xl font-semibold mb-[1vh] underline underline-offset-[0.4rem]"
       >
@@ -75,12 +70,12 @@
       </h1>
 
       <div
-        class="flex justify-between w-full mt-[1rem] border-black border-t-[1px] border-b-[1px]"
+        class="flex justify-between w-full mt-[1rem] lg:mt-[2rem] border-black border-t-[1px] border-b-[1px]"
       >
         <button
           id="allBlogsBtn"
           onclick="handleAllBlogs()"
-          class="text-center bg-blue-600 px-[1rem] py-[0.2rem] text-white font-semibold"
+          class="text-center bg-[#1E0342] px-[1rem] py-[0.2rem] text-white font-semibold"
         >
           All Blogs
         </button>
@@ -96,7 +91,7 @@
         <button
           id="postBlogsBtn"
           onclick="handlePostBlog()"
-          class="text-center px-[1rem] py-[0.2rem] my-[0.4rem] font-semibold bg-blue-600 text-white rounded-md"
+          class="text-center px-[1rem] py-[0.2rem] my-[0.4rem] font-semibold bg-[#1E0342] text-white rounded-md"
         >
           Post Blog
         </button>
@@ -112,21 +107,30 @@
         >
           <p>No Blogs Posted</p>
         </div>
-        <div
-          class="bg-white w-[18rem] h-[25rem] p-[1rem] rounded-lg shadow-md shadow-black mb-[2rem]"
-          th:each="blog : ${Blogs}"
-        >
-          <img
-            th:src="@{'data:image/jpeg;Base64,'+${blog.image}}"
-            alt=""
-            class="h-[12rem] w-full"
-          />
-          <p class="text-justify mb-[1rem]" th:text="${blog.msg}"></p>
-          <p class="font-semibold" th:text="${blog.name}"></p>
-          <p class="text-[0.8rem]">
-            <span class="font-semibold">Date: </span
-            ><span th:text="${blog.date}"></span>
-          </p>
+        <div class="lg:flex lg:flex-wrap lg:justify-center lg:items-center">
+          <div
+            class="bg-white w-[18rem] sm:w-[24rem] h-[25rem] sm:h-[27rem] p-[1rem] rounded-lg shadow-md shadow-black mb-[1.5rem] lg:mx-[1rem]"
+            th:each="blog : ${Blogs}"
+          >
+            <img
+              th:if="${blog.image!=null}"
+              th:src="@{'data:image/jpeg;base64,'+${blog.image}}"
+              alt=""
+              class="h-[12rem] sm:h-[14rem] w-full"
+            />
+            <img
+              th:if="${blog.image==null}"
+              th:src="@{/img/imgIcon.png}"
+              alt=""
+              class="h-[12rem] sm:h-[14rem] w-full"
+            />
+            <p class="text-justify mb-[1rem]" th:text="${blog.msg}"></p>
+            <p class="font-semibold" th:text="${blog.name}"></p>
+            <p class="text-[0.8rem]">
+              <span class="font-semibold">Date: </span
+              ><span th:text="${blog.date}"></span>
+            </p>
+          </div>
         </div>
       </div>
 
@@ -140,24 +144,33 @@
         >
           <p>No Blogs Posted</p>
         </div>
-        <div
-          class="bg-white w-[18rem] h-[25rem] p-[1rem] rounded-lg shadow-md shadow-black mb-[2rem]"
-          th:each="blog : ${myBlogs}"
-        >
-          <img
-            th:src="@{'data:image/jpeg;Base64,'+${blog.image}}"
-            alt=""
-            class="h-[12rem] w-full"
-          />
-          <p class="text-justify mb-[1rem]" th:text="${blog.msg}"></p>
-          <p class="font-semibold" th:text="${blog.name}"></p>
-          <p class="text-[0.8rem]">
-            <span class="font-semibold">Date: </span
-            ><span th:text="${blog.date}"></span>
-          </p>
-          <a th:href="@{'/common/deleteBlog/'+${blog.id}}"
-            ><i class="fa-solid fa-trash text-[1.2rem]"></i
-          ></a>
+        <div class="lg:flex lg:flex-wrap lg:justify-center lg:items-center">
+          <div
+            class="bg-white w-[18rem] sm:w-[24rem] h-[25rem] sm:h-[27rem] p-[1rem] rounded-lg shadow-md shadow-black mb-[1.5rem] lg:mx-[1rem]"
+            th:each="blog : ${myBlogs}"
+          >
+            <img
+              th:if="${blog.image!=null}"
+              th:src="@{'data:image/jpeg;base64,'+${blog.image}}"
+              alt=""
+              class="h-[12rem] sm:h-[14rem] w-full"
+            />
+            <img
+              th:if="${blog.image==null}"
+              th:src="@{/img/imgIcon.png}"
+              alt=""
+              class="h-[12rem] sm:h-[14rem] w-full"
+            />
+            <p class="text-justify mb-[1rem]" th:text="${blog.msg}"></p>
+            <p class="font-semibold" th:text="${blog.name}"></p>
+            <p class="text-[0.8rem]">
+              <span class="font-semibold">Date: </span
+              ><span th:text="${blog.date}"></span>
+            </p>
+            <a th:href="@{'/common/deleteBlog/'+${blog.id}}"
+              ><i class="fa-solid fa-trash text-[1.2rem] text-[#1E0342]"></i
+            ></a>
+          </div>
         </div>
       </div>
     </div>
@@ -171,18 +184,18 @@
       }
 
       function handleMyBlogs() {
-        document.getElementById("allBlogsBtn").classList.remove("bg-blue-600");
+        document.getElementById("allBlogsBtn").classList.remove("bg-[#1E0342]");
         document.getElementById("allBlogsBtn").classList.remove("text-white");
-        document.getElementById("myBlogsBtn").classList.add("bg-blue-600");
+        document.getElementById("myBlogsBtn").classList.add("bg-[#1E0342]");
         document.getElementById("myBlogsBtn").classList.add("text-white");
 
         document.getElementById("myBlogs").classList.remove("hidden");
         document.getElementById("allBlogs").classList.add("hidden");
       }
       function handleAllBlogs() {
-        document.getElementById("allBlogsBtn").classList.add("bg-blue-600");
+        document.getElementById("allBlogsBtn").classList.add("bg-[#1E0342]");
         document.getElementById("allBlogsBtn").classList.add("text-white");
-        document.getElementById("myBlogsBtn").classList.remove("bg-blue-600");
+        document.getElementById("myBlogsBtn").classList.remove("bg-[#1E0342]");
         document.getElementById("myBlogsBtn").classList.remove("text-white");
 
         document.getElementById("myBlogs").classList.add("hidden");

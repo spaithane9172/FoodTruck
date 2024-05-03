@@ -12,10 +12,12 @@
       ></div>
     </div>
 
-    <div class="flex justify-center items-center w-[100vw] h-[93vh]">
+    <div
+      class="flex justify-center items-center w-[100vw] pt-[15vh] sm:pt-[20vh] lg:pt-[25vh] 2xl:pt-[20vh]"
+    >
       <form action="/login" class="" method="post">
         <div
-          class="flex flex-col border-[1px] border-black w-[70vw] px-[5vw] pt-[2vh] pb-[5vh] rounded-lg shadow-md shadow-black bg-white"
+          class="flex flex-col border-[1px] border-black w-[70vw] lg:w-[50vw] xl:w-[40vw] px-[5vw] pt-[2vh] pb-[5vh] rounded-lg shadow-md shadow-black bg-white"
         >
           <h1 class="text-center text-2xl font-bold mb-[3vh]">LogIn</h1>
           <div class="flex flex-col">
@@ -25,7 +27,7 @@
             <input
               type="text"
               name="username"
-              class="border-[1px] border-black h-[4vh] rounded-md pl-[0.5rem] text-[1.1rem] focus:outline-none"
+              class="border-[1px] border-black h-[4vh] sm:h-[6vh] rounded-md pl-[0.5rem] text-[1.1rem] focus:outline-none w-[60vw] lg:w-[40vw] xl:w-[30vw]"
             />
             <label
               for="password"
@@ -33,12 +35,12 @@
               >Password</label
             >
             <div
-              class="border-[1px] border-black h-[4vh] rounded-md text-[1.1rem] flex items-center mb-[2rem]"
+              class="border-[1px] border-black rounded-md text-[1.1rem] flex items-center mb-[2rem]"
             >
               <input
                 type="password"
                 name="password"
-                class="focus:outline-none rounded-md pl-[0.5rem] text-[1.1rem]"
+                class="focus:outline-none rounded-md h-[4vh] sm:h-[6vh] px-[0.5rem] text-[1.1rem] w-[52vw] sm:w-[54vw] md:w-[55vw] lg:w-[37vw] xl:w-[27vw]"
                 id="pass"
               />
               <div class="cursor-pointer" onclick="handlePass()">
@@ -50,7 +52,7 @@
 
             <button
               type="submit"
-              class="bg-blue-400 rounded-lg py-[0.3rem] text-lg font-semibold text-white shadow-sm shadow-black mb-[1.3rem]"
+              class="bg-[#1E0342] rounded-lg py-[0.3rem] text-lg font-semibold text-white shadow-sm shadow-black mb-[1.3rem]"
             >
               LogIn
             </button>

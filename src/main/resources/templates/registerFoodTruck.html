@@ -13,7 +13,7 @@
     </div>
 
     <div
-      class="flex justify-center items-center w-[100vw] h-[93vh] px-[2rem] pt-[15vh]"
+      class="flex justify-center items-center w-[100vw] px-[2rem] pt-[15vh] sm:pt-[20vh] lg:pt-[25vh] 2xl:pt-[20vh] sm:mb-[40vh]"
     >
       <form
         action="/foodTruck/saveNewFoodTruck"
@@ -34,7 +34,7 @@
             >
             <a
               href="/public/registerFoodTruck"
-              class="text-center w-[55%] py-[1rem] text-[1rem] font-ibold bg-blue-400 rounded-tr-md text-white"
+              class="text-center w-[55%] py-[1rem] text-[1rem] font-ibold bg-[#1E0342] rounded-tr-md text-white"
               >Register FoodTruck</a
             >
           </div>
@@ -46,7 +46,7 @@
               type="text"
               name="name"
               required
-              class="w-[65vw] h-[4vh] border-[1px] border-black focus:outline-none pl-[0.5rem] text-[1.1rem] rounded-md mb-[0.5rem]"
+              class="w-[65vw] lg:w-[50vw] h-[4vh] sm:h-[6vh] border-[1px] border-black focus:outline-none pl-[0.5rem] text-[1.1rem] rounded-md mb-[0.5rem]"
             />
 
             <label
@@ -58,7 +58,7 @@
               type="text"
               name="foodTruckName"
               required
-              class="w-[65vw] h-[4vh] border-[1px] border-black focus:outline-none pl-[0.5rem] text-[1.1rem] rounded-md mb-[0.5rem]"
+              class="w-[65vw] lg:w-[50vw] h-[4vh] sm:h-[6vh] border-[1px] border-black focus:outline-none px-[0.5rem] text-[1.1rem] rounded-md mb-[0.5rem]"
             />
 
             <label for="email" class="font-semibold text-[1rem] mb-[0.5rem]"
@@ -68,7 +68,7 @@
               type="email"
               name="email"
               required
-              class="w-[65vw] h-[4vh] border-[1px] border-black focus:outline-none pl-[0.5rem] text-[1.1rem] rounded-md mb-[0.5rem]"
+              class="w-[65vw] lg:w-[50vw] h-[4vh] sm:h-[6vh] border-[1px] border-black focus:outline-none px-[0.5rem] text-[1.1rem] rounded-md mb-[0.5rem]"
             />
 
             <label for="img" class="font-semibold text-[1rem] mb-[0.5rem]"
@@ -78,20 +78,20 @@
               type="file"
               name="img"
               required
-              class="file:bg-gradient-to-b file:from-blue-400 file:to-blue-600 w-[65vw] file:text-white file:rounded-l-md file:border-0 file:h-full file:font-semibold file:mr-[1rem] file:text-[1rem] font-semibold text-[1rem] h-[4vh] border-[1px] border-black focus:outline-none rounded-md mb-[0.5rem]"
+              class="file:bg-gradient-to-b file:from-blue-400 file:to-[#1E0342] w-[65vw] lg:w-[50vw] file:text-white file:rounded-l-md file:border-0 file:h-full file:font-semibold file:mr-[1rem] lg:file:px-[1rem] file:text-[1rem] font-semibold text-[1rem] h-[4vh] sm:h-[6vh] border-[1px] border-black focus:outline-none rounded-md mb-[0.5rem]"
             />
 
             <label for="password" class="font-semibold text-[1rem] mb-[0.5rem]"
               >Password</label
             >
             <div
-              class="border-[1px] border-black h-[4vh] rounded-md text-[1.1rem] flex items-center mb-[0.5rem] flex justify-center items-center"
+              class="border-[1px] w-[65vw] lg:w-[50vw] border-black rounded-md text-[1.1rem] flex items-center mb-[0.5rem]"
             >
               <input
                 id="pass"
                 type="password"
                 name="password"
-                class="w-[56vw] focus:outline-none pl-[0.5rem] text-[1.1rem] rounded-md"
+                class="w-[56vw] sm:w-[60vw] lg:w-[47vw] h-[4vh] sm:h-[6vh] focus:outline-none px-[0.5rem] sm:px-[1rem] text-[1.1rem] rounded-md"
                 required
               />
               <div class="cursor-pointer" onclick="handlePass()">
@@ -104,13 +104,13 @@
               >Confirm Password</label
             >
             <div
-              class="border-[1px] border-black h-[4vh] rounded-md text-[1.1rem] flex items-center mb-[1rem] flex justify-center items-center"
+              class="border-[1px] w-[65vw] lg:w-[50vw] border-black rounded-md text-[1.1rem] flex items-center mb-[1rem]"
             >
               <input
                 id="cpass"
                 type="password"
                 name="cpassword"
-                class="w-[56vw] focus:outline-none pl-[0.5rem] text-[1.1rem] rounded-md"
+                class="w-[56vw] sm:w-[60vw] lg:w-[47vw] h-[4vh] sm:h-[6vh] focus:outline-none pl-[0.5rem] sm:px-[1rem] text-[1.1rem] rounded-md"
                 required
               />
               <div class="cursor-pointer" onclick="handleCPass()">
@@ -123,7 +123,7 @@
             <script src="/js/passwordVisibility.js"></script>
             <button
               type="submit"
-              class="bg-blue-400 text-white text-lg font-semibold rounded-lg py-[0.3rem] shadow-sm shadow-black mb-[1.3rem]"
+              class="bg-[#1E0342] text-white text-lg font-semibold rounded-lg py-[0.3rem] lg:py-[0.5rem] shadow-sm shadow-black mb-[1.3rem]"
             >
               Register FoodTruck
             </button>

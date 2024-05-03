@@ -12,7 +12,9 @@
       ></div>
     </div>
 
-    <div class="flex justify-center items-center w-[100vw] h-[93vh] px-[2rem]">
+    <div
+      class="flex justify-center items-center w-[100vw] px-[2rem] pt-[15vh] sm:pt-[20vh] lg:pt-[25vh] 2xl:pt-[20vh] sm:mb-[20vh]"
+    >
       <form action="/user/saveNewUser" method="post">
         <div
           class="flex flex-col bg-white pb-[5vh] rounded-md shadow-md shadow-black"
@@ -22,7 +24,7 @@
           >
             <a
               href="/public/registerUser"
-              class="text-center w-[45%] py-[1rem] text-[1rem] font-bold bg-blue-400 rounded-tl-md text-white"
+              class="text-center w-[45%] py-[1rem] text-[1rem] font-bold bg-[#1E0342] rounded-tl-md text-white"
               >Register User</a
             >
             <a
@@ -39,7 +41,7 @@
             <input
               type="text"
               name="name"
-              class="w-[65vw] h-[4vh] border-[1px] border-black focus:outline-none pl-[0.5rem] text-[1.1rem] rounded-md mb-[1rem]"
+              class="w-[65vw] lg:w-[50vw] h-[4vh] sm:h-[6vh] border-[1px] border-black focus:outline-none pl-[0.5rem] text-[1.1rem] rounded-md mb-[1rem]"
             />
             <label for="email" class="font-semibold text-[1rem] mb-[0.5rem]"
               >Email</label
@@ -47,20 +49,20 @@
             <input
               type="email"
               name="email"
-              class="w-[65vw] h-[4vh] border-[1px] border-black focus:outline-none pl-[0.5rem] text-[1.1rem] rounded-md mb-[1rem]"
+              class="w-[65vw] lg:w-[50vw] h-[4vh] sm:h-[6vh] border-[1px] border-black focus:outline-none pl-[0.5rem] text-[1.1rem] rounded-md mb-[1rem]"
             />
 
             <label for="password" class="font-semibold text-[1rem] mb-[0.5rem]"
               >Password</label
             >
             <div
-              class="border-[1px] border-black h-[4vh] rounded-md text-[1.1rem] flex items-center mb-[1rem] flex justify-center items-center"
+              class="border-[1px] lg:w-[50vw] border-black rounded-md text-[1.1rem] flex items-center mb-[1rem]"
             >
               <input
                 id="pass"
                 type="password"
                 name="password"
-                class="w-[56vw] focus:outline-none pl-[0.5rem] text-[1.1rem] rounded-md"
+                class="w-[56vw] sm:w-[60vw] lg:w-[47vw] focus:outline-none h-[4vh] sm:h-[6vh] px-[0.5rem] sm:px-[1rem] text-[1.1rem] rounded-md"
               />
               <div class="cursor-pointer" onclick="handlePass()">
                 <i class="fa-solid fa-eye" id="show"></i
@@ -72,13 +74,13 @@
               >Confirm Password</label
             >
             <div
-              class="border-[1px] border-black h-[4vh] rounded-md text-[1.1rem] flex items-center mb-[2rem] flex justify-center items-center"
+              class="border-[1px] lg:w-[50vw] border-black rounded-md text-[1.1rem] flex items-center mb-[2rem]"
             >
               <input
                 id="cpass"
                 type="password"
                 name="cpassword"
-                class="w-[56vw] focus:outline-none pl-[0.5rem] text-[1.1rem] rounded-md"
+                class="w-[56vw] sm:w-[60vw] lg:w-[47vw] focus:outline-none h-[4vh] sm:h-[6vh] px-[0.5rem] sm:px-[1rem] text-[1.1rem] rounded-md"
               />
               <div class="cursor-pointer" onclick="handleCPass()">
                 <i class="fa-solid fa-eye" id="cshow"></i
@@ -89,7 +91,7 @@
 
             <button
               type="submit"
-              class="bg-blue-400 text-white text-lg font-semibold rounded-lg py-[0.3rem] shadow-sm shadow-black mb-[1.3rem]"
+              class="bg-[#1E0342] text-white text-lg font-semibold rounded-lg py-[0.3rem] lg:py-[0.5rem] shadow-sm shadow-black mb-[1.3rem]"
             >
               Register User
             </button>

@@ -11,7 +11,7 @@
       ></div>
     </div>
 
-    <div class="pt-[7vh] pb-[5vh] px-[5vw]">
+    <div class="pt-[7vh] sm:pt-[17vh] pb-[5vh] px-[5vw]">
       <h1
         class="text-center font-semibold underline underline-offset-[0.4rem] text-[1.5rem]"
       >
@@ -23,7 +23,7 @@
           <button
             onclick="handleUpdateUser()"
             id="editBtn"
-            class="bg-blue-600 rounded-md px-[0.8rem] py-[0.2rem] text-white font-semibold"
+            class="bg-[#1E0342] rounded-md px-[0.8rem] lg:px-[1rem] py-[0.2rem] lg:py-[0.4rem] text-white font-semibold"
           >
             Edit Profile
           </button>
@@ -38,7 +38,7 @@
               id="name"
               name="name"
               th:value="${user.name}"
-              class="w-[65vw] h-[4vh] border-[1px] border-black focus:outline-none pl-[0.5rem] text-[1.1rem] rounded-md mb-[1rem]"
+              class="w-[65vw] md:w-[50vw] lg:w-[40vw] h-[4vh] sm:h-[6vh] border-[1px] border-black focus:outline-none pl-[0.5rem] text-[1.1rem] rounded-md mb-[1rem]"
               disabled
             />
             <label for="email" class="font-semibold text-[1rem] mb-[0.5rem]"
@@ -49,13 +49,13 @@
               id="email"
               name="email"
               th:value="${user.email}"
-              class="w-[65vw] h-[4vh] border-[1px] border-black focus:outline-none pl-[0.5rem] text-[1.1rem] rounded-md mb-[1rem]"
+              class="w-[65vw] md:w-[50vw] lg:w-[40vw] h-[4vh] sm:h-[6vh] border-[1px] border-black focus:outline-none pl-[0.5rem] text-[1.1rem] rounded-md mb-[1rem]"
               disabled
             />
             <button
               type="submit"
               id="subBtn"
-              class="bg-blue-600 rounded-md px-[2rem] py-[0.4rem] text-white font-semibold mt-[1rem] hidden"
+              class="bg-[#1E0342] rounded-md px-[2rem] py-[0.4rem] text-white font-semibold mt-[1rem] hidden"
             >
               Update
             </button>

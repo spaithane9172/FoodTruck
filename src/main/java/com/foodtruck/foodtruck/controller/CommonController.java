@@ -142,7 +142,7 @@ public class CommonController {
                 return "redirect:/common/blogs";
             }
         } else {
-            model.addFlashAttribute("error", "Post Correct Information.");
+            model.addFlashAttribute("error", "Something Wrong.");
             return "redirect:/common/blogs";
         }
     }

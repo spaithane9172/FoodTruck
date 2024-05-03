@@ -6,26 +6,37 @@
   <body class="bg-gray-100 p-0 m-0">
     <nav th:replace="~{/component/Navbar.html :: navbar}"></nav>
 
-    <div class="pt-[7vh] pb-[5vh] w-full">
+    <div th:if="${error}!=''">
+      <div
+        th:replace="~{/component/Toaster.html :: toaster(color=${error}=='Something wrong.'?red:green,msg=${error})}"
+      ></div>
+    </div>
+
+    <div
+      class="pt-[7vh] sm:pt-[14vh] lg:pt-[18vh] pb-[5vh] w-full h-[100vh]"
+      id="mainDiv"
+    >
       <div class="px-[5vw] w-full flex flex-col justify-center items-center">
         <div>
           <img
             th:src="@{'data:image/jpeg;base64,'+${foodtruck.foodTruckImage}}"
             alt=""
-            class="rounded-[100%] border-[1px] border-gray-500 w-[8rem] h-[8rem] shadow-black shadow-md"
+            class="rounded-[100%] border-[1px] border-gray-500 w-[8rem] sm:w-[14rem] h-[8rem] sm:h-[14rem] shadow-black shadow-md"
           />
           <h1
             th:text="${foodtruck.foodTruckName}"
-            class="text-center font-bold text-[1.3rem] my-[1rem]"
+            class="text-center font-bold text-[1.3rem] sm:text-[1.5rem] my-[1rem]"
           ></h1>
         </div>
         <div class="flex justify-center">
-          <div class="w-[50%] mr-[1rem]">
-            <p class="text-wrap font-semibold text-[0.9rem] mb-[1rem]">
+          <div class="w-[50%] mr-[1rem] sm:mr-[2rem] md:mr-[4rem] lg:mr-[10vw]">
+            <p
+              class="text-wrap font-semibold text-[0.9rem] sm:text-[1.1rem] mb-[1rem]"
+            >
               Type:
               <span class="font-normal">Vegetarian and Non-Vegetarian</span>
             </p>
-            <p class="text-wrap font-semibold text-[0.9rem]">
+            <p class="text-wrap font-semibold text-[0.9rem] sm:text-[1.1rem]">
               Timing:
               <span
                 th:text="${foodtruck.closingTime}"
@@ -34,7 +45,9 @@
             </p>
           </div>
           <div class="w-[50%]">
-            <p class="text-wrap font-semibold text-[0.9rem] mb-[1rem]">
+            <p
+              class="text-wrap font-semibold text-[0.9rem] sm:text-[1.1rem] mb-[1rem]"
+            >
               Distance:
               <span th:text="${foodtruck.distance}" class="font-normal"></span
               ><span class="font-semibold"> Km</span>
@@ -43,7 +56,9 @@
             <a
               th:href="@{'https://www.google.com/maps/place/'+${foodtruck.lat}+','+${foodtruck.longi}}"
               target="_blank"
-              ><p class="text-wrap font-semibold text-[0.9rem] mb-[0.2rem]">
+              ><p
+                class="text-wrap font-semibold text-[0.9rem] sm:text-[1.1rem] mb-[0.2rem]"
+              >
                 <i class="fa-solid fa-location-dot"></i>
                 <span> FoodTruck Location</span>
               </p></a
@@ -53,40 +68,63 @@
       </div>
 
       <div
-        class="flex justify-between border-[1px] border-t-black border-b-black mt-[2rem] bg-white"
+        class="flex justify-between border-[1px] border-t-black border-b-black mt-[2rem] bg-white lg:px-[5vw]"
       >
         <!-- handleFoodtruckMenu is defined in Rating.js file -->
         <h1
           id="menuBtn"
-          class="py-[0.5rem] font-semibold px-[2rem] cursor-pointer bg-gray-400"
+          class="py-[0.5rem] font-semibold px-[2rem] cursor-pointer menuDesign sm:text-[1.4rem]"
           onclick="handleFoodtruckMenu('menu')"
         >
           Menu
         </h1>
         <h1
           id="galleryBtn"
-          class="py-[0.5rem] font-semibold px-[2rem]"
+          class="py-[0.5rem] font-semibold px-[2rem] sm:text-[1.4rem] cursor-pointer"
           onclick="handleFoodtruckMenu('gallery')"
         >
           Gallery
         </h1>
         <h1
           id="feedbackBtn"
-          class="py-[0.5rem] font-semibold px-[2rem]"
+          class="py-[0.5rem] font-semibold px-[2rem] sm:text-[1.4rem] cursor-pointer"
           onclick="handleFoodtruckMenu('feedback')"
         >
           Feedbacks
         </h1>
       </div>
 
+      <div
+        id="imgDiv"
+        class="absolute bg-black bg-opacity-70 w-[100vw] h-[100vh] top-0 z-50 hidden"
+      >
+        <!-- closeImg is defined in rating.js -->
+        <button
+          onclick="closeImg()"
+          class="cursor-pointer absolute text-white flex justify-end items-end w-[100vw] px-[4vh] py-[5vh] text-[1.5rem] font-bold"
+        >
+          X
+        </button>
+        <div class="w-[100vw] h-[100vh] flex justify-center items-center">
+          <img
+            src="/img/fblog.jpeg"
+            alt=""
+            class="w-[90vw] h-[50vh] md:h-[70vh] xl:h-[75vh]"
+            id="BigImg"
+          />
+        </div>
+      </div>
+
       <!-- below div is for foodtruck Menu -->
-      <div id="menu" class="">
+      <div id="menu" class="pb-[10vh]">
         <!-- Filter by Category wise -->
         <!-- Filter Js is written in Rating.js file -->
         <div
-          class="bg-white border-b-[1px] border-black py-[0.5rem] px-[1rem] flex justify-between items-center"
+          class="bg-white border-b-[1px] border-black py-[0.5rem] px-[1rem] lg:px-[3rem] flex justify-between items-center"
         >
-          <p th:unless="${category}" class="font-semibold">All Category</p>
+          <p th:unless="${category}" class="font-semibold sm:text-[1.1rem]">
+            All Category
+          </p>
           <p
             th:if="${category}"
             th:text="${category}"
@@ -94,72 +132,87 @@
           ></p>
           <p onclick="handleFilterBox()">
             <i class="fa-solid fa-filter mr-[0.5rem]"></i
-            ><span class="font-semibold">Filter</span>
+            ><span class="font-semibold sm:text-[1.1rem]">Filter</span>
           </p>
+        </div>
 
-          <div
-            id="filterBox"
-            class="hidden bg-white absolute w-[12rem] py-[1rem] px-[1rem] left-[50vw] top-[53vh] border-[1px] border-black border-t-white"
-          >
-            <div class="border-b-[1px] border-gray-400 mb-[0.5rem] pb-[0.2rem]">
-              <a th:href="@{'/user/foodtruckDetails/'+${email}}"
-                >All Menu Item
-              </a>
-            </div>
-
-            <div th:each="category : ${categories}">
+        <div class="absolute flex justify-end items-end z-10">
+          <div class="w-[100vw] flex justify-end items-end">
+            <div
+              id="filterBox"
+              class="hidden bg-white w-[12rem] py-[1rem] px-[1rem] border-[1px] border-black border-t-white"
+            >
               <div
-                class="border-b-[1px] border-gray-400 mb-[0.5rem] pb-[0.2rem]"
+                class="border-b-[1px] border-gray-400 mb-[0.5rem] pb-[0.2rem] sm:text-[1.1rem]"
               >
-                <a
-                  th:href="@{'/user/menuItemFilter/category='+${category}+'&email='+${email}}"
-                  th:text="${category}"
-                ></a>
+                <a th:href="@{'/user/foodtruckDetails/'+${email}}"
+                  >All Menu Item
+                </a>
+              </div>
+
+              <div th:each="category : ${categories}">
+                <div
+                  class="border-b-[1px] border-gray-400 mb-[0.5rem] pb-[0.2rem] sm:text-[1.1rem]"
+                >
+                  <a
+                    th:href="@{'/user/menuItemFilter/category='+${category}+'&email='+${email}}"
+                    th:text="${category}"
+                  ></a>
+                </div>
               </div>
             </div>
           </div>
         </div>
+
         <div
-          class="flex flex-col px-[1rem] items-center"
-          th:each="foodMenu : ${foodtruck.menuEntity}"
+          class="flex flex-col justify-center lg:flex-row lg:flex-wrap px-[1rem] items-center sm:mt-[2vh] z-0"
         >
           <div
-            class="border-[1px] border-black rounded-lg bg-white w-[22rem] h-[13rem] shadow-md shadow-black flex p-[0.5rem] my-[0.5rem]"
+            th:each="foodMenu : ${foodtruck.menuEntity}"
+            class="z-0 border-[1px] border-black rounded-lg bg-white w-[22rem] sm:w-[30rem] lg:w-[28rem] h-[13rem] sm:h-[18rem] shadow-md shadow-black flex p-[0.5rem] my-[0.5rem] lg:mx-[1rem]"
           >
             <img
               th:if="${foodMenu.dishePhoto!=null}"
               th:src="@{'data:image/jpeg;base64,'+${foodMenu.dishePhoto}}"
               alt=""
-              class="rounded-lg w-[10rem] border-black border-[1px]"
+              class="rounded-lg w-[10rem] sm:w-[15rem] border-black border-[1px]"
             /><img
               th:if="${foodMenu.dishePhoto==null}"
               th:src="@{/img/imgIcon.png}"
               alt=""
-              class="rounded-lg w-[10rem] border-black border-[1px]"
+              class="rounded-lg w-[10rem] sm:w-[15rem] border-black border-[1px]"
             />
 
             <div class="ml-[1rem]">
               <p
                 th:text="${foodMenu.disheName}"
-                class="text-wrap font-semibold text-[1.2rem] mb-[0.5rem]"
+                class="text-wrap font-semibold text-[1.2rem] sm:text-[1.5rem] mb-[0.5rem]"
               ></p>
-              <p class="text-wrap font-semibold text-[0.9rem] mb-[0.2rem]">
+              <p
+                class="text-wrap font-semibold text-[0.9rem] sm:text-[1.1rem] mb-[0.2rem]"
+              >
                 Type:
                 <span class="font-normal" th:text="${foodMenu.category}"></span>
               </p>
-              <p class="text-wrap font-semibold text-[0.9rem] mb-[0.2rem]">
+              <p
+                class="text-wrap font-semibold text-[0.9rem] sm:text-[1.1rem] mb-[0.2rem]"
+              >
                 Description:
                 <span
                   class="font-normal"
                   th:text="${foodMenu.disheDescription}"
                 ></span>
               </p>
-              <p class="text-wrap font-semibold text-[0.9rem] mb-[0.2rem]">
+              <p
+                class="text-wrap font-semibold text-[0.9rem] sm:text-[1.1rem] mb-[0.2rem]"
+              >
                 Price:
                 <span class="font-normal" th:text="${foodMenu.price}"></span
                 ><span> &#x20B9;</span>
               </p>
-              <p class="text-wrap font-semibold text-[0.9rem] mb-[0.2rem]">
+              <p
+                class="text-wrap font-semibold text-[0.9rem] sm:text-[1.1rem] mb-[0.2rem]"
+              >
                 Discount:
                 <span class="font-normal" th:text="${foodMenu.discount}"></span
                 ><span> %</span>
@@ -168,22 +221,28 @@
           </div>
         </div>
       </div>
+
       <!-- below div is for foodtruck photo gallery -->
-      <div id="gallery" class="hidden">
+      <div
+        id="gallery"
+        class="flex flex-wrap justify-center items-center hidden pb-[10vh]"
+      >
         <div
-          class="flex flex-wrap justify-center"
+          class="mx-[0.2rem] my-[0.2rem] flex flex-col justify-center items-center"
           th:each="img : ${foodtruck.galleryPhotos}"
         >
           <img
+            th:onclick="'showImg('+${img.id}+')'"
             th:src="@{'data:image/jpeg;base64,'+${img.image}}"
             alt=""
-            class="w-[23rem] h-[30rem] my-[0.5rem]"
+            class="cursor-pointer w-[11rem] sm:w-[12rem] md:w-[14rem] lg:w-[20rem] xl:w-[25rem] xl:w-[30rem] h-[11rem] sm:h-[12rem] md:h-[14rem] lg:h-[20rem] xl:h-[23rem] xl:h-[25rem]"
           />
+          <p th:text="${img.image}" th:id="'img'+${img.id}" hidden></p>
         </div>
       </div>
 
       <!-- below div is for foodtruck feedback -->
-      <div id="feedback" class="hidden">
+      <div id="feedback" class="hidden pb-[10vh]">
         <div
           class="flex flex-col justify-center items-center py-[1rem] border-[1px] border-b-black"
         >
@@ -196,9 +255,7 @@
                 placeholder="Feedback"
                 name="feedback"
                 id="feedback"
-                cols="40"
-                rows="4"
-                class="mb-[0.5rem] focus:outline-none border-[1px] border-black rounded-md p-[0.5rem]"
+                class="mb-[0.5rem] focus:outline-none border-[1px] border-black rounded-md p-[0.5rem] w-[80vw] h-[14vh] sm:h-[20vh]"
                 required
               ></textarea>
               <input
@@ -217,27 +274,27 @@
               />
               <div>
                 <i
-                  class="fa-regular fa-star"
+                  class="fa-regular fa-star lg:text-[1.5rem] text-[#1E0342]"
                   onclick="handleRating(1)"
                   id="star1"
                 ></i
                 ><i
-                  class="fa-regular fa-star"
+                  class="fa-regular fa-star lg:text-[1.5rem] text-[#1E0342]"
                   onclick="handleRating(2)"
                   id="star2"
                 ></i
                 ><i
-                  class="fa-regular fa-star"
+                  class="fa-regular fa-star lg:text-[1.5rem] text-[#1E0342]"
                   onclick="handleRating(3)"
                   id="star3"
                 ></i
                 ><i
-                  class="fa-regular fa-star"
+                  class="fa-regular fa-star lg:text-[1.5rem] text-[#1E0342]"
                   onclick="handleRating(4)"
                   id="star4"
                 ></i
                 ><i
-                  class="fa-regular fa-star"
+                  class="fa-regular fa-star lg:text-[1.5rem] text-[#1E0342]"
                   onclick="handleRating(5)"
                   id="star5"
                 ></i>
@@ -246,7 +303,7 @@
               <div class="flex justify-center items-center">
                 <button
                   type="submit"
-                  class="bg-black text-white py-[0.5rem] px-[2rem] w-fit"
+                  class="bg-[#1E0342] text-white py-[0.5rem] px-[2rem] w-fit"
                 >
                   Submit
                 </button>
@@ -255,9 +312,9 @@
           </form>
         </div>
 
-        <div class="flex flex-wrap justify-center mt-[1rem]">
+        <div class="flex flex-col items-center justify-center mt-[1rem]">
           <div
-            class="w-[21rem] border-[1px] border-black shadow-black shadow-md rounded-md mt-[1rem]"
+            class="w-[21rem] sm:w-[30rem] md:w-[40rem] lg:w-[85vw] border-[1px] border-black shadow-black shadow-md rounded-md mt-[1rem]"
             th:each="feedback : ${foodtruck.feedbacks}"
           >
             <div class="py-[0.5rem] px-[1rem] border-[1px] border-b-black">
@@ -268,19 +325,19 @@
                 ></span>
                 <span>
                   <i
-                    th:class="${feedback.rating>=1?'fa-solid':'fa-regular'}+' fa-star'"
+                    th:class="${feedback.rating>=1?'fa-solid':'fa-regular'}+' fa-star text-[#1E0342]'"
                   ></i>
                   <i
-                    th:class="${feedback.rating>=2?'fa-solid':'fa-regular'}+' fa-star'"
+                    th:class="${feedback.rating>=2?'fa-solid':'fa-regular'}+' fa-star text-[#1E0342]'"
                   ></i>
                   <i
-                    th:class="${feedback.rating>=3?'fa-solid':'fa-regular'}+' fa-star'"
+                    th:class="${feedback.rating>=3?'fa-solid':'fa-regular'}+' fa-star text-[#1E0342]'"
                   ></i>
                   <i
-                    th:class="${feedback.rating>=4?'fa-solid':'fa-regular'}+' fa-star'"
+                    th:class="${feedback.rating>=4?'fa-solid':'fa-regular'}+' fa-star text-[#1E0342]'"
                   ></i>
                   <i
-                    th:class="${feedback.rating>=5?'fa-solid':'fa-regular'}+' fa-star'"
+                    th:class="${feedback.rating>=5?'fa-solid':'fa-regular'}+' fa-star text-[#1E0342]'"
                   ></i>
                 </span>
               </h1>
@@ -293,5 +350,6 @@
         </div>
       </div>
     </div>
+    <link rel="stylesheet" href="/css/handleMenuDesign.css" />
   </body>
 </html>

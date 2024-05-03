@@ -5,7 +5,17 @@
   </head>
   <body class="bg-gray-100 p-0 m-0">
     <nav th:replace="~{/component/Navbar.html :: navbar}"></nav>
-    <div class="py-[3vh] w-full pt-[8vh]">
+
+    <div th:if="${error}!=''">
+      <div
+        th:replace="~{/component/Toaster.html :: toaster(color=${error}=='Something wrong.'?red:green,msg=${error})}"
+      ></div>
+    </div>
+
+    <div
+      class="pt-[12vh] sm:pt-[17vh] lg:pt-[19vh] pb-[5vh] w-full h-[100vh]"
+      id="mainDiv"
+    >
       <div class="px-[5vw] w-full flex flex-col justify-center items-center">
         <div class="flex flex-col justify-center items-center">
           <!-- showCoverPhotoEdit is defined in Rating.js file -->
@@ -28,7 +38,7 @@
                   class="bg-white flex flex-col justify-center items-center px-[1rem] pt-[3rem] pb-[2rem] shadow-md shadow-black border-[1px] border-black rounded-md"
                 >
                   <p
-                    class="absolute translate-x-[17vh] text-[1.5rem] font-semibold translate-y-[-9vh]"
+                    class="absolute translate-x-[17vh] text-[1.5rem] font-semibold translate-y-[-9vh] cursor-pointer"
                     onclick="coverPhotoBtn()"
                   >
                     x
@@ -36,7 +46,7 @@
                   <input
                     type="file"
                     name="img"
-                    class="border-[1px] border-black file:rounded-md file:h-[2.2rem] file:bg-blue-600 file:text-white file:font-semibold h-[2.2rem] rounded-md focus:outline-none mb-[1rem]"
+                    class="border-[1px] border-black file:rounded-md file:cursor-pointer file:h-[2.2rem] file:bg-blue-600 file:text-white file:font-semibold h-[2.2rem] rounded-md focus:outline-none mb-[1rem]"
                   />
                   <button
                     type="submit"
@@ -47,31 +57,33 @@
                 </div>
               </form>
             </div>
-            <div
-              class="rounded-[100%] w-[2.2rem] h-[2.2rem] bg-blue-600 flex justify-center items-center absolute translate-x-[20vw] translate-y-[10vh] shadow-md shadow-black border-[1px] border-white"
-              id="coverPhoto"
-              onclick="coverPhotoBtn()"
-            >
-              <i class="fa-solid fa-pen-to-square text-white"></i>
+            <div class="absolute" id="coverPhoto" onclick="coverPhotoBtn()">
+              <div
+                class="relative rounded-[100%] w-[2.2rem] h-[2.2rem] bg-[#1E0342] flex justify-center items-center shadow-md shadow-black border-[1px] border-white top-[6rem] sm:top-[10rem] left-[10vh] sm:left-[11rem] cursor-pointer"
+              >
+                <i class="fa-solid fa-pen-to-square text-white"></i>
+              </div>
             </div>
             <img
               th:src="@{'data:image/jpeg;base64,'+${foodtruck.foodTruckImage}}"
               alt=""
-              class="rounded-[100%] border-[1px] border-gray-500 w-[8rem] h-[8rem] shadow-black shadow-md"
+              class="rounded-[100%] border-[1px] border-gray-500 w-[8rem] sm:w-[14rem] h-[8rem] sm:h-[14rem] shadow-black shadow-md"
             />
           </div>
           <h1
             th:text="${foodtruck.foodTruckName}"
-            class="text-center font-bold text-[1.3rem] my-[1rem]"
+            class="text-center font-bold text-[1.3rem] sm:text-[1.5rem] my-[1rem]"
           ></h1>
         </div>
         <div class="flex justify-center">
-          <div class="w-[50%] mr-[1rem]">
-            <p class="text-wrap font-semibold text-[0.9rem] mb-[1rem]">
+          <div class="w-[50%] mr-[1rem] sm:mr-[2rem] md:mr-[4rem] lg:mr-[10vw]">
+            <p
+              class="text-wrap font-semibold text-[0.9rem] sm:text-[1.1rem] mb-[1rem]"
+            >
               Type:
               <span class="font-normal">Vegetarian and Non-Vegetarian</span>
             </p>
-            <p class="text-wrap font-semibold text-[0.9rem]">
+            <p class="text-wrap font-semibold text-[0.9rem] sm:text-[1.1rem]">
               Timing:
               <span
                 th:text="${foodtruck.closingTime}"
@@ -80,7 +92,9 @@
             </p>
           </div>
           <div class="w-[50%]">
-            <p class="text-wrap font-semibold text-[0.9rem] mb-[1rem]">
+            <p
+              class="text-wrap font-semibold text-[0.9rem] sm:text-[1.1rem] mb-[1rem]"
+            >
               Distance:
               <span th:text="${foodtruck.distance}" class="font-normal"></span
               ><span class="font-semibold"> Km</span>
@@ -89,7 +103,9 @@
             <a
               th:href="@{'https://www.google.com/maps/place/'+${foodtruck.lat}+','+${foodtruck.longi}}"
               target="_blank"
-              ><p class="text-wrap font-semibold text-[0.9rem] mb-[0.2rem]">
+              ><p
+                class="text-wrap font-semibold text-[0.9rem] sm:text-[1.1rem] mb-[0.2rem]"
+              >
                 <i class="fa-solid fa-location-dot"></i>
                 <span> FoodTruck Location</span>
               </p></a
@@ -99,34 +115,54 @@
       </div>
 
       <div
-        class="flex justify-between border-[1px] border-t-black border-b-black mt-[2rem] bg-white"
+        class="flex justify-between border-[1px] border-t-black border-b-black mt-[2rem] bg-white lg:px-[5vw]"
       >
         <!-- handleFoodtruckMenu is defined in Rating.js file -->
         <h1
           id="menuBtn"
-          class="py-[0.5rem] font-semibold px-[2rem] cursor-pointer bg-gray-400"
+          class="py-[0.5rem] font-semibold px-[2rem] cursor-pointer menuDesign sm:text-[1.4rem]"
           onclick="handleFoodtruckMenu('menu')"
         >
           Menu
         </h1>
         <h1
           id="galleryBtn"
-          class="py-[0.5rem] font-semibold px-[2rem]"
+          class="py-[0.5rem] font-semibold px-[2rem] sm:text-[1.4rem] cursor-pointer"
           onclick="handleFoodtruckMenu('gallery')"
         >
           Gallery
         </h1>
         <h1
           id="feedbackBtn"
-          class="py-[0.5rem] font-semibold px-[2rem]"
+          class="py-[0.5rem] font-semibold px-[2rem] sm:text-[1.4rem] cursor-pointer"
           onclick="handleFoodtruckMenu('feedback')"
         >
           Feedbacks
         </h1>
       </div>
+      <div
+        id="imgDiv"
+        class="absolute bg-black bg-opacity-70 w-[100vw] h-[100vh] top-0 z-50 hidden"
+      >
+        <!-- closeImg is defined in rating.js -->
+        <button
+          onclick="closeImg()"
+          class="cursor-pointer absolute text-white flex justify-end items-end w-[100vw] px-[4vh] py-[5vh] text-[1.5rem] font-bold"
+        >
+          X
+        </button>
+        <div class="w-[100vw] h-[100vh] flex justify-center items-center">
+          <img
+            src="/img/fblog.jpeg"
+            alt=""
+            class="w-[90vw] h-[50vh] md:h-[70vh] xl:h-[75vh]"
+            id="BigImg"
+          />
+        </div>
+      </div>
 
       <!-- below div is for foodtruck Menu -->
-      <div id="menu" class="">
+      <div id="menu" class="pb-[10vh]">
         <!-- Filter by Category wise -->
         <!-- Filter Js is written in Rating.js file -->
         <div
@@ -134,10 +170,10 @@
           class="flex justify-center items-center pt-[5vh] hidden"
         >
           <div
-            class="bg-white absolute w-[20rem] h-[47rem] p-[1rem] border-[1px] border-black rounded-lg shadow-md shadow-black"
+            class="bg-white absolute w-[20rem] lg:w-[50vw] p-[1rem] pb-[3vh] lg:pb-[5vh] border-[1px] border-black rounded-lg shadow-md shadow-black sm:top-[20vh]"
           >
             <p
-              class="absolute left-[18rem] font-semibold text-[1.1rem]"
+              class="cursor-pointer w-[18rem] lg:w-[47vw] flex justify-end items-end font-semibold text-[1.1rem] lg:text-[1.5rem]"
               onclick="handleUpdateMenuBox()"
             >
               X
@@ -161,7 +197,7 @@
                 <input
                   type="text"
                   name="disheName"
-                  class="border-[1px] border-black h-[2.2rem] rounded-md focus:outline-none px-[0.5rem] text-[1.1rem] mb-[1rem]"
+                  class="border-[1px] border-black h-[4vh] sm:h-[6vh] rounded-md focus:outline-none px-[0.5rem] text-[1.1rem] mb-[1rem]"
                   id="formDisheName"
                 />
 
@@ -174,7 +210,7 @@
                 <input
                   type="text"
                   name="disheDescription"
-                  class="border-[1px] border-black h-[2.2rem] rounded-md focus:outline-none px-[0.5rem] text-[1.1rem] mb-[1rem]"
+                  class="border-[1px] border-black h-[4vh] sm:h-[6vh] rounded-md focus:outline-none px-[0.5rem] text-[1.1rem] mb-[1rem]"
                   id="formDisheDescription"
                 />
 
@@ -186,7 +222,7 @@
                 <input
                   type="text"
                   name="price"
-                  class="border-[1px] border-black h-[2.2rem] rounded-md focus:outline-none px-[0.5rem] text-[1.1rem] mb-[1rem]"
+                  class="border-[1px] border-black h-[4vh] sm:h-[6vh] rounded-md focus:outline-none px-[0.5rem] text-[1.1rem] mb-[1rem]"
                   id="formDishePrice"
                 />
 
@@ -198,7 +234,7 @@
                 <input
                   type="text"
                   name="discount"
-                  class="border-[1px] border-black h-[2.2rem] rounded-md focus:outline-none px-[0.5rem] text-[1.1rem] mb-[1rem]"
+                  class="border-[1px] border-black h-[4vh] sm:h-[6vh] rounded-md focus:outline-none px-[0.5rem] text-[1.1rem] mb-[1rem]"
                   id="formDisheDiscount"
                 />
 
@@ -210,9 +246,19 @@
                 <input
                   type="text"
                   name="category"
-                  class="border-[1px] border-black h-[2.2rem] rounded-md focus:outline-none px-[0.5rem] text-[1.1rem] mb-[1rem]"
+                  list="updateCategoryList"
+                  class="border-[1px] border-black h-[4vh] sm:h-[6vh] rounded-md focus:outline-none px-[0.5rem] text-[1.1rem] mb-[1rem]"
                   id="formDisheCategory"
                 />
+                <datalist id="updateCategoryList">
+                  <div th:each="category : ${categories}">
+                    <option
+                      th:value="${category}"
+                      th:text="${category}"
+                    ></option>
+                  </div>
+                </datalist>
+
                 <div class="flex flex-col items-center">
                   <img
                     th:src="@{/img/imgIcon.png}"
@@ -220,15 +266,15 @@
                     class="w-[10rem] h-[8rem] mb-[1rem]"
                     id="formDishePhoto"
                   />
-                  <input
-                    type="file"
-                    name="dishePhoto"
-                    class="border-[1px] border-black file:rounded-md file:h-[2.2rem] file:bg-blue-400 file:text-white file:font-semibold h-[2.2rem] rounded-md focus:outline-none w-[2]"
-                  />
                 </div>
+                <input
+                  type="file"
+                  name="dishePhoto"
+                  class="border-[1px] border-black file:cursor-pointer file:px-[1rem] file:mr-[1rem] file:border-0 file:rounded-md file:h-[4vh] file:bg-blue-600 file:text-white file:font-semibold h-[4vh] sm:h-[6vh] sm:file:h-[6vh] rounded-md focus:outline-none w-[2]"
+                />
                 <button
                   type="submit"
-                  class="bg-blue-400 py-[0.5rem] mt-[1.5rem] font-semibold text-white"
+                  class="bg-blue-600 mt-[1.5rem] h-[4vh] sm:h-[6vh] font-semibold text-white"
                 >
                   Update Dishe
                 </button>
@@ -244,10 +290,10 @@
           class="flex justify-center items-center hidden"
         >
           <div
-            class="bg-white absolute w-[20rem] p-[1rem] border-[1px] border-black rounded-lg shadow-md shadow-black"
+            class="bg-white absolute w-[20rem] lg:w-[50vw] p-[1rem] pb-[3vh] lg:pb-[5vh] border-[1px] border-black rounded-lg shadow-md shadow-black sm:top-[20vh]"
           >
             <p
-              class="absolute left-[18rem] font-semibold text-[1.1rem]"
+              class="cursor-pointer w-[18rem] lg:w-[47vw] flex justify-end items-end font-semibold text-[1.1rem] lg:text-[1.5rem]"
               onclick="handleAddMenuItem()"
             >
               X
@@ -269,7 +315,7 @@
                 <input
                   type="text"
                   name="disheName"
-                  class="border-[1px] border-black h-[2.2rem] rounded-md focus:outline-none px-[0.5rem] text-[1.1rem] mb-[1rem]"
+                  class="border-[1px] border-black h-[4vh] sm:h-[6vh] rounded-md focus:outline-none px-[0.5rem] text-[1.1rem] mb-[1rem]"
                   id="formDisheName"
                 />
 
@@ -282,7 +328,7 @@
                 <input
                   type="text"
                   name="disheDescription"
-                  class="border-[1px] border-black h-[2.2rem] rounded-md focus:outline-none px-[0.5rem] text-[1.1rem] mb-[1rem]"
+                  class="border-[1px] border-black h-[4vh] sm:h-[6vh] rounded-md focus:outline-none px-[0.5rem] text-[1.1rem] mb-[1rem]"
                   id="formDisheDescription"
                 />
 
@@ -294,7 +340,7 @@
                 <input
                   type="text"
                   name="price"
-                  class="border-[1px] border-black h-[2.2rem] rounded-md focus:outline-none px-[0.5rem] text-[1.1rem] mb-[1rem]"
+                  class="border-[1px] border-black h-[4vh] sm:h-[6vh] rounded-md focus:outline-none px-[0.5rem] text-[1.1rem] mb-[1rem]"
                   id="formDishePrice"
                 />
 
@@ -306,7 +352,7 @@
                 <input
                   type="text"
                   name="discount"
-                  class="border-[1px] border-black h-[2.2rem] rounded-md focus:outline-none px-[0.5rem] text-[1.1rem] mb-[1rem]"
+                  class="border-[1px] border-black h-[4vh] sm:h-[6vh] rounded-md focus:outline-none px-[0.5rem] text-[1.1rem] mb-[1rem]"
                   id="formDisheDiscount"
                 />
 
@@ -319,7 +365,7 @@
                   type="text"
                   list="categoryList"
                   name="category"
-                  class="border-[1px] border-black h-[2.2rem] rounded-md focus:outline-none px-[0.5rem] text-[1.1rem] mb-[1rem]"
+                  class="border-[1px] border-black h-[4vh] sm:h-[6vh] rounded-md focus:outline-none px-[0.5rem] text-[1.1rem] mb-[1rem]"
                   id="formDisheCategory"
                 />
                 <datalist id="categoryList">
@@ -339,11 +385,11 @@
                 <input
                   type="file"
                   name="dishePhoto"
-                  class="border-[1px] border-black file:rounded-md file:h-[2.2rem] file:bg-blue-400 file:text-white file:font-semibold h-[2.2rem] rounded-md focus:outline-none w-[2]"
+                  class="border-[1px] border-black file:cursor-pointer file:px-[1rem] file:mr-[1rem] file:border-0 file:rounded-md file:h-[4vh] file:bg-blue-600 file:text-white file:font-semibold h-[4vh] sm:h-[6vh] sm:file:h-[6vh] rounded-md focus:outline-none w-[2]"
                 />
                 <button
                   type="submit"
-                  class="bg-blue-400 py-[0.5rem] mt-[1.5rem] font-semibold text-white"
+                  class="bg-blue-600 mt-[1.5rem] h-[4vh] sm:h-[6vh] font-semibold text-white"
                 >
                   Add New Dishe
                 </button>
@@ -355,9 +401,11 @@
         <!-- -------------------- -->
 
         <div
-          class="bg-white border-b-[1px] border-black py-[0.5rem] px-[1rem] flex justify-between items-center"
+          class="bg-white border-b-[1px] border-black py-[0.5rem] px-[1rem] lg:px-[3rem] flex justify-between items-center"
         >
-          <p th:unless="${category}" class="font-semibold">All Category</p>
+          <p th:unless="${category}" class="font-semibold sm:text-[1.1rem]">
+            All Category
+          </p>
           <p
             th:if="${category}"
             th:text="${category}"
@@ -368,44 +416,50 @@
           <div class="flex justify-center items-center">
             <button
               onclick="handleAddMenuItem()"
-              class="bg-blue-600 text-white font-semibold px-[1rem] py-[0.3rem]"
+              class="bg-[#1E0342] text-white font-semibold px-[1rem] py-[0.3rem] sm:text-[1.1rem]"
             >
               Add Item
             </button>
             <!-- handleFilterBox is defined in Rating.js -->
             <p onclick="handleFilterBox()" class="ml-[1rem]">
               <i class="fa-solid fa-filter mr-[0.5rem]"></i
-              ><span class="font-semibold">Filter</span>
+              ><span class="font-semibold sm:text-[1.1rem]">Filter</span>
             </p>
           </div>
+        </div>
 
-          <div
-            id="filterBox"
-            class="hidden bg-white absolute w-[12rem] py-[1rem] px-[1rem] left-[50vw] top-[55vh] border-[1px] border-black border-t-white"
-          >
-            <div class="border-b-[1px] border-gray-400 mb-[0.5rem] pb-[0.2rem]">
-              <a th:href="@{/foodTruck/foodTruckDashboard}">All Menu Item </a>
-            </div>
-
-            <div th:each="category : ${categories}">
+        <div class="absolute flex justify-end items-end z-10">
+          <div class="w-[100vw] flex justify-end items-end">
+            <div
+              id="filterBox"
+              class="hidden bg-white w-[12rem] py-[1rem] px-[1rem] border-[1px] border-black border-t-white"
+            >
               <div
-                class="border-b-[1px] border-gray-400 mb-[0.5rem] pb-[0.2rem]"
+                class="border-b-[1px] border-gray-400 mb-[0.5rem] pb-[0.2rem] sm:text-[1.1rem]"
               >
-                <a
-                  th:href="@{'/foodTruck/foodTruckDashboardByCategory/'+${category}}"
-                  th:text="${category}"
-                ></a>
+                <a th:href="@{/foodTruck/foodTruckDashboard}">All Menu Item </a>
+              </div>
+
+              <div th:each="category : ${categories}">
+                <div
+                  class="border-b-[1px] border-gray-400 mb-[0.5rem] pb-[0.2rem] sm:text-[1.1rem]"
+                >
+                  <a
+                    th:href="@{'/foodTruck/foodTruckDashboardByCategory/'+${category}}"
+                    th:text="${category}"
+                  ></a>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
         <div
-          class="flex flex-col px-[1rem] items-center"
-          th:each="foodMenu : ${foodtruck.menuEntity}"
+          class="flex flex-col justify-center lg:flex-row lg:flex-wrap px-[1rem] items-center sm:mt-[2vh]"
         >
           <div
-            class="border-[1px] border-black rounded-lg bg-white w-[22rem] h-[13rem] shadow-md shadow-black flex p-[0.5rem] my-[0.5rem]"
+            th:each="foodMenu : ${foodtruck.menuEntity}"
+            class="border-[1px] border-black rounded-lg bg-white w-[22rem] sm:w-[30rem] lg:w-[28rem] h-[13rem] sm:h-[18rem] shadow-md shadow-black flex p-[0.5rem] my-[0.5rem] lg:mx-[1rem]"
           >
             <p
               th:id="'disheId'+${foodMenu.id}"
@@ -416,7 +470,7 @@
               th:if="${foodMenu.dishePhoto!=null}"
               th:src="@{'data:image/jpeg;base64,'+${foodMenu.dishePhoto}}"
               alt=""
-              class="rounded-lg w-[10rem] border-black border-[1px]"
+              class="rounded-lg w-[10rem] sm:w-[15rem] border-black border-[1px]"
             />
             <p
               th:id="'dishePhoto'+${foodMenu.id}"
@@ -427,16 +481,18 @@
               th:if="${foodMenu.dishePhoto==null}"
               th:src="@{/img/imgIcon.png}"
               alt=""
-              class="rounded-lg w-[10rem] border-black border-[1px]"
+              class="rounded-lg w-[10rem] sm:w-[15rem] border-black border-[1px]"
             />
 
             <div class="ml-[1rem]">
               <p
                 th:id="'disheName'+${foodMenu.id}"
                 th:text="${foodMenu.disheName}"
-                class="text-wrap font-semibold text-[1.2rem] mb-[0.5rem]"
+                class="text-wrap font-semibold text-[1.2rem] sm:text-[1.5rem] mb-[0.5rem]"
               ></p>
-              <p class="text-wrap font-semibold text-[0.9rem] mb-[0.2rem]">
+              <p
+                class="text-wrap font-semibold text-[0.9rem] sm:text-[1.1rem] mb-[0.2rem]"
+              >
                 Type:
                 <span
                   class="font-normal"
@@ -444,7 +500,9 @@
                   th:id="'disheCategory'+${foodMenu.id}"
                 ></span>
               </p>
-              <p class="text-wrap font-semibold text-[0.9rem] mb-[0.2rem]">
+              <p
+                class="text-wrap font-semibold text-[0.9rem] sm:text-[1.1rem] mb-[0.2rem]"
+              >
                 Description:
                 <span
                   th:id="'disheDescription'+${foodMenu.id}"
@@ -452,33 +510,37 @@
                   th:text="${foodMenu.disheDescription}"
                 ></span>
               </p>
-              <p class="text-wrap font-semibold text-[0.9rem] mb-[0.2rem]">
+              <p
+                class="text-wrap font-semibold text-[0.9rem] sm:text-[1.1rem] mb-[0.2rem]"
+              >
                 Price:
                 <span
                   class="font-normal"
                   th:text="${foodMenu.price}"
                   th:id="'dishePrice'+${foodMenu.id}"
                 ></span
-                ><span> &#x20B9;</span>
+                ><span class="font-normal"> &#x20B9;</span>
               </p>
-              <p class="text-wrap font-semibold text-[0.9rem] mb-[0.2rem]">
+              <p
+                class="text-wrap font-semibold text-[0.9rem] sm:text-[1.1rem] mb-[0.2rem]"
+              >
                 Discount:
                 <span
                   class="font-normal"
                   th:text="${foodMenu.discount}"
                   th:id="'disheDiscount'+${foodMenu.id}"
                 ></span
-                ><span> %</span>
+                ><span class="font-normal"> %</span>
               </p>
-              <div>
-                <a href="#"
-                  ><i
-                    th:onclick="'updateMenuItem('+${foodMenu.id}+')'"
-                    class="fa-solid fa-pen-to-square text-[1.2rem] mr-[0.5rem]"
-                  ></i
-                ></a>
+              <div class="sm:mt-[0.5rem]">
+                <i
+                  th:onclick="'updateMenuItem('+${foodMenu.id}+')'"
+                  class="fa-solid fa-pen-to-square text-[1.2rem] sm:text-[1.5rem] mr-[0.5rem] text-[#1E0342]"
+                ></i>
                 <a th:href="@{'/foodTruck/deleteMenuItem/'+${foodMenu.id}}"
-                  ><i class="fa-solid fa-trash text-[1.2rem]"></i
+                  ><i
+                    class="fa-solid fa-trash text-[1.2rem] sm:text-[1.5rem] text-[#1E0342]"
+                  ></i
                 ></a>
               </div>
             </div>
@@ -491,7 +553,9 @@
         <div
           class="border-b-[1px] border-black py-[1rem] px-[1rem] flex flex-col justify-center items-center mb-[1rem]"
         >
-          <h1 class="text-center mb-[0.5rem]">Add Photo</h1>
+          <h1 class="text-center mb-[0.5rem] sm:text-[1.5rem] font-semibold">
+            Add Photo
+          </h1>
           <form
             action="/foodTruck/addGalleryPhoto"
             method="post"
@@ -501,11 +565,11 @@
               <input
                 type="file"
                 name="galleryPhoto"
-                class="file:bg-black file:text-white file:py-[0.5rem] file:font-semibold file:px-[1rem] file:rounded-md bg-white file:mr-[0.5rem] rounded-md border-black border-[1px] w-[16rem] mr-[0.5rem]"
+                class="file:bg-[#1E0342] file:text-white file:py-[0.3rem] sm:file:py-[0.5rem] file:font-semibold file:px-[0.7rem] sm:file:px-[1rem] file:rounded-md bg-white file:mr-[0.5rem] rounded-md border-black border-[1px] w-[15rem] sm:w-[60vw] lg:w-[50vw] 2xl:w-[40vw] mr-[0.5rem]"
               />
               <button
                 type="submit"
-                class="bg-black rounded-md text-white font-semibold px-[1rem] py-[0.5rem]"
+                class="bg-[#1E0342] rounded-md text-white font-semibold px-[1rem] py-[0.5rem]"
               >
                 Upload
               </button>
@@ -513,21 +577,28 @@
           </form>
         </div>
 
-        <div
-          class="flex flex-wrap justify-center"
-          th:each="img : ${foodtruck.galleryPhotos}"
-        >
-          <div>
+        <div class="flex flex-wrap justify-center">
+          <div
+            class="mx-[0.2rem] my-[0.2rem] flex flex-col justify-center items-center"
+            th:each="img : ${foodtruck.galleryPhotos}"
+          >
             <img
+              th:onclick="'showImg('+${img.id}+')'"
               th:src="@{'data:image/jpeg;base64,'+${img.image}}"
               alt=""
-              class="w-[23rem] h-[30rem] my-[0.5rem]"
+              class="cursor-pointer w-[11rem] sm:w-[12rem] md:w-[14rem] lg:w-[20rem] xl:w-[25rem] xl:w-[30rem] h-[11rem] sm:h-[12rem] md:h-[14rem] lg:h-[20rem] xl:h-[23rem] xl:h-[25rem]"
             />
+            <p th:text="${img.image}" th:id="'img'+${img.id}" hidden></p>
+
             <div
-              class="bg-white relative left-[80vw] w-fit top-[-6vh] py-[0.5rem] px-[1rem]"
+              class="bg-white relative w-fit h-0 left-[4rem] sm:left-[4.5rem] md:left-[5.5rem] lg:left-[8.5rem] xl:left-[13.5rem] top-[-2rem]"
             >
-              <a th:href="@{'/foodTruck/deleteGalleryPhoto/'+${img.id}}"
-                ><i class="fa-solid fa-trash text-[1.2rem] hover:scale-110"></i
+              <a
+                th:href="@{'/foodTruck/deleteGalleryPhoto/'+${img.id}}"
+                class="bg-white py-[0.3rem] px-[0.5rem]"
+                ><i
+                  class="fa-solid fa-trash text-[1.2rem] hover:scale-110 text-[#1E0342]"
+                ></i
               ></a>
             </div>
           </div>
@@ -536,9 +607,9 @@
 
       <!-- below div is for foodtruck feedback -->
       <div id="feedback" class="hidden">
-        <div class="flex flex-wrap justify-center mt-[1rem]">
+        <div class="flex flex-col items-center justify-center mt-[1rem]">
           <div
-            class="w-[21rem] border-[1px] border-black shadow-black shadow-md rounded-md mt-[1rem]"
+            class="w-[80vw] border-[1px] border-black shadow-black shadow-md rounded-md mt-[1rem]"
             th:each="feedback : ${foodtruck.feedbacks}"
           >
             <div class="py-[0.5rem] px-[1rem] border-[1px] border-b-black">
@@ -549,19 +620,19 @@
                 ></span>
                 <span>
                   <i
-                    th:class="${feedback.rating>=1?'fa-solid':'fa-regular'}+' fa-star'"
+                    th:class="${feedback.rating>=1?'fa-solid':'fa-regular'}+' fa-star text-[#1E0342]'"
                   ></i>
                   <i
-                    th:class="${feedback.rating>=2?'fa-solid':'fa-regular'}+' fa-star'"
+                    th:class="${feedback.rating>=2?'fa-solid':'fa-regular'}+' fa-star text-[#1E0342]'"
                   ></i>
                   <i
-                    th:class="${feedback.rating>=3?'fa-solid':'fa-regular'}+' fa-star'"
+                    th:class="${feedback.rating>=3?'fa-solid':'fa-regular'}+' fa-star text-[#1E0342]'"
                   ></i>
                   <i
-                    th:class="${feedback.rating>=4?'fa-solid':'fa-regular'}+' fa-star'"
+                    th:class="${feedback.rating>=4?'fa-solid':'fa-regular'}+' fa-star text-[#1E0342]'"
                   ></i>
                   <i
-                    th:class="${feedback.rating>=5?'fa-solid':'fa-regular'}+' fa-star'"
+                    th:class="${feedback.rating>=5?'fa-solid':'fa-regular'}+' fa-star text-[#1E0342]'"
                   ></i>
                 </span>
               </h1>
@@ -575,169 +646,9 @@
       </div>
     </div>
 
-    <div class="hidden">
-      <div
-        style="
-          border: 1px solid black;
-          border-radius: 50%;
-          width: 10vw;
-          height: 20vh;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        "
-      >
-        <img
-          th:if="${foodtruck.foodTruckImage}!=null"
-          th:src="@{'data:image/jpeg;base64,'+${foodtruck.foodTruckImage}}"
-          alt=""
-          style="
-            border: 1px solid black;
-            border-radius: 50%;
-            width: 10vw;
-            height: 20vh;
-          "
-        /><img
-          th:if="${foodtruck.foodTruckImage}==null"
-          th:src="@{/img/imgIcon.png}"
-          alt=""
-          style="
-            border: 1px solid black;
-            border-radius: 50%;
-            width: 10vw;
-            height: 20vh;
-          "
-        />
-      </div>
-      <br />
-
-      <form
-        action="/foodTruck/updateFoodtruckImage"
-        method="post"
-        enctype="multipart/form-data"
-      >
-        <label for="">Update Cover Photo</label>
-        <input type="file" name="img" />
-        <button type="submit">Update Photo</button>
-      </form>
-
-      <form action="/foodTruck/getLocation" method="post" hidden>
-        <p id="msg"></p>
-        <input type="text" name="lat" id="lat" />
-        <input type="text" name="long" id="long" />
-        <button type="submit" id="sendLocation">Go Online</button>
-      </form>
-      <button onclick="getLocation()">Go Online</button>
-
-      <form action="/foodTruck/setClosingTime" method="post">
-        <input type="time" name="closingTime" />
-        <button type="submit">Set ClosingTime</button>
-      </form>
-
-      <form
-        action="/foodTruck/addMenuItem"
-        method="post"
-        enctype="multipart/form-data"
-      >
-        <input type="text" name="disheName" placeholder="Dishe Name" />
-        <input
-          type="text"
-          name="disheDescription"
-          placeholder="Dishe Description"
-        />
-        <input type="text" name="price" placeholder="Price" />
-        <input type="text" name="discount" placeholder="Discount" />
-
-        <input
-          type="text"
-          list="categoryList"
-          name="category"
-          placeholder="Dishe Category"
-        />
-        <datalist id="categoryList">
-          <div th:each="category : ${categories}">
-            <option th:value="${category}" th:text="${category}"></option>
-          </div>
-        </datalist>
-
-        <input type="file" name="dishePhoto" />
-        <button type="submit">Add Dishe</button>
-      </form>
-      <h1>Welcome To FoodTruck</h1>
-
-      <h1>Menu List</h1>
-      <hr />
-      <div
-        th:each="menuItem : ${foodtruck.menuEntity}"
-        style="display: flex; margin-bottom: 3vh"
-      >
-        <div style="margin-right: 5vh">
-          <img
-            th:if="${menuItem.dishePhoto!=null}"
-            th:src="@{'data:image/jpeg;base64,'+${menuItem.dishePhoto}}"
-            style="width: 15vw; height: 30vh"
-            alt=""
-          /><img
-            th:if="${menuItem.dishePhoto==null}"
-            th:src="@{/img/imgIcon.png}"
-            style="width: 15vw; height: 30vh"
-            alt=""
-          />
-        </div>
-        <div>
-          <p>Dishe Name : <span th:text="${menuItem.disheName}"></span></p>
-          <p>
-            Dishe Description :
-            <span th:text="${menuItem.disheDescription}"></span>
-          </p>
-          <p>Dishe Price : <span th:text="${menuItem.price}"></span></p>
-          <p>Dishe Discount : <span th:text="${menuItem.discount}"></span></p>
-          <p>Dishe Category : <span th:text="${menuItem.category}"></span></p>
-          <a th:href="@{'/foodTruck/deleteMenuItem/'+${menuItem.id}}"
-            >Delete Item</a
-          >
-          <a th:href="@{'/foodTruck/menuItem/'+${menuItem.id}}">Update Item</a>
-        </div>
-      </div>
-
-      <p>Name :</p>
-      <p th:text="${foodtruck}"></p>
-
-      <form
-        action="/foodTruck/addGalleryPhoto"
-        method="post"
-        enctype="multipart/form-data"
-      >
-        <input type="file" name="galleryPhoto" />
-        <button type="submit">Upload</button>
-      </form>
-      <h1>Foodtruck Photo Gallery</h1>
-      <hr />
-      <div th:each="img:${foodtruck.galleryPhotos}">
-        <img
-          th:src="@{'data:image/jpeg;base64,'+${img.image}}"
-          alt=""
-          style="width: 20vw; height: 40vh"
-        />
-        <a th:href="'/foodTruck/deleteGalleryPhoto/'+${img.id}"
-          >Delete Gallery Photo</a
-        >
-      </div>
-
-      <div>
-        <h1>Foodtruck Feedbacks:</h1>
-        <hr />
-        <div th:each="feedback: ${foodtruck.feedbacks}">
-          <p>Name : <span th:text="${feedback.userName}"></span></p>
-          <p>Feedback : <span th:text="${feedback.feedback}"></span></p>
-          <p>Rating : <span th:text="${feedback.rating}"></span></p>
-          <p>Date : <span th:text="${feedback.date}"></span></p>
-          <hr />
-        </div>
-      </div>
-    </div>
     <script src="/js/updateMenuItem.js"></script>
     <script src="/js/Rating.js"></script>
     <script th:src="@{/js/getFoodTruckLocation.js}"></script>
+    <link rel="stylesheet" href="/css/handleMenuDesign.css" />
   </body>
 </html>

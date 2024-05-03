@@ -94,7 +94,7 @@ public class FoodTruckController {
             }
 
         } catch (Exception e) {
-            m.addAttribute("error", "Something Wrong Try Again");
+            m.addFlashAttribute("error", "Something wrong.");
             return "redirect:/public/registerFoodTruck";
 
         }
@@ -103,7 +103,7 @@ public class FoodTruckController {
 
     @RequestMapping("/updateFoodtruckImage")
     public String updateFoodtruckImage(@RequestParam("img") MultipartFile img,
-            @AuthenticationPrincipal CustomUserDetails customUserDetails) throws IOException {
+            @AuthenticationPrincipal CustomUserDetails customUserDetails, RedirectAttributes m) throws IOException {
         try {
             FoodtruckEntity foodtruckEntity = foodTruckService.findFoodTruckByEmail(customUserDetails.getUsername());
             if (img.isEmpty())
@@ -111,14 +111,17 @@ public class FoodTruckController {
             else
                 foodtruckEntity.setFoodTruckImage(Base64.getEncoder().encodeToString(img.getBytes()));
             foodTruckService.updateFoodTruck(foodtruckEntity);
+            m.addFlashAttribute("error", "Photo Updated.");
             return "redirect:/foodTruck/foodTruckDashboard";
         } catch (Exception e) {
+            m.addFlashAttribute("error", "Something wrong.");
             return "redirect:/foodTruck/foodTruckDashboard";
         }
     }
 
     @RequestMapping("/foodTruckDashboard")
-    public String foodTruckDashboard(@AuthenticationPrincipal CustomUserDetails user, Model model) {
+    public String foodTruckDashboard(@AuthenticationPrincipal CustomUserDetails user, Model model,
+            @ModelAttribute("error") String error) {
         FoodtruckEntity foodtruckEntity = foodTruckService.findFoodTruckByEmail(user.getUsername());
         foodtruckEntity.setId(null);
         foodtruckEntity.setPassword(null);
@@ -137,6 +140,7 @@ public class FoodTruckController {
         else
             model.addAttribute("isUserLogged", true);
 
+        model.addAttribute("error", error);
         model.addAttribute("categories", categories);
         model.addAttribute("foodtruck", foodtruckEntity);
         return "foodTruck";
@@ -173,11 +177,13 @@ public class FoodTruckController {
 
     @RequestMapping("/addGalleryPhoto")
     public String addMenuImg(@RequestParam("galleryPhoto") MultipartFile file,
-            @AuthenticationPrincipal CustomUserDetails customUserDetails, Model m)
+            @AuthenticationPrincipal CustomUserDetails customUserDetails, RedirectAttributes m)
             throws IOException {
         try {
-            if (file.isEmpty())
+            if (file.isEmpty()) {
+                m.addFlashAttribute("error", "Something wrong.");
                 return "redirect:/foodTruck/foodTruckDashboard";
+            }
             GalleryPhotos menuEntity = new GalleryPhotos();
             menuEntity.setImage(Base64.getEncoder().encodeToString(file.getBytes()));
             FoodtruckEntity foodtruckEntity = foodTruckService.findFoodTruckByEmail(customUserDetails.getUsername());
@@ -185,22 +191,25 @@ public class FoodTruckController {
 
             foodtruckEntity.setGalleryPhotos(foodtruckEntity.getGalleryPhotos());
             foodTruckService.updateFoodTruck(foodtruckEntity);
+
+            m.addFlashAttribute("error", "Photo Added Successfully.");
             return "redirect:/foodTruck/foodTruckDashboard";
 
         } catch (Exception e) {
-            m.addAttribute("error", "Something Wrong Try Again");
+            m.addFlashAttribute("error", "Something wrong.");
             return "redirect:/foodTruck/foodTruckDashboard";
         }
 
     }
 
     @RequestMapping("/deleteGalleryPhoto/{id}")
-    public String deleteMenu(@PathVariable("id") Long id, Model m) {
+    public String deleteMenu(@PathVariable("id") Long id, RedirectAttributes m) {
         try {
             menuService.deleteMenu(id);
+            m.addFlashAttribute("error", "Photo Deleted Successfully.");
             return "redirect:/foodTruck/foodTruckDashboard";
         } catch (Exception e) {
-            m.addAttribute("error", "Something Wrong Try Again");
+            m.addFlashAttribute("error", "Something wrong.");
             return "redirect:/foodTruck/foodTruckDashboard";
         }
     }
@@ -215,7 +224,7 @@ public class FoodTruckController {
             foodTruckService.updateFoodTruck(foodtruckEntity);
             return "redirect:/foodTruck/foodTruckDashboard";
         } catch (Exception e) {
-            m.addAttribute("error", "Something Wrong Try Again");
+            m.addAttribute("error", "Something wrong.");
             return "redirect:/foodTruck/foodTruckDashboard";
         }
 
@@ -230,14 +239,14 @@ public class FoodTruckController {
             foodTruckService.updateFoodTruck(foodtruckEntity);
             return "redirect:/foodTruck/foodTruckDashboard";
         } catch (Exception e) {
-            m.addAttribute("error", "Something Wrong Try Again");
+            m.addAttribute("error", "Something wrong.");
             return "redirect:/foodTruck/foodTruckDashboard";
         }
 
     }
 
     @RequestMapping("/addMenuItem")
-    public String addMenu(@AuthenticationPrincipal CustomUserDetails customUserDetails, Model model,
+    public String addMenu(@AuthenticationPrincipal CustomUserDetails customUserDetails, RedirectAttributes model,
             MenuModel menuModel, @RequestParam("dishePhoto") MultipartFile file) {
         try {
             FoodtruckEntity foodtruckEntity = foodTruckService.findFoodTruckByEmail(customUserDetails.getUsername());
@@ -257,10 +266,10 @@ public class FoodTruckController {
             foodtruckEntity.getMenuEntity().add(menuEntity);
 
             foodTruckService.updateFoodTruck(foodtruckEntity);
-
+            model.addFlashAttribute("error", "Menu Item Added Successfully.");
             return "redirect:/foodTruck/foodTruckDashboard";
         } catch (Exception e) {
-            model.addAttribute("error", "Something wrong try again.");
+            model.addFlashAttribute("error", "Something wrong.");
             return "redirect:/foodTruck/foodTruckDashboard";
         }
 
@@ -270,9 +279,12 @@ public class FoodTruckController {
     public String deleteMenuItem(@PathVariable("id") Long id, RedirectAttributes m) {
 
         if (menuListServiceImpl.deleteMenuItem(id)) {
+            m.addFlashAttribute("error", "Menu Item Deleted Successfully.");
             return "redirect:/foodTruck/foodTruckDashboard";
-        } else
+        } else {
+            m.addFlashAttribute("error", "Something wrong.");
             return "redirect:/foodTruck/foodTruckDashboard";
+        }
     }
 
     @RequestMapping("/menuItem/{id}")
@@ -286,7 +298,8 @@ public class FoodTruckController {
     }
 
     @RequestMapping("/updateMenuItem")
-    public String updateMenuItem(MenuModel menuModel, @RequestParam("dishePhoto") MultipartFile file)
+    public String updateMenuItem(MenuModel menuModel, @RequestParam("dishePhoto") MultipartFile file,
+            RedirectAttributes model)
             throws IOException {
         MenuEntity menuItem = new MenuEntity();
         Optional<MenuEntity> m = menuListServiceImpl.findMenuItem(Long.parseLong(menuModel.getId()));
@@ -303,6 +316,7 @@ public class FoodTruckController {
             menuItem.setDishePhoto(m.get().getDishePhoto());
 
         menuListServiceImpl.updateMenuItem(menuItem);
+        model.addFlashAttribute("error", "Menu Item Updated Successfully.");
         return "redirect:/foodTruck/foodTruckDashboard";
     }
 

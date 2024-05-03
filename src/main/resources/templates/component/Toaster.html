@@ -7,14 +7,20 @@
   <script>
     let toaster = document.getElementById("toaster");
     setTimeout(() => {
-      toaster.classList.add("translate-y-[4rem]");
+      toaster.classList.add("translate-y-[3.5rem]");
+      toaster.classList.add("sm:translate-y-[4.5rem]");
+      toaster.classList.add("lg:translate-y-[5.5rem]");
       toaster.classList.add("duration-500");
     }, 500);
     setTimeout(() => {
-      toaster.classList.remove("translate-y-[4rem]");
+      toaster.classList.remove("translate-y-[3.5rem]");
+      toaster.classList.remove("lg:translate-y-[5.5rem]");
+      toaster.classList.remove("sm:translate-y-[4.5rem]");
       toaster.classList.remove("duration-500");
 
-      toaster.classList.add("translate-y-[-4rem]");
+      toaster.classList.add("translate-y-[-3.5rem]");
+      toaster.classList.add("lg:translate-y-[-5.5rem]");
+      toaster.classList.add("sm:translate-y-[-4.5rem]");
       toaster.classList.add("duration-500");
     }, 4000);
   </script>

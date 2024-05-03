@@ -128,7 +128,7 @@ public class UserController {
     }
 
     @RequestMapping("/saveFeedback")
-    public String saveFeedback(FeedbackModel feedbackModel, Model m,
+    public String saveFeedback(FeedbackModel feedbackModel, RedirectAttributes m,
             @AuthenticationPrincipal CustomUserDetails customUserDetails) {
         try {
             UserEntity userEntity = userServiceImpl.findUser(customUserDetails.getUsername());
@@ -143,9 +143,10 @@ public class UserController {
             foodtruckEntity.getFeedbacks().add(foodtruckFeedbacks);
             foodTruckServiceImpl.updateFoodTruck(foodtruckEntity);
 
+            m.addFlashAttribute("error", "Feedback Saved.");
             return "redirect:/user/foodtruckDetails/" + feedbackModel.getFoodtruckEmail();
         } catch (Exception e) {
-            m.addAttribute("error", "Something Wrong");
+            m.addFlashAttribute("error", "Something wrong.");
             return "redirect:/user/foodtruckDetails/" + feedbackModel.getFoodtruckEmail();
         }
 

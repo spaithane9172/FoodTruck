@@ -6,7 +6,7 @@
   <body class="bg-gray-100 p-0 m-0">
     <nav th:replace="~{/component/Navbar.html :: navbar}"></nav>
     <div class="px-[5vw] py-[7vh]">
-      <img src="/img/foodtruck.png" alt="" class="w-full h-[35vh]" />
+      <img src="/img/foodtruck.png" alt="" class="w-full h-[35vh] lg:hidden" />
       <div class="mt-[2rem]">
         <h1
           class="text-center text-[1.5rem] font-semibold underline underline-offset-[0.5rem]"
@@ -207,6 +207,10 @@
         element.classList.contains("h-[20vh]")
           ? element.classList.remove("h-[20vh]")
           : element.classList.add("h-[20vh]");
+
+        element.classList.contains("lg:h-[10vh]")
+          ? element.classList.remove("lg:h-[10vh]")
+          : element.classList.add("lg:h-[10vh]");
       }
     </script>
   </body>
