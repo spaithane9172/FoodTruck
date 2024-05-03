@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/foodtruck
+    url: jdbc:mysql://roundhouse.proxy.rlwy.net:28025/railway
     username: root
-    password: 1234
+    password: uHlXvWOoGYCVlRjJLAJruxJMriEJPaqj
   jpa:
     hibernate:
       ddl-auto: update
