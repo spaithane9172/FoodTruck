@@ -2,7 +2,7 @@
   th:fragment="navbar"
   class="bg-white flex justify-between px-[7vw] lg:px-[5vw] h-[6vh] sm:h-[10vh] lg:h-[12vh] xl:h-[10vh] w-full items-center fixed z-50"
 >
-  <a href="/public/">
+  <a href="/">
     <img
       src="/img/logo.png"
       alt=""
@@ -23,13 +23,13 @@
         >
           <a
             href="/public/registerUser"
-            class="bg-[#1E0342] py-[0.5rem] mb-[0.5rem] font-semibold rounded-md shadow-md shadow-black-400 text-center lg:hidden text-white"
+            class="bg-[#1E0342] py-[0.5rem] mb-[0.5rem] font-semibold rounded-md shadow-md shadow-[#171616]-400 text-center lg:hidden text-white"
           >
             Create New Account
           </a>
           <a
             href="/public/loginPage"
-            class="bg-gray-200 px-[10vw] lg:px-[1rem] py-[0.5rem] font-semibold rounded-md shadow-md shadow-black-400 text-center"
+            class="bg-gray-200 px-[10vw] lg:px-[1rem] py-[0.5rem] font-semibold rounded-md shadow-md shadow-[#171616]-400 text-center"
           >
             LogIn
           </a>
@@ -44,7 +44,7 @@
           th:if="${isUser}"
           class="lg:flex lg:justify-center lg:items-center"
           ><li
-            class="pl-[10vw] lg:px-[1rem] py-[2vh] border-b-[1px] border-gray-300 lg:border-b-0"
+            th:class="'pl-[10vw] lg:px-[1rem] 2xl:px-[2rem] py-[2vh] border-b-[1px] border-gray-300 lg:border-b-0 font-semibold rounded-md '+${isUpActive}"
           >
             Profile
           </li></a
@@ -53,15 +53,16 @@
           th:if="${isFoodtruck}"
           class="lg:flex lg:justify-center lg:items-center"
           ><li
-            class="pl-[10vw] lg:px-[1rem] py-[2vh] border-b-[1px] border-gray-300 lg:border-b-0"
+            th:class="'pl-[10vw] lg:px-[1rem] 2xl:px-[2rem] py-[2vh] border-b-[1px] border-gray-300 lg:border-b-0 font-semibold rounded-md '+${isFpActive}"
           >
             Profile
           </li></a
         >
       </div>
-      <a href="/public/" class="lg:flex lg:justify-center lg:items-center"
+
+      <a href="/" class="lg:flex lg:justify-center lg:items-center"
         ><li
-          th:class="'pl-[10vw] lg:px-[2rem] py-[2vh] border-b-[1px] border-gray-300 lg:border-b-0 '+${isActive}"
+          th:class="'pl-[10vw] lg:px-[1rem] 2xl:px-[2rem] py-[2vh] border-b-[1px] border-gray-300 lg:border-b-0 font-semibold rounded-md '+${isHActive}"
         >
           Home
         </li></a
@@ -71,7 +72,7 @@
         class="lg:flex lg:justify-center lg:items-center"
         th:if="${isFoodtruck}"
         ><li
-          th:class="'pl-[10vw] lg:px-[2rem] py-[2vh] border-b-[1px] border-gray-300 lg:border-b-0 '+${isActive}"
+          th:class="'pl-[10vw] lg:px-[1rem] 2xl:px-[2rem] py-[2vh] border-b-[1px] border-gray-300 lg:border-b-0 font-semibold rounded-md '+${isFdActive}"
         >
           Dashboard
         </li></a
@@ -81,7 +82,7 @@
         class="lg:flex lg:justify-center lg:items-center"
         th:if="${isUser}"
         ><li
-          th:class="'pl-[10vw] lg:px-[2rem] py-[2vh] border-b-[1px] border-gray-300 lg:border-b-0 '+${isActive}"
+          th:class="'pl-[10vw] lg:px-[1rem] 2xl:px-[2rem] py-[2vh] border-b-[1px] border-gray-300 lg:border-b-0 font-semibold rounded-md '+${isUdActive}"
         >
           Dashboard
         </li></a
@@ -90,7 +91,7 @@
         href="/public/aboutUs"
         class="lg:flex lg:justify-center lg:items-center"
         ><li
-          class="pl-[10vw] lg:px-[1rem] py-[2vh] border-b-[1px] border-gray-300 lg:border-b-0"
+          th:class="'pl-[10vw] lg:px-[1rem] 2xl:px-[2rem] py-[2vh] border-b-[1px] border-gray-300 lg:border-b-0 font-semibold rounded-md '+${isAActive}"
           th:unless="${isUserLogged}"
         >
           About
@@ -101,7 +102,7 @@
         class="lg:flex lg:justify-center lg:items-center"
         ><li
           th:if="${isUserLogged}"
-          class="pl-[10vw] lg:px-[1rem] py-[2vh] border-b-[1px] border-gray-300 lg:border-b-0"
+          th:class="'pl-[10vw] lg:px-[1rem] 2xl:px-[2rem] py-[2vh] border-b-[1px] border-gray-300 lg:border-b-0 font-semibold rounded-md '+${isCActive}"
         >
           Contact
         </li></a
@@ -110,7 +111,7 @@
         href="/common/reviewUs"
         class="lg:flex lg:justify-center lg:items-center"
         ><li
-          class="pl-[10vw] lg:px-[1rem] py-[2vh] border-b-[1px] border-gray-300 lg:border-b-0"
+          th:class="'pl-[10vw] lg:px-[1rem] 2xl:px-[2rem] py-[2vh] border-b-[1px] border-gray-300 lg:border-b-0 font-semibold rounded-md '+${isRActive}"
           th:if="${isUserLogged}"
         >
           Review Us
@@ -118,7 +119,7 @@
       >
       <a href="/common/blogs" class="lg:flex lg:justify-center lg:items-center"
         ><li
-          class="pl-[10vw] lg:px-[1rem] py-[2vh] border-b-[1px] border-gray-300 lg:border-b-0"
+          th:class="'pl-[10vw] lg:px-[1rem] 2xl:px-[2rem] py-[2vh] border-b-[1px] border-gray-300 lg:border-b-0 font-semibold rounded-md '+${isBActive}"
           th:if="${isUserLogged}"
         >
           Blogs
@@ -129,7 +130,7 @@
         th:if="${isUser} or ${isFoodtruck}"
         class="lg:flex lg:justify-center lg:items-center lg:order-5"
         ><li
-          class="pl-[10vw] lg:px-[1rem] py-[2vh] border-b-[1px] border-gray-300 lg:border-b-0"
+          class="pl-[10vw] lg:px-[1rem] 2xl:px-[2rem] py-[2vh] border-b-[1px] border-gray-300 lg:border-b-0 font-semibold"
         >
           LogOut
         </li></a

@@ -62,6 +62,8 @@ public class CommonController {
         model.addAttribute("isFoodtruck", role.contains("ROLE_FOODTRUCK"));
         model.addAttribute("reviews", reviewUs);
         model.addAttribute("error", error);
+        model.addAttribute("isRActive", "bg-[#1E0342] text-white");
+
         return "reviewUs";
     }
 
@@ -88,6 +90,8 @@ public class CommonController {
         model.addAttribute("isUser", role.contains("ROLE_USER"));
         model.addAttribute("isFoodtruck", role.contains("ROLE_FOODTRUCK"));
         model.addAttribute("error", error);
+        model.addAttribute("isCActive", "bg-[#1E0342] text-white");
+
         return "contact";
     }
 
@@ -119,6 +123,8 @@ public class CommonController {
         model.addAttribute("isUser", role.contains("ROLE_USER"));
         model.addAttribute("isFoodtruck", role.contains("ROLE_FOODTRUCK"));
         model.addAttribute("error", error);
+        model.addAttribute("isBActive", "bg-[#1E0342] text-white");
+
         return "blogs";
     }
 

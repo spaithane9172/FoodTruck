@@ -60,7 +60,7 @@
         </p>
         <a
           href="/public/howToStartFoodtruck"
-          class="font-semibold px-[1rem] py-[0.5rem] bg-[#1E0342] text-white w-[70vw] lg:w-[50vw] text-center font-semibold rounded-md shadow-md shadow-black"
+          class="font-semibold px-[1rem] py-[0.5rem] bg-[#1E0342] text-white w-[70vw] lg:w-[50vw] text-center font-semibold rounded-md shadow-md shadow-[#171616]"
           >How to start Food Truck?</a
         >
       </div>
@@ -75,7 +75,7 @@
 
       <div class="flex flex-col justify-center items-center mt-[3vh]">
         <div
-          class="bg-white w-[20rem] sm:w-[30rem] sm:w-[40rem] lg:w-[90vw] p-[1.5rem] rounded-lg shadow-md shadow-black mb-[2rem]"
+          class="bg-white w-[20rem] sm:w-[30rem] sm:w-[40rem] lg:w-[90vw] p-[1.5rem] rounded-lg shadow-md shadow-[#171616] mb-[2rem]"
           th:each="review : ${reviews}"
         >
           <p class="text-justify mb-[1rem]" th:text="${review.msg}"></p>
@@ -106,7 +106,7 @@
       <div class="flex mt-[3vh] overflow-y-hidden overflow-x-scroll">
         <div class="flex w-[1000vw] py-[2rem]">
           <div
-            class="bg-white w-[18rem] h-[25rem] p-[1rem] rounded-lg shadow-md shadow-black mx-[1rem]"
+            class="bg-white w-[18rem] h-[25rem] p-[1rem] rounded-lg shadow-md shadow-[#171616] mx-[1rem]"
             th:each="blog : ${blogs}"
           >
             <img
@@ -123,7 +123,7 @@
           </div>
 
           <div
-            class="bg-white w-[18rem] h-[25rem] p-[1rem] rounded-lg shadow-md shadow-black mx-[1rem] flex justify-center items-center"
+            class="bg-white w-[18rem] h-[25rem] p-[1rem] rounded-lg shadow-md shadow-[#171616] mx-[1rem] flex justify-center items-center"
           >
             <a
               href="/common/blogs"
@@ -134,5 +134,6 @@
         </div>
       </div>
     </div>
+    <script src="/js/getFoodTruckLocation.js"></script>
   </body>
 </html>

@@ -114,6 +114,8 @@ public class UserController {
 
         model.addAttribute("user", u);
         model.addAttribute("foodtrucks", foodtruckEntity);
+
+        model.addAttribute("isUdActive", "bg-[#1E0342] text-white");
         return "users";
     }
 
@@ -224,6 +226,8 @@ public class UserController {
         model.addAttribute("isUser", role.contains("ROLE_USER"));
         model.addAttribute("isFoodtruck", role.contains("ROLE_FOODTRUCK"));
         model.addAttribute("error", error);
+        model.addAttribute("isUpActive", "bg-[#1E0342] text-white");
+
         return "userProfile";
     }
 

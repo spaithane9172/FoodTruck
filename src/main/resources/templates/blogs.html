@@ -17,7 +17,7 @@
       class="flex justify-center items-center relative top-[50vh] hidden"
     >
       <div
-        class="bg-white absolute w-[20rem] p-[1rem] border-[1px] border-black rounded-lg shadow-md shadow-black"
+        class="bg-white absolute w-[20rem] p-[1rem] border-[1px] border-black rounded-lg shadow-md shadow-[#171616]"
       >
         <p
           class="absolute left-[18rem] font-semibold text-[1.1rem] cursor-pointer"
@@ -109,7 +109,7 @@
         </div>
         <div class="lg:flex lg:flex-wrap lg:justify-center lg:items-center">
           <div
-            class="bg-white w-[18rem] sm:w-[24rem] h-[25rem] sm:h-[27rem] p-[1rem] rounded-lg shadow-md shadow-black mb-[1.5rem] lg:mx-[1rem]"
+            class="bg-white w-[18rem] sm:w-[24rem] h-[25rem] sm:h-[27rem] p-[1rem] rounded-lg shadow-md shadow-[#171616] mb-[1.5rem] lg:mx-[1rem]"
             th:each="blog : ${Blogs}"
           >
             <img
@@ -146,7 +146,7 @@
         </div>
         <div class="lg:flex lg:flex-wrap lg:justify-center lg:items-center">
           <div
-            class="bg-white w-[18rem] sm:w-[24rem] h-[25rem] sm:h-[27rem] p-[1rem] rounded-lg shadow-md shadow-black mb-[1.5rem] lg:mx-[1rem]"
+            class="bg-white w-[18rem] sm:w-[24rem] h-[25rem] sm:h-[27rem] p-[1rem] rounded-lg shadow-md shadow-[#171616] mb-[1.5rem] lg:mx-[1rem]"
             th:each="blog : ${myBlogs}"
           >
             <img
@@ -202,5 +202,6 @@
         document.getElementById("allBlogs").classList.remove("hidden");
       }
     </script>
+    <script src="/js/getFoodTruckLocation.js"></script>
   </body>
 </html>

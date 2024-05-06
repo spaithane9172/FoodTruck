@@ -21,7 +21,7 @@
           <img
             th:src="@{'data:image/jpeg;base64,'+${foodtruck.foodTruckImage}}"
             alt=""
-            class="rounded-[100%] border-[1px] border-gray-500 w-[8rem] sm:w-[14rem] h-[8rem] sm:h-[14rem] shadow-black shadow-md"
+            class="rounded-[100%] border-[1px] border-gray-500 w-[8rem] sm:w-[14rem] h-[8rem] sm:h-[14rem] shadow-[#171616] shadow-md"
           />
           <h1
             th:text="${foodtruck.foodTruckName}"
@@ -169,7 +169,7 @@
         >
           <div
             th:each="foodMenu : ${foodtruck.menuEntity}"
-            class="z-0 border-[1px] border-black rounded-lg bg-white w-[22rem] sm:w-[30rem] lg:w-[28rem] h-[13rem] sm:h-[18rem] shadow-md shadow-black flex p-[0.5rem] my-[0.5rem] lg:mx-[1rem]"
+            class="z-0 border-[1px] border-black rounded-lg bg-white w-[22rem] sm:w-[30rem] lg:w-[28rem] h-[13rem] sm:h-[18rem] shadow-md shadow-[#171616] flex p-[0.5rem] my-[0.5rem] lg:mx-[1rem]"
           >
             <img
               th:if="${foodMenu.dishePhoto!=null}"
@@ -314,7 +314,7 @@
 
         <div class="flex flex-col items-center justify-center mt-[1rem]">
           <div
-            class="w-[21rem] sm:w-[30rem] md:w-[40rem] lg:w-[85vw] border-[1px] border-black shadow-black shadow-md rounded-md mt-[1rem]"
+            class="w-[21rem] sm:w-[30rem] md:w-[40rem] lg:w-[85vw] border-[1px] border-black shadow-[#171616] shadow-md rounded-md mt-[1rem]"
             th:each="feedback : ${foodtruck.feedbacks}"
           >
             <div class="py-[0.5rem] px-[1rem] border-[1px] border-b-black">

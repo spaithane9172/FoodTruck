@@ -143,6 +143,8 @@ public class FoodTruckController {
         model.addAttribute("error", error);
         model.addAttribute("categories", categories);
         model.addAttribute("foodtruck", foodtruckEntity);
+        model.addAttribute("isFdActive", "bg-[#1E0342] text-white");
+
         return "foodTruck";
     }
 
@@ -337,6 +339,8 @@ public class FoodTruckController {
         model.addAttribute("isUser", role.contains("ROLE_USER"));
         model.addAttribute("isFoodtruck", role.contains("ROLE_FOODTRUCK"));
         model.addAttribute("error", error);
+        model.addAttribute("isFpActive", "bg-[#1E0342] text-white");
+
         return "truckProfile";
     }
 
