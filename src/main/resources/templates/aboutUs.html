@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-  <head th:insert="~{/component/Header.html :: head}">
+  <head th:insert="~{Header.html :: head}">
     <title>Document</title>
   </head>
   <body class="bg-gray-100 p-0 m-0">
-    <nav th:replace="~{/component/Navbar.html :: navbar}"></nav>
+    <nav th:replace="~{Navbar.html :: navbar}"></nav>
     <div class="px-[5vw] py-[7vh]">
       <img src="/img/foodtruck.png" alt="" class="w-full h-[35vh] lg:hidden" />
       <div class="mt-[2rem]">

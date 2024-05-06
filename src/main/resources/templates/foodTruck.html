@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-  <head th:insert="~{/component/Header.html :: head}">
+  <head th:insert="~{Header.html :: head}">
     <title>FoodTruck</title>
   </head>
   <body class="bg-gray-100 p-0 m-0">
-    <nav th:replace="~{/component/Navbar.html :: navbar}"></nav>
+    <nav th:replace="~{Navbar.html :: navbar}"></nav>
 
     <div th:if="${error}!=''">
       <div
-        th:replace="~{/component/Toaster.html :: toaster(color=${error}=='Something wrong.'?red:green,msg=${error})}"
+        th:replace="~{Toaster.html :: toaster(color=${error}=='Something wrong.'?red:green,msg=${error})}"
       ></div>
     </div>
 

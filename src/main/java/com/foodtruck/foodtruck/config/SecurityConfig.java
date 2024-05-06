@@ -43,7 +43,7 @@ public class SecurityConfig {
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(
                         auth -> auth
-                                .requestMatchers("/public/**", "/foodTruck/saveNewFoodTruck", "/user/saveNewUser",
+                                .requestMatchers("/", "/public/**", "/foodTruck/saveNewFoodTruck", "/user/saveNewUser",
                                         "/img/**", "/js/**", "/css/**")
                                 .permitAll()
                                 .requestMatchers("/foodTruck/**").hasRole("FOODTRUCK")

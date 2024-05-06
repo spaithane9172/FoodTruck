@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-  <head th:insert="~{/component/Header.html :: head}">
+  <head th:insert="~{Header.html :: head}">
     <title>Home | Page</title>
   </head>
   <body class="bg-gray-100 p-0 m-0">
-    <nav th:replace="~{/component/Navbar.html :: navbar}"></nav>
+    <nav th:replace="~{Navbar.html :: navbar}"></nav>
 
     <div
       class="bg-[url(/img/foodtruck.png)] bg-cover xl:bg-[1px] flex flex-col justify-center items-center h-[40vh] sm:h-[65vh] md:h-[75vh] lg:h-[100vh]"

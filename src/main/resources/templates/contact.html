@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head th:insert="~{/component/Header.html :: head}">
+  <head th:insert="~{Header.html :: head}">
     <title>Login | Page</title>
   </head>
   <body class="bg-gray-100 p-0 m-0">
-    <nav th:replace="~{/component/Navbar.html :: navbar}"></nav>
+    <nav th:replace="~{Navbar.html :: navbar}"></nav>
 
     <div th:if="${error}!=''">
       <div
-        th:replace="~{/component/Toaster.html :: toaster(color=${error}=='Message Send Successfully.'?green:red,msg=${error})}"
+        th:replace="~{Toaster.html :: toaster(color=${error}=='Message Send Successfully.'?green:red,msg=${error})}"
       ></div>
     </div>
 
     <div th:if="${param.error}">
       <div
-        th:replace="~{/component/Toaster.html :: toaster(color=red,msg='Bad Credential')}"
+        th:replace="~{Toaster.html :: toaster(color=red,msg='Bad Credential')}"
       ></div>
     </div>
     <div class="flex justify-center items-center w-[100vw] h-[93vh]">

@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <!-- solve user location problem before doing any thing -->
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-  <head th:insert="~{/component/Header.html :: head}">
+  <head th:insert="~{Header.html :: head}">
     <title>FoodTruck | User</title>
   </head>
   <body onload="" class="bg-gray-100 p-0 m-0">
-    <nav th:replace="~{/component/Navbar.html :: navbar}"></nav>
+    <nav th:replace="~{Navbar.html :: navbar}"></nav>
     <div class="px-[4vw] pt-[7vh] pb-[5vh] sm:pt-[12vh]">
       <!-- below code is responsible for getting user location -->
       <form action="/user/getUserLocation" method="post" hidden>
