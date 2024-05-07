@@ -76,40 +76,50 @@
           ></h1>
         </div>
         <div class="flex justify-center">
-          <div class="w-[50%] mr-[1rem] sm:mr-[2rem] md:mr-[4rem] lg:mr-[10vw]">
-            <p
-              class="text-wrap font-semibold text-[0.9rem] sm:text-[1.1rem] mb-[1rem]"
-            >
-              Type:
-              <span class="font-normal">Vegetarian and Non-Vegetarian</span>
-            </p>
-            <p class="text-wrap font-semibold text-[0.9rem] sm:text-[1.1rem]">
-              Timing:
-              <span
-                th:text="${foodtruck.closingTime}"
-                class="font-normal"
-              ></span>
-            </p>
-          </div>
-          <div class="w-[50%]">
-            <p
-              class="text-wrap font-semibold text-[0.9rem] sm:text-[1.1rem] mb-[1rem]"
-            >
-              Distance:
-              <span th:text="${foodtruck.distance}" class="font-normal"></span
-              ><span class="font-semibold"> Km</span>
-            </p>
-
-            <a
-              th:href="@{'https://www.google.com/maps/place/'+${foodtruck.lat}+','+${foodtruck.longi}}"
-              target="_blank"
-              ><p
-                class="text-wrap font-semibold text-[0.9rem] sm:text-[1.1rem] mb-[0.2rem]"
+          <div
+            class="w-[40vw] flex justify-center items-center mr-[1rem] sm:mr-[2rem] md:mr-[4rem] lg:mr-[10vw]"
+          >
+            <div class="w-fit">
+              <p
+                class="text-wrap font-semibold text-[0.9rem] sm:text-[1.1rem] mb-[1rem]"
               >
-                <i class="fa-solid fa-location-dot"></i>
-                <span> FoodTruck Location</span>
-              </p></a
-            >
+                Type:
+                <span class="font-normal" th:text="${foodtruck.type}"></span>
+              </p>
+              <p class="text-wrap font-semibold text-[0.9rem] sm:text-[1.1rem]">
+                Timing:
+                <span
+                  th:text="${foodtruck.openingTime}"
+                  class="font-normal"
+                ></span>
+                -
+                <span
+                  th:text="${foodtruck.closingTime}"
+                  class="font-normal"
+                ></span>
+              </p>
+            </div>
+          </div>
+          <div class="w-[40vw] flex justify-center items-center">
+            <div class="w-fit">
+              <p
+                class="text-wrap font-semibold text-[0.9rem] sm:text-[1.1rem] mb-[1rem]"
+              >
+                FoodTruck:
+                <span th:text="${foodtruck.status}" class="font-normal"></span>
+              </p>
+
+              <a
+                th:href="@{'https://www.google.com/maps/place/'+${foodtruck.lat}+','+${foodtruck.longi}}"
+                target="_blank"
+                ><p
+                  class="text-wrap font-semibold text-[0.9rem] sm:text-[1.1rem] mb-[0.2rem]"
+                >
+                  <i class="fa-solid fa-location-dot"></i>
+                  <span> FoodTruck Location</span>
+                </p></a
+              >
+            </div>
           </div>
         </div>
       </div>

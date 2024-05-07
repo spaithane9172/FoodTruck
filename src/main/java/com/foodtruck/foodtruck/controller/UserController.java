@@ -176,7 +176,7 @@ public class UserController {
         model.addAttribute("isFoodtruck", role.contains("ROLE_FOODTRUCK"));
         model.addAttribute("categories", categories);
         model.addAttribute("foodtruck", foodtruckEntity);
-        return "/foodtruckDetails";
+        return "foodtruckDetails";
     }
 
     @RequestMapping("/menuItemFilter/category={category}&email={email}")
@@ -206,7 +206,7 @@ public class UserController {
         model.addAttribute("categories", categories);
         model.addAttribute("foodtruck", foodtruckEntity);
 
-        return "/foodtruckDetails";
+        return "foodtruckDetails";
     }
 
     @RequestMapping("/userProfile")

@@ -56,6 +56,18 @@
               class="w-[65vw] md:w-[50vw] lg:w-[40vw] h-[4vh] sm:h-[6vh] border-[1px] border-black focus:outline-none pl-[0.5rem] text-[1.1rem] rounded-md mb-[1rem]"
               disabled
             />
+            <label for="type" class="font-semibold text-[1rem] mb-[0.5rem]"
+              >Type</label
+            >
+            <input
+              type="text"
+              id="type"
+              name="type"
+              th:value="${foodtruck.type}"
+              class="w-[65vw] md:w-[50vw] lg:w-[40vw] h-[4vh] sm:h-[6vh] border-[1px] border-black focus:outline-none pl-[0.5rem] text-[1.1rem] rounded-md mb-[1rem]"
+              placeholder="(Vegetarian or Non-Vegetarian)"
+              disabled
+            />
             <label for="email" class="font-semibold text-[1rem] mb-[0.5rem]"
               >Email</label
             >
@@ -106,7 +118,7 @@
                   name="status"
                   th:value="Open"
                   class="focus:outline-none w-[1.2rem] h-[1.2rem] mr-[1rem]"
-                  th:checked="${foodtruck.status=='Open'?'checked':''}"
+                  th:checked="${foodtruck.status=='Open'}"
                   disabled
                 /><label
                   for="closingTime"
@@ -119,9 +131,9 @@
                   type="radio"
                   id="status1"
                   name="status"
-                  value="Close"
+                  value="Closed"
                   class="focus:outline-none w-[1.2rem] h-[1.2rem] mr-[1rem]"
-                  th:checked="${foodtruck.status=='Closed'?'checked':''}"
+                  th:checked="${foodtruck.status=='Closed'}"
                   disabled
                 /><label for="closingTime" class="font-semibold text-[1rem]"
                   >Closed</label
@@ -147,6 +159,7 @@
             document.getElementById("closingTime").removeAttribute("disabled");
             document.getElementById("status").removeAttribute("disabled");
             document.getElementById("status1").removeAttribute("disabled");
+            document.getElementById("type").removeAttribute("disabled");
             document.getElementById("subBtn").classList.remove("hidden");
             document.getElementById("editBtn").classList.add("hidden");
           }

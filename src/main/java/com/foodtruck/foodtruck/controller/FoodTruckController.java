@@ -30,7 +30,6 @@ import com.foodtruck.foodtruck.entity.MenuEntity;
 import com.foodtruck.foodtruck.entity.UserEntity;
 import com.foodtruck.foodtruck.model.FoodTruckModel;
 import com.foodtruck.foodtruck.model.MenuModel;
-import com.foodtruck.foodtruck.model.UserModel;
 import com.foodtruck.foodtruck.service.FoodTruckService;
 import com.foodtruck.foodtruck.service.GalleryPhotosService;
 import com.foodtruck.foodtruck.service.MenuListServiceImpl;
@@ -76,6 +75,7 @@ public class FoodTruckController {
                     foodtruckEntity.setPassword(passwordEncoder.encode(foodTruckModel.getPassword()));
                     foodtruckEntity.setLat(Double.parseDouble(foodTruckModel.getLat()));
                     foodtruckEntity.setLongi(Double.parseDouble(foodTruckModel.getLongi()));
+                    foodtruckEntity.setType(foodTruckModel.getType());
                     if (img.isEmpty())
                         foodtruckEntity.setFoodTruckImage(null);
                     else
@@ -349,8 +349,13 @@ public class FoodTruckController {
             FoodTruckModel foodTruckModel) {
         try {
             FoodtruckEntity foodtruckEntity = foodTruckService.findFoodTruckByEmail(authentication.getName());
-            if (foodtruckEntity.getName().length() >= 3) {
+            if (foodTruckModel.getName().length() >= 3 && foodTruckModel.getFoodTruckName().length() >= 3) {
                 foodtruckEntity.setName(foodTruckModel.getName());
+                foodtruckEntity.setFoodTruckName(foodTruckModel.getFoodTruckName());
+                foodtruckEntity.setType(foodTruckModel.getType());
+                foodtruckEntity.setOpeningTime(foodTruckModel.getOpeningTime());
+                foodtruckEntity.setClosingTime(foodTruckModel.getClosingTime());
+                foodtruckEntity.setStatus(foodTruckModel.getStatus());
             } else {
                 throw new Exception();
             }

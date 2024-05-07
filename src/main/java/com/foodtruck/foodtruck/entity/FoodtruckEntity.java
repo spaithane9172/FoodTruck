@@ -26,6 +26,7 @@ public class FoodtruckEntity {
 
     private String name;
     private String foodTruckName;
+    private String type;
     private String email;
     private String password;
     private String role = "ROLE_FOODTRUCK";
@@ -43,6 +44,7 @@ public class FoodtruckEntity {
     private Double distance;
     private String openingTime;
     private String closingTime;
+
     @Lob
     @Column(columnDefinition = "LONGBLOB")
     private String foodTruckImage;
@@ -51,5 +53,5 @@ public class FoodtruckEntity {
     @JoinColumn(name = "fk_foodtruck_id", referencedColumnName = "id")
     private List<MenuEntity> menuEntity;
 
-    private String status;
+    private String status = "Closed";
 }

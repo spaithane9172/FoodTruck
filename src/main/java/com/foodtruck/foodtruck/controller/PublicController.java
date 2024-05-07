@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/public")
 public class PublicController {
-    static final String PATH = "redirect:/public/";
+    static final String PATH = "redirect:/";
 
     @RequestMapping("/registerFoodTruck")
     public String registerFoodTruck(@ModelAttribute("error") String error, Model m) {

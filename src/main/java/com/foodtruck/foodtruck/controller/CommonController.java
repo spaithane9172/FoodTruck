@@ -19,9 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.foodtruck.foodtruck.entity.Blog;
-import com.foodtruck.foodtruck.entity.FoodtruckEntity;
 import com.foodtruck.foodtruck.entity.ReviewUs;
-import com.foodtruck.foodtruck.entity.UserEntity;
 import com.foodtruck.foodtruck.model.BlogModel;
 import com.foodtruck.foodtruck.model.ContactModel;
 import com.foodtruck.foodtruck.model.ReviewUsModel;
