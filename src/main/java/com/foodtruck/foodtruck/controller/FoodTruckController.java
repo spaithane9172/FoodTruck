@@ -143,7 +143,7 @@ public class FoodTruckController {
         model.addAttribute("error", error);
         model.addAttribute("categories", categories);
         model.addAttribute("foodtruck", foodtruckEntity);
-        model.addAttribute("isFdActive", "bg-[#1E0342] text-white");
+        model.addAttribute("isFdActive", "lg:bg-[#1E0342] lg:text-white");
 
         return "foodTruck";
     }
@@ -174,6 +174,8 @@ public class FoodTruckController {
 
         model.addAttribute("categories", categories);
         model.addAttribute("foodtruck", foodtruckEntity);
+        model.addAttribute("isFdActive", "lg:bg-[#1E0342] lg:text-white");
+
         return "foodTruck";
     }
 
@@ -223,21 +225,6 @@ public class FoodTruckController {
             FoodtruckEntity foodtruckEntity = foodTruckService.findFoodTruckByEmail(customUserDetails.getUsername());
             foodtruckEntity.setLat(Double.parseDouble(lat));
             foodtruckEntity.setLongi(Double.parseDouble(longi));
-            foodTruckService.updateFoodTruck(foodtruckEntity);
-            return "redirect:/foodTruck/foodTruckDashboard";
-        } catch (Exception e) {
-            m.addAttribute("error", "Something wrong.");
-            return "redirect:/foodTruck/foodTruckDashboard";
-        }
-
-    }
-
-    @RequestMapping("/setClosingTime")
-    public String setClosingTime(@RequestParam("closingTime") String closingTime,
-            @AuthenticationPrincipal CustomUserDetails customUserDetails, Model m) {
-        try {
-            FoodtruckEntity foodtruckEntity = foodTruckService.findFoodTruckByEmail(customUserDetails.getUsername());
-            foodtruckEntity.setClosingTime(closingTime);
             foodTruckService.updateFoodTruck(foodtruckEntity);
             return "redirect:/foodTruck/foodTruckDashboard";
         } catch (Exception e) {
@@ -339,7 +326,7 @@ public class FoodTruckController {
         model.addAttribute("isUser", role.contains("ROLE_USER"));
         model.addAttribute("isFoodtruck", role.contains("ROLE_FOODTRUCK"));
         model.addAttribute("error", error);
-        model.addAttribute("isFpActive", "bg-[#1E0342] text-white");
+        model.addAttribute("isFpActive", "lg:bg-[#1E0342] lg:text-white");
 
         return "truckProfile";
     }
