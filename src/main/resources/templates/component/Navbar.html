@@ -1,0 +1,162 @@
+<nav
+  th:fragment="navbar"
+  class="bg-white flex justify-between px-[7vw] lg:px-[5vw] h-[6vh] sm:h-[10vh] lg:h-[12vh] xl:h-[10vh] w-full items-center fixed z-50"
+>
+  <a href="/">
+    <img
+      src="/img/logo.png"
+      alt=""
+      class="w-[40vw] md:w-[30vw] lg:w-[20vw] h-[5vh] sm:h-[7vh]"
+  /></a>
+  <div
+    class="overflow-hidden absolute top-[6vh] sm:top-[10vh] lg:top-0 w-[100vw] left-[0vw] lg:relative lg:z-1 lg:ml-[2rem] lg:h-[12vh] xl:h-[10vh]"
+    id="outerMneu"
+  >
+    <ul
+      class="flex flex-col absolute bg-white w-[100vw] translate-x-[100vw] lg:translate-x-0 h-[93vh] lg:h-[12vh] xl:h-[10vh] lg:flex-row"
+      id="menuList"
+    >
+      <li class="lg:order-last lg:flex lg:justify-center lg:items-center">
+        <div
+          class="flex flex-col lg:flex-row justify-center p-[1rem] lg:p-0"
+          th:unless="${isUser} or ${isFoodtruck}"
+        >
+          <a
+            href="/public/registerUser"
+            class="bg-[#1E0342] py-[0.5rem] mb-[0.5rem] font-semibold rounded-md shadow-md shadow-black-400 text-center lg:hidden text-white"
+          >
+            Create New Account
+          </a>
+          <a
+            href="/public/loginPage"
+            class="bg-gray-200 px-[10vw] lg:px-[1rem] py-[0.5rem] font-semibold rounded-md shadow-md shadow-black-400 text-center"
+          >
+            LogIn
+          </a>
+        </div>
+      </li>
+      <div
+        th:if="${isUserLogged}"
+        class="lg:order-4 lg:flex lg:justify-center lg:items-center"
+      >
+        <a
+          href="/user/userProfile"
+          th:if="${isUser}"
+          class="lg:flex lg:justify-center lg:items-center"
+          ><li
+            class="pl-[10vw] lg:px-[1rem] py-[2vh] border-b-[1px] border-gray-300 lg:border-b-0"
+          >
+            Profile
+          </li></a
+        ><a
+          href="/foodTruck/truckProfile"
+          th:if="${isFoodtruck}"
+          class="lg:flex lg:justify-center lg:items-center"
+          ><li
+            class="pl-[10vw] lg:px-[1rem] py-[2vh] border-b-[1px] border-gray-300 lg:border-b-0"
+          >
+            Profile
+          </li></a
+        >
+      </div>
+      <a href="/" class="lg:flex lg:justify-center lg:items-center"
+        ><li
+          th:class="'pl-[10vw] lg:px-[2rem] py-[2vh] border-b-[1px] border-gray-300 lg:border-b-0 '+${isActive}"
+        >
+          Home
+        </li></a
+      >
+      <a
+        href="/foodTruck/foodTruckDashboard"
+        class="lg:flex lg:justify-center lg:items-center"
+        th:if="${isFoodtruck}"
+        ><li
+          th:class="'pl-[10vw] lg:px-[2rem] py-[2vh] border-b-[1px] border-gray-300 lg:border-b-0 '+${isActive}"
+        >
+          Dashboard
+        </li></a
+      >
+      <a
+        href="/user/userDashboard"
+        class="lg:flex lg:justify-center lg:items-center"
+        th:if="${isUser}"
+        ><li
+          th:class="'pl-[10vw] lg:px-[2rem] py-[2vh] border-b-[1px] border-gray-300 lg:border-b-0 '+${isActive}"
+        >
+          Dashboard
+        </li></a
+      >
+      <a
+        href="/public/aboutUs"
+        class="lg:flex lg:justify-center lg:items-center"
+        ><li
+          class="pl-[10vw] lg:px-[1rem] py-[2vh] border-b-[1px] border-gray-300 lg:border-b-0"
+          th:unless="${isUserLogged}"
+        >
+          About
+        </li></a
+      >
+      <a
+        href="/common/contact"
+        class="lg:flex lg:justify-center lg:items-center"
+        ><li
+          th:if="${isUserLogged}"
+          class="pl-[10vw] lg:px-[1rem] py-[2vh] border-b-[1px] border-gray-300 lg:border-b-0"
+        >
+          Contact
+        </li></a
+      >
+      <a
+        href="/common/reviewUs"
+        class="lg:flex lg:justify-center lg:items-center"
+        ><li
+          class="pl-[10vw] lg:px-[1rem] py-[2vh] border-b-[1px] border-gray-300 lg:border-b-0"
+          th:if="${isUserLogged}"
+        >
+          Review Us
+        </li></a
+      >
+      <a href="/common/blogs" class="lg:flex lg:justify-center lg:items-center"
+        ><li
+          class="pl-[10vw] lg:px-[1rem] py-[2vh] border-b-[1px] border-gray-300 lg:border-b-0"
+          th:if="${isUserLogged}"
+        >
+          Blogs
+        </li></a
+      >
+      <a
+        href="/logout"
+        th:if="${isUser} or ${isFoodtruck}"
+        class="lg:flex lg:justify-center lg:items-center lg:order-5"
+        ><li
+          class="pl-[10vw] lg:px-[1rem] py-[2vh] border-b-[1px] border-gray-300 lg:border-b-0"
+        >
+          LogOut
+        </li></a
+      >
+    </ul>
+  </div>
+  <div class="flex justify-center items-center">
+    <div class="flex justify-center items-center" th:if="${isFoodtruck}">
+      <form action="/foodTruck/getLocation" method="post" hidden>
+        <p id="msg"></p>
+        <input type="text" name="lat" id="lat" />
+        <input type="text" name="long" id="long" />
+        <button type="submit" id="sendLocation">Go Online</button>
+      </form>
+      <button
+        onclick="getLocation()"
+        th:if="${isFoodtruck}"
+        class="mr-[1rem] lg:mr-0 px-[0.5rem] py-[0.3rem] bg-[#1E0342] text-white rounded-md font-semibold"
+      >
+        GoOnline
+      </button>
+    </div>
+    <button onclick="handleHamburger()" class="relative lg:hidden">
+      <div class="bg-black w-[2.2rem] h-[0.2rem] mb-[0.4rem]" id="bar1"></div>
+      <div class="bg-black w-[2.2rem] h-[0.2rem] mb-[0.4rem]" id="bar2"></div>
+      <div class="bg-black w-[2.2rem] h-[0.2rem]" id="bar3"></div>
+    </button>
+  </div>
+  <script th:src="@{/js/handleHamburger.js}"></script>
+</nav>

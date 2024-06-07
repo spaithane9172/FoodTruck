@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:mysql://foodtruck.cxe68ey002ns.us-east-1.rds.amazonaws.com:3306/foodtruck
+    url: jdbc:mysql://roundhouse.proxy.rlwy.net:36350/railway
     username: root
-    password: Sachin123
+    password: zLIAUMJLQvYKrMOypuoMAsBoFgfSRbie
   jpa:
     hibernate:
       ddl-auto: update

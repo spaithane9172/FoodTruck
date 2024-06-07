@@ -11,5 +11,7 @@ public interface FoodTruckService {
 
     public FoodtruckEntity updateFoodTruck(FoodtruckEntity foodtruckEntity);
 
-    public List<FoodtruckEntity> getAllFoodTrucksNearMe();
+    public List<FoodtruckEntity> getAllOpenFoodTrucksNearMe();
+
+    public List<FoodtruckEntity> getAllClosedFoodTrucksNearMe();
 }
