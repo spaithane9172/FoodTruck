@@ -1,7 +1,6 @@
 package com.foodtruck.foodtruck.controller;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -84,46 +83,20 @@ public class UserController {
     @RequestMapping("/userDashboard")
     public String userDashboard(@AuthenticationPrincipal CustomUserDetails user, Model model) {
         UserEntity u = userServiceImpl.findUser(user.getUsername());
-        List<FoodtruckEntity> openFoodtruckEntity = foodTruckServiceImpl.getAllOpenFoodTrucksNearMe();
-        List<FoodtruckEntity> closedFoodtruckEntity = foodTruckServiceImpl.getAllClosedFoodTrucksNearMe();
-        List<FoodtruckEntity> foodtruckEntity = new ArrayList<>();
+        List<FoodtruckEntity> foodtruckEntity = foodTruckServiceImpl.getAllFoodTrucksNearMe();
         DecimalFormat decimalFormat = new DecimalFormat("0.00");
         try {
-            for (int i = 0; i < openFoodtruckEntity.size(); i++) {
-                openFoodtruckEntity.get(i).setId(null);
-                openFoodtruckEntity.get(i).setPassword(null);
-                openFoodtruckEntity.get(i).setRole(null);
-                if (u.getLat() != null && u.getLongi() != null && closedFoodtruckEntity.get(i).getLat() != null
-                        && closedFoodtruckEntity.get(i).getLongi() != null) {
-                    openFoodtruckEntity.get(i)
-                            .setDistance(Double.parseDouble(
-                                    decimalFormat.format(findDistance.calculateDistance(u.getLat(), u.getLongi(),
-                                            openFoodtruckEntity.get(i).getLat(),
-                                            openFoodtruckEntity.get(i).getLongi()))));
-                }
+            for (int i = 0; i < foodtruckEntity.size(); i++) {
+                foodtruckEntity.get(i).setId(null);
+                foodtruckEntity.get(i).setPassword(null);
+                foodtruckEntity.get(i).setRole(null);
+                foodtruckEntity.get(i)
+                        .setDistance(Double.parseDouble(
+                                decimalFormat.format(findDistance.calculateDistance(u.getLat(), u.getLongi(),
+                                        foodtruckEntity.get(i).getLat(), foodtruckEntity.get(i).getLongi()))));
             }
-            openFoodtruckEntity = sortFoodTrucksByDistance.sortObject(openFoodtruckEntity);
-
-            for (int i = 0; i < closedFoodtruckEntity.size(); i++) {
-                closedFoodtruckEntity.get(i).setId(null);
-                closedFoodtruckEntity.get(i).setPassword(null);
-                closedFoodtruckEntity.get(i).setRole(null);
-                if (u.getLat() != null && u.getLongi() != null && closedFoodtruckEntity.get(i).getLat() != null
-                        && closedFoodtruckEntity.get(i).getLongi() != null) {
-                    closedFoodtruckEntity.get(i)
-                            .setDistance(Double.parseDouble(
-                                    decimalFormat.format(findDistance.calculateDistance(u.getLat(), u.getLongi(),
-                                            closedFoodtruckEntity.get(i).getLat(),
-                                            closedFoodtruckEntity.get(i).getLongi()))));
-                }
-            }
-
-            closedFoodtruckEntity = sortFoodTrucksByDistance.sortObject(closedFoodtruckEntity);
-            foodtruckEntity = openFoodtruckEntity;
-            foodtruckEntity.addAll(closedFoodtruckEntity);
+            foodtruckEntity = sortFoodTrucksByDistance.sortObject(foodtruckEntity);
         } catch (Exception e) {
-            foodtruckEntity = openFoodtruckEntity;
-            foodtruckEntity.addAll(closedFoodtruckEntity);
             for (int i = 0; i < foodtruckEntity.size(); i++) {
                 foodtruckEntity.get(i).setId(null);
                 foodtruckEntity.get(i).setPassword(null);
@@ -142,7 +115,7 @@ public class UserController {
         model.addAttribute("user", u);
         model.addAttribute("foodtrucks", foodtruckEntity);
 
-        model.addAttribute("isUdActive", "lg:bg-[#1E0342] lg:text-white");
+        model.addAttribute("isUdActive", "bg-[#1E0342] text-white");
         return "users";
     }
 
@@ -194,12 +167,6 @@ public class UserController {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Set<String> role = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
-        UserEntity userEntity = userServiceImpl.findUser(authentication.getName());
-
-        DecimalFormat decimalFormat = new DecimalFormat("0.00");
-        model.addAttribute("distance", decimalFormat.format(findDistance.calculateDistance(userEntity.getLat(),
-                userEntity.getLongi(), foodtruckEntity.getLat(), foodtruckEntity.getLongi())));
-
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken)
             model.addAttribute("isUserLogged", false);
         else
@@ -259,7 +226,7 @@ public class UserController {
         model.addAttribute("isUser", role.contains("ROLE_USER"));
         model.addAttribute("isFoodtruck", role.contains("ROLE_FOODTRUCK"));
         model.addAttribute("error", error);
-        model.addAttribute("isUpActive", "lg:bg-[#1E0342] lg:text-white");
+        model.addAttribute("isUpActive", "bg-[#1E0342] text-white");
 
         return "userProfile";
     }

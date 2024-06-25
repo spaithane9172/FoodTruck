@@ -29,14 +29,9 @@ public class FoodTruckServiceImpl implements FoodTruckService {
     }
 
     @Override
-    public List<FoodtruckEntity> getAllOpenFoodTrucksNearMe() {
+    public List<FoodtruckEntity> getAllFoodTrucksNearMe() {
 
-        return foodTruckRepo.findOpenFoodTrucks();
+        return foodTruckRepo.findAll();
     }
 
-    @Override
-    public List<FoodtruckEntity> getAllClosedFoodTrucksNearMe() {
-
-        return foodTruckRepo.findClosedFoodTrucks();
-    }
 }

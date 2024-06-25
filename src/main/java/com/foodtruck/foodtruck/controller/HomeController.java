@@ -42,7 +42,7 @@ public class HomeController {
             m.addAttribute("isUserLogged", false);
         else
             m.addAttribute("isUserLogged", true);
-        m.addAttribute("isHActive", "lg:bg-[#1E0342] lg:text-white");
+        m.addAttribute("isHActive", "bg-[#1E0342] text-white");
 
         return "index";
     }
